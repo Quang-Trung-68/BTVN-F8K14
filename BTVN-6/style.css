@@ -1,0 +1,118 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+/* ============form============ */
+.container {
+  max-width: 1170px;
+  margin: 0 auto;
+}
+
+.form-subscribe {
+  background-color: #334455;
+  padding: 30px;
+  margin-top: 20px;
+  border-radius: 10px;
+}
+
+.form-subscribe {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+.form-subscribe h2,
+.form-subscribe p {
+  color: #fff;
+}
+
+.form-subscribe h2 + p {
+  margin-top: 20px;
+}
+
+.form-subscribe h2 + p + p {
+  margin-bottom: 20px;
+}
+
+.form-subscribe span {
+  color: #f79b19;
+}
+
+.form-subscribe input,
+.form-subscribe button {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+}
+
+.form-subscribe button {
+  background-color: #f8db35;
+  font-weight: 600;
+}
+
+.form-subscribe button:hover {
+  cursor: pointer;
+}
+
+.form-subscribe:hover:not(:has(:hover)) input[type="email"]::placeholder {
+  color: #f79b19;
+}
+
+.form-subscribe:hover:not(:has(:hover)) input[type="email"] {
+  background-color: #ddd;
+}
+
+.form-subscribe:hover:not(:has(:hover)) button {
+  background-color: #f79b19;
+  color: #fff;
+}
+
+/* ================ */
+/* custom list */
+
+.custom-list {
+  margin-top: 50px;
+  padding: 20px;
+  font-weight: 600;
+}
+
+/* ================= */
+/* html */
+
+.html {
+  margin-top: 50px;
+  padding: 20px;
+}
+.html h1 {
+  color: #555878;
+}
+.html .desc {
+  margin-top: 30px;
+}
+.html .desc code {
+  background-color: #e2e8f0;
+  color: #1e293b;
+  padding: 1px;
+  border-radius: 4px;
+  font-family: monospace;
+}
+
+.html .desc a {
+  color: #538ed9;
+}
+
+.html .cta-block {
+  margin-top: 20px;
+  padding: 20px;
+  border: 2px solid;
+  border-radius: 16px;
+}
+
+.html .cta-block .cta-desc{
+    margin-bottom: 20px;
+}
+
+.html .cta-block a{
+    font-weight: 600;
+}

@@ -14,12 +14,9 @@
   padding: 30px;
   margin-top: 20px;
   border-radius: 10px;
-}
-
-.form-subscribe {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
 }
 
 .form-subscribe h2,
@@ -109,10 +106,10 @@
   border-radius: 16px;
 }
 
-.html .cta-block .cta-desc{
-    margin-bottom: 20px;
+.html .cta-block .cta-desc {
+  margin-bottom: 20px;
 }
 
-.html .cta-block a{
-    font-weight: 600;
+.html .cta-block a {
+  font-weight: 600;
 }

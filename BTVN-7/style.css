@@ -134,10 +134,9 @@ p {
   margin: 10px;
   padding: 30px;
   /* backdrop-filter: blur(2px); */
-  
+
   display: inline-block;
 }
-
 
 .sub-container .action-item .action-item-icon {
   border-radius: 50%;
@@ -146,28 +145,362 @@ p {
   outline: 1px solid #f2a93b;
 }
 
-.sub-container .action-item .title{
-    margin-top: 20px;
-    font-weight: 600;
-    font-size: 1.6rem;
+.sub-container .action-item .title {
+  margin-top: 20px;
+  font-weight: 600;
+  font-size: 1.6rem;
 }
 
-.sub-container .action-item .desc{
-    margin-top: 20px;
-    color:#888;
+.sub-container .action-item .desc {
+  margin-top: 20px;
+  color: #888;
 }
 
-.sub-container .action-item .cta-btn{
-    display: inline-block;
-    width:100px;
-    margin-top: 30px;
-    text-decoration: none;
-    font-family: inherit;
-    padding: 10px;
-    color:#fff;
-    background-color: #f2a93b;
+.sub-container .action-item .cta-btn {
+  display: inline-block;
+  width: 100px;
+  margin-top: 30px;
+  text-decoration: none;
+  font-family: inherit;
+  padding: 10px;
+  color: #fff;
+  background-color: #f2a93b;
 }
 
-.sub-container .action-item .cta-btn:hover{
-    opacity: 0.85;
+.sub-container .action-item .cta-btn:hover {
+  opacity: 0.85;
+}
+
+/* =====form====== */
+
+.form-container {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  max-width: 50%;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.form-container h1 {
+  font-family: "Lobster", sans-serif;
+}
+
+.form-container p {
+  margin-top: 30px;
+}
+
+.form-container span {
+  color: red;
+}
+
+.input-group + .input-group {
+  margin: 40px 0;
+}
+
+.input-group label {
+  position: relative;
+  display: inline-block;
+  color: #ddd;
+}
+
+.input-group label::after {
+  content: "✭";
+  color: currentColor;
+  display: inline-block;
+  position: absolute;
+  font-size: 0.8rem;
+  left: 570px;
+  top: 10px;
+}
+
+.form-container .input-group:nth-child(5) > label::after {
+  display: none;
+}
+.form-container .input-group:nth-child(6) > label::after {
+  content: "\2195";
+}
+
+.input-group svg {
+  background-color: #ddd;
+  position: absolute;
+  padding: 8px;
+  top: 0;
+  left: 0;
+}
+.input-group input,
+.input-group select,
+.input-group textarea {
+  display: block;
+  border: 2px solid #ddd;
+  padding: 10px;
+  width: 562px;
+  height: 40px;
+  position: absolute;
+  left: 40px;
+  top: 0;
+  right: 0;
+}
+
+.input-group select {
+  appearance: none;
+}
+
+.input-group textarea {
+  font-family: inherit;
+  height: 200px;
+}
+
+.input-group input::placeholder {
+  color: #ccc;
+}
+
+.input-group *:hover {
+  color: #333;
+}
+
+.input-group *:hover svg {
+  background-color: #333333;
+}
+
+.input-group *:hover input,
+.input-group *:hover select {
+  border: 2px solid #333333;
+}
+.input-group *:hover input::placeholder {
+  color: #333333;
+}
+
+.input-group *:hover {
+  color: #333;
+}
+
+.input-group *:hover svg {
+  background-color: #333333;
+}
+
+.input-group *:hover input {
+  border: 2px solid #333333;
+}
+.input-group *:hover input::placeholder {
+  color: #333333;
+}
+
+.input-group input:active::placeholder,
+.input-group input:focus::placeholder {
+  color: #333333;
+}
+
+.input-group label:has(:focus),
+.input-group label:has(:active) {
+  color: #333333;
+}
+
+.input-group label:has(:focus) svg,
+.input-group label:has(:active) svg {
+  background-color: #333;
+}
+
+.input-group label:has(:focus)::after {
+  content: "✖";
+}
+
+/* =====tooltips====== */
+.input-group {
+  position: relative;
+}
+
+.input-group .tooltip {
+  display: none;
+  position: absolute;
+  padding: 10px;
+  margin-bottom: 10px;
+  top: -200%;
+  left: 15%;
+  color: #fff;
+  background-color: #333;
+}
+.input-group:has(:hover) .tooltip {
+  display: block;
+}
+
+.tooltip::after {
+  content: "";
+  position: absolute;
+  border-width: 10px;
+  border-style: solid;
+  border-color: #333 transparent transparent transparent;
+  bottom: calc(100% - 10px);
+  left: 20%;
+  transform: translate(-50%, 250%);
+  visibility: hidden;
+  opacity: 0;
+}
+
+.input-group:has(:hover) .tooltip::after {
+  visibility: visible;
+  opacity: 1;
+}
+
+.block-send-copy {
+  display: inline-block;
+  width: 100%;
+  margin-top: 200px;
+  color: #333;
+}
+
+.block-send-copy input {
+  display: none;
+}
+
+.block-send-copy label {
+  position: relative;
+}
+
+.block-send-copy label::before,
+.block-send-copy label::after {
+  content: "";
+  display: inline-block;
+}
+
+.block-send-copy label::before {
+  width: 14px;
+  height: 14px;
+  margin-right: 5px;
+  border: 2px solid #ddd;
+}
+.block-send-copy label::after {
+  width: 10px;
+  height: 5px;
+  position: absolute;
+  top: 3px;
+  right: 224px;
+  border: 2px solid black;
+  border-top: none;
+  border-right: none;
+  rotate: -45deg;
+  display: none;
+}
+.block-send-copy:has(input[type="checkbox"]:checked) label::after {
+  display: inline-block;
+}
+.block-send-copy button {
+  padding: 10px;
+  color: #fff;
+  width: 100px;
+  background-color: red;
+  float: right;
+  cursor: pointer;
+  border: none;
+}
+
+/* =====menu ngang======= */
+
+.menu-ngang {
+  margin-top: 100px;
+}
+
+.header {
+  white-space: nowrap;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+}
+
+.header svg.icon-study {
+  height: 16px;
+}
+
+.header img.logo-study {
+  height: 30px;
+  margin-left: 20px;
+}
+
+.header svg.icon-study,
+.header img.logo-study,
+.header .category,
+.header ul,
+.header button {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.header .category {
+  padding: 10px;
+  background-color: #f5f5f5;
+  border-radius: 16px;
+  margin-left: 10px;
+  font-weight: 600;
+}
+
+.header .category p {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0;
+}
+
+.header > ul {
+  list-style: none;
+  padding: 0;
+  margin-left: 100px;
+  margin-right: 240px;
+}
+
+.header ul li {
+  display: inline-block;
+  width: auto;
+  padding: 14px;
+  font-weight: 600;
+  text-align: center;
+  border-radius: 14px;
+}
+
+.header > ul > li::after {
+  content: "^";
+  position: absolute;
+  top: 16px;
+  font-size: 0.6rem;
+  font-weight: bold;
+  rotate: 180deg;
+  right: 0px;
+}
+
+.header > ul > li + li {
+  margin-left: 10px;
+}
+.header ul li:hover {
+  background-color: #f5f5f5;
+  cursor: pointer;
+}
+
+.header ul li:hover > .menu-2 {
+  display: inline-block;
+}
+
+.header .menu-2 li {
+  display: block;
+  padding: 10px;
+}
+
+.header > ul > li {
+  position: relative;
+}
+
+.header .menu-2 {
+  position: absolute;
+  top: 100%;
+  left: 8px;
+  display: none;
+}
+
+.header button {
+  width: 120px;
+  color: #fff;
+  font-weight: 600;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(to right, #3357ef, #b867e7);
+}
+.header button:hover{
+  opacity: 0.85;
+  cursor: pointer;
 }

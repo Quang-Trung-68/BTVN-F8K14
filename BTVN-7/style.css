@@ -444,7 +444,7 @@ p {
 }
 
 .header > ul > li:hover::after{
-  transform: rotate(0deg);
+  rotate: 180deg;
   top: 18px;
 }
 

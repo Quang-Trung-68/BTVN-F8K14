@@ -440,7 +440,12 @@ p {
   font-size: 0.6rem;
   font-weight: bold;
   transform: rotate(180deg);
-  right: 0px;
+  right: 1px;
+}
+
+.header > ul > li:hover::after{
+  transform: rotate(0deg);
+  top: 18px;
 }
 
 .header > ul > li + li {

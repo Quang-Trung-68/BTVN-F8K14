@@ -424,12 +424,13 @@ p {
 }
 
 .header .category {
-  padding: 10px;
   background-color: #f5f5f5;
   border-radius: 16px;
   margin-left: 10px;
   font-weight: 600;
 }
+
+
 
 .header .category p {
   display: inline-block;
@@ -491,16 +492,28 @@ p {
   display: none;
 }
 
-.header button {
-  width: 120px;
+.header .btn {
+  width: 100px;
   color: #fff;
   font-weight: 600;
-  padding: 14px;
+  padding: 10px;
   border: none;
   border-radius: 12px;
+}
+.header .btn-join-now{
   background: linear-gradient(to right, #3357ef, #b867e7);
 }
-.header button:hover{
+
+.header .category-btn{
+  background-color: #f5f5f5;
+  color:#000;
+}
+
+.header .btn:hover{
   opacity: 0.85;
   cursor: pointer;
+}
+.header .category-btn:hover{
+  background-color: #ccc;
+  opacity: none;
 }

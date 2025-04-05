@@ -133,7 +133,6 @@ p {
   box-shadow: 0px 0px 4px #ccc;
   margin: 10px;
   padding: 30px;
-  /* backdrop-filter: blur(2px); */
 
   display: inline-block;
 }
@@ -254,10 +253,6 @@ p {
   color: #ccc;
 }
 
-.input-group *:hover {
-  color: #333;
-}
-
 .input-group *:hover svg {
   background-color: #333333;
 }
@@ -266,13 +261,6 @@ p {
 .input-group *:hover select {
   border: 2px solid #333333;
 }
-.input-group *:hover input::placeholder {
-  color: #333333;
-}
-
-.input-group *:hover {
-  color: #333;
-}
 
 .input-group *:hover svg {
   background-color: #333333;
@@ -280,14 +268,6 @@ p {
 
 .input-group *:hover input {
   border: 2px solid #333333;
-}
-.input-group *:hover input::placeholder {
-  color: #333333;
-}
-
-.input-group input:active::placeholder,
-.input-group input:focus::placeholder {
-  color: #333333;
 }
 
 .input-group label:has(:focus),
@@ -300,11 +280,12 @@ p {
   background-color: #333;
 }
 
-.input-group label:has(:focus)::after {
+.input-group label:not(:has(:placeholder-shown))::after {
   content: "✖";
 }
 
 /* =====tooltips====== */
+
 .input-group {
   position: relative;
 }
@@ -373,7 +354,7 @@ p {
   height: 5px;
   position: absolute;
   top: 3px;
-  right: 224px;
+  left: 3px;
   border: 2px solid black;
   border-top: none;
   border-right: none;
@@ -430,8 +411,6 @@ p {
   font-weight: 600;
 }
 
-
-
 .header .category p {
   display: inline-block;
   vertical-align: middle;
@@ -460,7 +439,7 @@ p {
   top: 16px;
   font-size: 0.6rem;
   font-weight: bold;
-  rotate: 180deg;
+  transform: rotate(180deg);
   right: 0px;
 }
 
@@ -513,6 +492,7 @@ p {
   opacity: 0.85;
   cursor: pointer;
 }
+
 .header .category-btn:hover{
   background-color: #ccc;
   opacity: none;

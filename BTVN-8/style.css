@@ -1,6 +1,9 @@
+/* ======menu 2 cap====== */
+
 .container {
   max-width: 1170px;
   margin: 0 auto;
+  box-sizing: border-box;
 }
 
 .menu-dropdown {
@@ -8,6 +11,7 @@
   display: flex;
   border: 1px solid #666;
   color: #666;
+  margin-bottom: 100px;
 }
 
 .menu-dropdown__item {
@@ -34,7 +38,7 @@
   align-items: center;
   justify-content: center;
   gap: 5px;
-  padding: 15px;
+  padding: 10px;
 }
 
 .menu-item-dropdown {
@@ -63,10 +67,10 @@
 .menu-item-dropdown::before {
   content: "";
   position: absolute;
-  top: -15px;
+  top: -24px;
   left: 0;
   width: 230px;
-  height: 15px;
+  height: 28px;
   background-color: transparent;
 }
 
@@ -84,7 +88,7 @@
 .menu-item-dropdown ul li a {
   width: 200px;
   display: inline-block;
-  padding: 15px;
+  padding: 10px;
 }
 ul {
   margin: 0;
@@ -94,4 +98,231 @@ a {
   text-decoration: none;
   font-family: inherit;
   color: inherit;
+}
+
+/* ======form login===== */
+
+h3,input,button{
+  margin: 0;
+  padding: 0;
+}
+
+.container-form-login {
+  background-image: url("https://uiwebsoft.com/justlog/login-one/images/login-bg2.jpg");
+  background-repeat: no-repeat;
+  object-fit: cover;
+  background-position: center;
+  box-sizing: border-box;
+  height: 1000px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-login {
+  max-width: 50%;
+  height: 500px;
+  background-color: #fff;
+  display: flex;
+  border-radius: 20px;
+  font-family: "Nunito", sans-serif;
+}
+
+.cta-block {
+  max-width: 45%;
+  padding: 50px auto;
+  background-color: #ff574d;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  border-radius: 20px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.cta-block__group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  font-size: 1.6rem;
+}
+
+.cta-block__desc{
+  text-align: center;
+  margin-top: 30px;
+}
+
+.form-login .btn{
+  width: 150px;
+  background-color: #fff;
+  padding:10px;
+  font-family: inherit;
+  border: none;
+  font-size: inherit;
+  border-radius: 4px;
+}
+
+.form-login .btn:hover{
+  opacity: 0.85;
+  cursor: pointer;
+}
+
+.cta-block .btn-read-more{
+  margin-top: 20px;
+  color:#ff574d;
+}
+
+.cta-block-icon-contact{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.cta-block-icon-contact svg{
+  background-color: #db5c4f;
+  padding: 4px;
+  border-radius: 4px;
+}
+
+
+
+h2{
+  margin: 0;
+  padding: 0;
+}
+
+.login-block{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+.login-block__content{
+  display: flex;
+  align-items: stretch;
+  flex-direction: column;
+  width:80%;
+}
+
+.login-block__heading{
+  color:#272323;
+  margin-top: 50px;
+  text-align: center;
+  position: relative;
+}
+
+.login-block__heading::before{
+  content: "";
+  display: inline-block;
+  position: absolute;
+  background-color: #ff574d;
+  width: 46px;
+  height: 1px;
+  bottom: -10px;
+  left: 150px;
+}
+
+.login-block__heading span{
+  color: #ff574d;
+}
+
+.login-block .login-data{
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.login-block .login-data input{
+  padding: 15px;
+  width:calc(100% - 30px);
+  border: 2px solid #ccc;
+  border-radius: 4px;
+}
+
+.login-block .login-data input+ input{
+  margin: 20px;
+}
+
+.forgot-pass-block{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.forgot-pass-block label{
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.forgot-pass-block label input{
+  display: none;
+}
+
+.forgot-pass-block label::before,.forgot-pass-block label::after{
+  content: "";
+  display: inline-block;
+}
+
+.forgot-pass-block label::before{
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  border: 2px solid #ccc;
+  margin-right: 5px;
+}
+
+.forgot-pass-block label::after{
+  width: 10px;
+  height: 5px;
+  border: 2px solid #ff574d;
+  border-top: none;
+  border-right: none;
+  rotate: -45deg;
+  position: absolute;
+  left: 2px;
+  top: 6px;
+  display: none;
+}
+
+.forgot-pass-block:has(:checked) label::after{
+  display: inline-block;
+}
+
+.login-block .btn-login{
+  width: 100%;
+  background-color: #ff574d;
+  color:#fff;
+  margin-top: 20px;
+}
+
+.login-block .btn-create-account{
+  width: 100%;
+  margin-top: 20px;
+}
+
+.form-login{
+  position: relative;
+}
+
+.form-login .arrow-right{
+  position: absolute;
+  left: 40%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.form-login .arrow-right svg{
+  background-color: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 6px #ccc;
 }

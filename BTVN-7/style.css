@@ -523,3 +523,8 @@ p {
   background-color: #ccc;
   opacity: none;
 }
+
+.test{
+  color:#ccc;
+  background-color: #fff;
+}

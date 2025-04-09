@@ -1,0 +1,136 @@
+.container {
+  width: 1170px;
+  margin: 0 auto;
+  margin-top: 50px;
+}
+*{
+    box-sizing: border-box;
+}
+.form {
+  width: 50%;
+  margin: 0 auto;
+  padding: 30px;
+  font-family: "Lato", sans-serif;
+}
+
+.form .heading{
+    font-family: "Lobster", sans-serif;
+    font-weight: 600;
+    font-size: 1.8rem ;
+}
+
+.form .desc{
+    margin-top: 40px;
+    color:#ccc;
+}
+
+.form .desc span{
+    color:red;
+}
+
+.form .input-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  margin-top: 20px;
+  background-color: #ddd;
+}
+
+.form .input-group svg {
+  width:38px;
+  height: 38px;
+  padding: 10px;
+}
+
+.form .input-group:last-child svg{
+    align-self: flex-start;
+}
+
+.form .input-group .input-data {
+  border: none;
+  outline: none;
+  width: calc(100% - 25px);
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+.form .input-group .tooltip {
+  position: absolute;
+  top: -60px;
+  left: 50px;
+  background-color: #000;
+  color: #fff;
+  padding: 15px 10px;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.5s ease;
+}
+
+.form .input-group .arrow-triangle {
+  position: absolute;
+  top: -15px;
+  left: 70px;
+  border-width: 7px 10px;
+  border-style: solid;
+  border-color: #000 transparent transparent transparent;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.5s ease;
+}
+
+.form .input-group .sub-icon::after {
+  content: "★";
+  display: inline-block;
+  position: absolute;
+  color: #ddd;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 10px;
+}
+
+.form .input-group .sub-icon-select::after {
+  content: "↔";
+  rotate: 90deg;
+  display: inline-block;
+  position: absolute;
+  color: #ddd;
+  top: 30%;
+  transform: translateY(-0%);
+  right: 7px;
+}
+
+.form .input-group:last-child .sub-icon::after{
+    top: 10%;
+}
+
+.form .input-group:hover .tooltip,
+.form .input-group:hover .arrow-triangle {
+  opacity: 1;
+  visibility: visible;
+}
+
+.form .input-group:hover .input-data {
+    border: 1px solid #000;
+}
+
+.form .input-group:hover{
+    background-color: #000;
+}
+
+.form .input-group:hover .sub-icon::after{
+    color: #000;
+}
+
+.form .input-group:hover .sub-icon-select::after{
+    color: #000;
+}
+
+.form .input-group:not(:has(:placeholder-shown)) .sub-icon::after{
+    content:'×';
+    color:#000;
+}
+
+.form .input-group:has(:focus) {
+    background-color: #000;
+}

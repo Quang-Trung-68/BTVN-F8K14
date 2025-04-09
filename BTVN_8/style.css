@@ -1,0 +1,244 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+p {
+  line-height: 1.4;
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+
+/* =====form====== */
+
+.form-container {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  max-width: 50%;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.form-container h1 {
+  font-family: "Lobster", sans-serif;
+}
+
+.form-container p {
+  margin-top: 30px;
+}
+
+.form-container span {
+  color: red;
+}
+
+.input-group + .input-group {
+  margin: 40px 0;
+}
+
+.input-group label {
+  position: relative;
+  display: inline-block;
+  color: #ddd;
+}
+
+.input-group label::after {
+  content: "✭";
+  color: currentColor;
+  display: inline-block;
+  position: absolute;
+  font-size: 0.8rem;
+  left: 570px;
+  top: 10px;
+}
+
+.form-container .input-group:nth-child(5) > label::after {
+  display: none;
+}
+.form-container .input-group:nth-child(6) > label::after {
+  content: "\2195";
+}
+
+.input-group svg {
+  background-color: #ddd;
+  position: absolute;
+  padding: 8px;
+  top: 0;
+  left: 0;
+}
+.input-group input,
+.input-group select,
+.input-group textarea {
+  display: block;
+  border: 1px solid #ddd;
+  padding: 10px;
+  width: 560px;
+  height: 40px;
+  position: absolute;
+  left: 40px;
+  top: 0;
+  right: 0;
+}
+
+.input-group select {
+  appearance: none;
+}
+
+.input-group textarea {
+  resize: none;
+  font-family: inherit;
+  height: 200px;
+}
+
+.input-group input::placeholder {
+  color: #ccc;
+}
+
+.input-group *:hover svg {
+  background-color: #333333;
+}
+
+.input-group *:hover input,
+.input-group *:hover select,
+.input-group *:hover textarea {
+  border: 2px solid #333333;
+}
+
+.input-group *:hover svg {
+  background-color: #333333;
+}
+
+.input-group *:hover input {
+  border: 2px solid #333333;
+}
+
+.input-group label:has(:focus),
+.input-group label:has(:active) {
+  color: #333333;
+}
+
+.input-group label input:focus,
+.input-group label select:focus,
+.input-group label textarea:focus {
+  border: 2px solid #ccc;
+  outline: none;
+}
+
+.input-group label:has(:focus) svg,
+.input-group label:has(:active) svg {
+  background-color: #333;
+}
+
+.input-group label:not(:has(:placeholder-shown))::after {
+  content: "✖";
+}
+
+/* =====tooltips====== */
+
+.input-group {
+  position: relative;
+}
+
+.input-group .tooltip {
+  display: none;
+  position: absolute;
+  padding: 10px;
+  margin-bottom: 10px;
+  top: -200%;
+  left: 15%;
+  color: #fff;
+  background-color: #333;
+}
+.input-group:has(:hover) .tooltip {
+  display: block;
+}
+
+.tooltip::after {
+  content: "";
+  position: absolute;
+  border-width: 10px;
+  border-style: solid;
+  border-color: #333 transparent transparent transparent;
+  bottom: calc(100% - 10px);
+  left: 20%;
+  transform: translate(-50%, 250%);
+  visibility: hidden;
+  opacity: 0;
+}
+
+.input-group:has(:hover) .tooltip::after {
+  visibility: visible;
+  opacity: 1;
+}
+
+.block-send-copy {
+  display: inline-block;
+  width: 100%;
+  margin-top: 200px;
+  color: #333;
+}
+
+.block-send-copy input {
+  display: none;
+}
+
+.block-send-copy label {
+  position: relative;
+}
+
+.block-send-copy button:hover{
+  opacity: 0.8;
+}
+
+.block-send-copy span {
+  position: absolute;
+  display: inline-block;
+  top: 8px;
+  left: 24px;
+  color: inherit;
+  white-space: nowrap;
+}
+
+.block-send-copy label::before,
+.block-send-copy label::after {
+  content: "";
+  display: inline-block;
+}
+
+.block-send-copy label::before {
+  width: 18px;
+  height: 18px;
+  margin-right: 5px;
+  border: 2px solid #ddd;
+  top: 8px;
+  position: absolute;
+}
+.block-send-copy label::after {
+  width: 10px;
+  height: 6px;
+  position: absolute;
+  top: 12px;
+  left: 4px;
+  border: 3px solid black;
+  border-top: none;
+  border-right: none;
+  rotate: -45deg;
+  display: none;
+}
+.block-send-copy:has(input[type="checkbox"]:checked) label::after {
+  display: inline-block;
+}
+.block-send-copy button {
+  padding: 10px;
+  color: #fff;
+  width: 100px;
+  background-color: red;
+  float: right;
+  cursor: pointer;
+  border: none;
+}

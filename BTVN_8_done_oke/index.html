@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- reset css -->
+
+    <link rel="stylesheet" href="reset.css" />
+
+    <!-- style css -->
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- embed font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,100..900;1,100..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Lobster&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- form -->
+    <div class="container">
+      <form action="#!" method="post">
+        <div class="form">
+          <!-- BT Form -->
+          <h1 class="heading">Here there</h1>
+          <p class="desc">
+            <span>We'd like to hear from you</span>. Send us your message or
+            just say hy with our contact form or directly via phone, we love to
+            chat.
+          </p>
+          <div class="input-group">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+              <path
+                fill="#ffffff"
+                d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304l-91.4 0z"
+              />
+            </svg>
+            <span class="tooltip">Enter your name</span>
+            <span class="arrow-triangle"></span>
+            <input
+              name="userName"
+              class="input-data"
+              type="text"
+              required
+              autocomplete="off"
+              placeholder="Your name"
+            />
+            <span class="sub-icon"></span>
+          </div>
+          <div class="input-group">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+              <path
+                fill="#ffffff"
+                d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48L48 64zM0 176L0 384c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-208L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z"
+              />
+            </svg>
+            <span class="tooltip">Enter your domain</span>
+            <span class="arrow-triangle"></span>
+            <input
+              name="domain"
+              class="input-data"
+              type="email"
+              required
+              autocomplete="off"
+              placeholder="your@domain.com"
+            />
+            <span class="sub-icon"></span>
+          </div>
+          <div class="input-group">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+              <path
+                fill="#ffffff"
+                d="M16 64C16 28.7 44.7 0 80 0L304 0c35.3 0 64 28.7 64 64l0 384c0 35.3-28.7 64-64 64L80 512c-35.3 0-64-28.7-64-64L16 64zM224 448a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zM304 64L80 64l0 320 224 0 0-320z"
+              />
+            </svg>
+            <span class="tooltip">Enter your phone number</span>
+            <span class="arrow-triangle"></span>
+            <input
+              name="phoneNumber"
+              class="input-data"
+              type="tel"
+              autocomplete="off"
+              placeholder="+ 44 123 000"
+            />
+            <span class="sub-icon sub-icon-tel"></span>
+          </div>
+          <div class="input-group">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+              <path
+                fill="#ffffff"
+                d="M184 48l144 0c4.4 0 8 3.6 8 8l0 40L176 96l0-40c0-4.4 3.6-8 8-8zm-56 8l0 40L64 96C28.7 96 0 124.7 0 160l0 96 192 0 128 0 192 0 0-96c0-35.3-28.7-64-64-64l-64 0 0-40c0-30.9-25.1-56-56-56L184 0c-30.9 0-56 25.1-56 56zM512 288l-192 0 0 32c0 17.7-14.3 32-32 32l-64 0c-17.7 0-32-14.3-32-32l0-32L0 288 0 416c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-128z"
+              />
+            </svg>
+            <span class="tooltip">Select your subject</span>
+            <span class="arrow-triangle"></span>
+            <select
+              style="appearance: none"
+              class="input-data"
+              name="subject"
+              id="subject"
+            >
+              <option value="" selected disabled>---Select subject---</option>
+              <option value="subject1">subject1</option>
+              <option value="subject2">subject2</option>
+              <option value="subject3">subject3</option>
+            </select>
+            <span class="sub-icon-select"></span>
+          </div>
+          <div class="input-group">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+              <path
+                fill="#ffffff"
+                d="M512 240c0 114.9-114.6 208-256 208c-37.1 0-72.3-6.4-104.1-17.9c-11.9 8.7-31.3 20.6-54.3 30.6C73.6 471.1 44.7 480 16 480c-6.5 0-12.3-3.9-14.8-9.9c-2.5-6-1.1-12.8 3.4-17.4c0 0 0 0 0 0s0 0 0 0s0 0 0 0c0 0 0 0 0 0l.3-.3c.3-.3 .7-.7 1.3-1.4c1.1-1.2 2.8-3.1 4.9-5.7c4.1-5 9.6-12.4 15.2-21.6c10-16.6 19.5-38.4 21.4-62.9C17.7 326.8 0 285.1 0 240C0 125.1 114.6 32 256 32s256 93.1 256 208z"
+              />
+            </svg>
+            <span class="tooltip">Enter your message</span>
+            <span class="arrow-triangle"></span>
+            <textarea
+              style="resize: none; font-family: inherit; padding: 15px"
+              rows="10"
+              required
+              class="input-data"
+              name="message"
+              id="message"
+              placeholder="Message"
+            ></textarea>
+            <span class="sub-icon-textarea"></span>
+          </div>
+          <div class="send-copy-button-sbm">
+            <label>
+              <input
+                hidden
+                type="checkbox"
+                name="sendCopy"
+                id="sendCopy"
+              /><span>Send me a copy of this message</span>
+            </label>
+            <button>SEND</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <!-- real estate -->
+    <div class="container container-real-estate">
+      <h1 class="heading">KHÁM PHÁ BẤT ĐỘNG SẢN CÁC KHU VỰC NỔI BẬT</h1>
+      <div class="location-list">
+        <div class="location-item">
+          <p class="location-item__title">Hồ Chí Minh</p>
+          <p class="location-item__quantity">50.317 bất động sản</p>
+        </div>
+        <div class="location-item">
+          <p class="location-item__title">Hà Nội</p>
+          <p class="location-item__quantity">18.767 bất động sản</p>
+        </div>
+        <div class="location-item">
+          <p class="location-item__title">Bình Dương</p>
+          <p class="location-item__quantity">7.051 bất động sản</p>
+        </div>
+        <div class="location-item">
+          <p class="location-item__title">Đồng Nai</p>
+          <p class="location-item__quantity">4.251 bất động sản</p>
+        </div>
+        <div class="location-item">
+          <p class="location-item__title">Bà Rịa Vũng Tàu</p>
+          <p class="location-item__quantity">3.968 bất động sản</p>
+        </div>
+        <div class="location-item">
+          <p class="location-item__title">Đà Nẵng</p>
+          <p class="location-item__quantity">3.680 bất động sản</p>
+        </div>
+        <div class="location-item">
+          <p class="location-item__title">Long An</p>
+          <p class="location-item__quantity">2.835 bất động sản</p>
+        </div>
+        <div class="location-item">
+          <p class="location-item__title">Quảng Ninh</p>
+          <p class="location-item__quantity">2.490 bất động sản</p>
+        </div>
+      </div>
+      <div class="card-location-list">
+        <div class="card-location-item quan-2">
+          <p class="card-location-item__title">Quận 2</p>
+          <p class="card-location-item__quantity">
+            <span>4.186</span> bất động sản đang bán
+          </p>
+        </div>
+        <div class="card-location-item quan-7">
+          <p class="card-location-item__title">Quận 7</p>
+          <p class="card-location-item__quantity">
+            <span>4.664</span> bất động sản đang bán
+          </p>
+        </div>
+        <div class="card-location-item quan-9">
+          <p class="card-location-item__title">Quận 9</p>
+          <p class="card-location-item__quantity">
+            <span>3.702</span> bất động sản đang bán
+          </p>
+        </div>
+        <div class="card-location-item quan-tan-binh">
+          <p class="card-location-item__title">Quận Tân Bình</p>
+          <p class="card-location-item__quantity">
+            <span>3.062</span> bất động sản đang bán
+          </p>
+        </div>
+        <div class="card-location-item thanh-pho-thu-duc">
+          <p class="card-location-item__title">Thành phố Thủ Đức</p>
+          <p class="card-location-item__quantity">
+            <span>2.843</span> bất động sản đang bán
+          </p>
+        </div>
+        <div class="card-location-item huyen-binh-chanh">
+          <p class="card-location-item__title">Huyện Bình Chánh</p>
+          <p class="card-location-item__quantity">
+            <span>3.235</span> bất động sản đang bán
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

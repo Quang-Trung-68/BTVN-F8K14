@@ -1,0 +1,308 @@
+.container {
+  width: 1170px;
+  margin: 0 auto;
+  margin-top: 50px;
+}
+* {
+  box-sizing: border-box;
+}
+
+/* ==========form============== */
+.form {
+  width: 50%;
+  margin: 0 auto;
+  padding: 30px;
+  font-family: "Lato", sans-serif;
+}
+
+.form .heading {
+  font-family: "Lobster", sans-serif;
+  font-weight: 600;
+  font-size: 1.8rem;
+}
+
+.form .desc {
+  margin-top: 40px;
+  color: #ccc;
+}
+
+.form .desc span {
+  color: red;
+}
+
+.form .input-group {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  position: relative;
+  margin-top: 20px;
+  background-color: #ddd;
+}
+
+.form .input-group svg {
+  width: 38px;
+  height: 38px;
+  padding: 10px;
+}
+
+.form .input-group .input-data {
+  border: none;
+  outline: none;
+  width: calc(100% - 25px);
+  padding: 11px;
+  border: 2px solid #ccc;
+}
+
+.form .input-group .tooltip {
+  position: absolute;
+  top: -60px;
+  left: 50px;
+  background-color: #000;
+  color: #fff;
+  padding: 15px 10px;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.5s ease;
+}
+
+.form .input-group .arrow-triangle {
+  position: absolute;
+  top: -15px;
+  left: 70px;
+  border-width: 7px 10px;
+  border-style: solid;
+  border-color: #000 transparent transparent transparent;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.5s ease;
+}
+
+.form .input-group .sub-icon::after,
+.form .input-group .sub-icon-textarea::after {
+  content: "★";
+  display: inline-block;
+  position: absolute;
+  color: #ddd;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 10px;
+}
+
+.form .input-group .sub-icon-tel::after {
+  content: "";
+}
+
+.form .input-group .sub-icon-select::after {
+  content: "↔";
+  rotate: 90deg;
+  display: inline-block;
+  position: absolute;
+  color: #ddd;
+  top: 30%;
+  transform: translateY(-0%);
+  right: 7px;
+}
+
+.form .input-group .sub-icon-textarea::after {
+  top: 10%;
+}
+
+.form .input-group:has(:focus) .tooltip,
+.form .input-group:has(:focus) .arrow-triangle {
+  opacity: 1;
+  visibility: visible;
+}
+
+.form .input-group:hover .input-data {
+  border: 2px solid #000;
+}
+
+.form .input-group:has(:focus) .input-data{
+  border: 2px solid #000 ;
+}
+
+.form .input-group:hover {
+  background-color: #000;
+}
+
+.form .input-group:hover .sub-icon::after,
+.form .input-group:hover .sub-icon-textarea::after {
+  color: #000;
+}
+
+.form .input-group:hover .sub-icon-select::after {
+  color: #000;
+}
+
+.form .input-group:not(:has(:placeholder-shown)) .sub-icon::after,
+.form .input-group:not(:has(:placeholder-shown)) .sub-icon-textarea::after {
+  content: "×";
+  color: #000;
+}
+
+.form .input-group:has(:focus) {
+  background-color: #000;
+}
+
+.send-copy-button-sbm {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.send-copy-button-sbm label {
+  position: relative;
+}
+
+.send-copy-button-sbm span {
+  margin-left: 24px;
+}
+.send-copy-button-sbm label::before,
+.send-copy-button-sbm label::after {
+  content: "";
+  display: inline-block;
+  position: absolute;
+}
+
+.send-copy-button-sbm label::before {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #ddd;
+}
+
+.send-copy-button-sbm label::after {
+  width: 10px;
+  height: 6px;
+  border: 2px solid #000;
+  border-top: none;
+  border-right: none;
+  rotate: -45deg;
+  left: 4px;
+  top: 4px;
+  display: none;
+}
+
+.send-copy-button-sbm:has(:checked) label::after {
+  display: inline-block;
+}
+
+.send-copy-button-sbm button {
+  font-family: inherit;
+  border: none;
+  outline: none;
+  background-color: red;
+  padding: 10px 30px;
+  color: #fff;
+}
+
+.send-copy-button-sbm button:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+/* ========real estate========= */
+
+.container-real-estate {
+  font-family: "Asap", sans-serif;
+  margin-bottom: 100px;
+}
+
+.container-real-estate .heading {
+  font-weight: 600;
+  margin-top: 30px;
+}
+
+.location-list {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.location-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 10px 16px;
+  background-color: #e5e5e5;
+  border-radius: 30px;
+  font-weight: 600;
+  transition: 0.4s;
+}
+
+.location-item:first-child,
+.location-item:hover {
+  background-color: #af7c38;
+  color: #fff;
+  cursor: pointer;
+}
+
+.location-item__quantity {
+  margin-top: 5px;
+  transform: skewX(-14deg);
+  font-size: 0.7rem;
+}
+
+.card-location-item__quantity span {
+  font-weight: 600;
+}
+
+.card-location-list {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.card-location-item {
+  width: calc((100% - 60px) / 3);
+  height: 200px;
+  row-gap: 20px;
+  border-radius: 6px;
+  background-image: url("https://plus.unsplash.com/premium_photo-1712685296167-40032b5bcea3?q=80&w=2067&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 25px 20px;
+  color: #fff;
+  transition: 0.4s;
+}
+
+.card-location-item:hover {
+  cursor: pointer;
+  scale: 1.05;
+}
+
+.card-location-item.quan-2 {
+  background-image: url("https://plus.unsplash.com/premium_photo-1712685296167-40032b5bcea3?q=80&w=2067&auto=format&fit=crop");
+}
+
+.card-location-item.quan-7 {
+  background-image: url("https://images.unsplash.com/photo-1742845918430-c6093f93f740?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+}
+
+.card-location-item.quan-9 {
+  background-image: url("https://plus.unsplash.com/premium_photo-1671430149410-0f3d554127a2?q=80&w=1975&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+}
+
+.card-location-item.quan-tan-binh {
+  background-image: url("https://images.unsplash.com/photo-1741807083060-39c641cd97fa?q=80&w=2036&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+}
+
+.card-location-item.thanh-pho-thu-duc {
+  background-image: url("https://images.unsplash.com/photo-1741807117240-0aee0cd41d25?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+}
+
+.card-location-item.huyen-binh-chanh {
+  background-image: url("https://images.unsplash.com/photo-1742435456486-3a0059c05e38?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+}
+
+.card-location-item__title {
+  font-size: 1.6rem;
+}

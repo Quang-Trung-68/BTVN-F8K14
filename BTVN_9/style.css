@@ -51,7 +51,6 @@ label{
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    position: relative;
 }
 
 .content table{
@@ -86,12 +85,13 @@ label{
 }
 
 .add-new-dialog {
-    position: absolute;
-    top: 50%;
-    left: 50%;
+    position: fixed;
+    top: 50vh;
+    left: 50vw;
     transform: translate(-50%,-50%);
     background-color: #555;
     display: none;
+    z-index: 10;
 }
 
 .add-new-dialog p{
@@ -132,10 +132,14 @@ label{
     display: block !important;
 }
 
-.container:has([name="edit"]:checked)::before{
-    content: "";
-    display: inline-block;
+.overlay{
+    position: fixed;
     inset: 0;
-    position: absolute;
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(0,0,0,0.5);
+    display: none;
+    z-index: 9;
+    cursor: default;
+}
+.container .action:has([name="edit"]:checked)  .overlay{
+    display: block;
 }

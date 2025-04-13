@@ -14,7 +14,8 @@
         <div class="navigation-bar">
             <div class="logo"><span class="mdi mdi-stack-overflow"></span><a href="#!">F8 Admin</a></div>
             <nav class="nav">
-                <ul>Menu
+                <span>Menu</span>
+                <ul>
                     <li><a href="#!"><span class="mdi mdi-account"></span>Quản lý đơn hàng</a></li>
                     <li><a href="#!"><span class="mdi mdi-account"></span>Quản lý xe</a></li>
                     <li><a href="#!"><span class="mdi mdi-account"></span>Quản lý dịch vụ</a></li>
@@ -33,6 +34,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                  
                     <tr>
                         <td>1</td>
                         <td>Nguyen Van A</td>
@@ -47,21 +49,26 @@
                                     <span class="mdi mdi-delete"> Delete</span>
                                     <input type="checkbox" hidden name="delete" >
                                 </label>
+                                <label for="edit-user-1" class="overlay"></label>
                                 <div class="add-new-dialog">
-                                    <p>New member<span>&times;</span></p>
+                                    <p>New member<label for="edit-user-1"><span>&times;</span>
+                                    <input type="checkbox" name="close-dialog" hidden>
+                                    </label></p>
+                                    <form method="post">
                                     <input type="text" autocomplete="off" name="skill" placeholder="Skill" required>
                                     <input type="text" autocomplete="off" name="name" placeholder="Name" required>
                                     <input type="email" autocomplete="off" name="email" placeholder="Email" required>
-                                    <div class="action-add-new">
-                                        <label for="edit-user-1" class="btn btn-delete">
-                                           Close
-                                            <input type="checkbox" hidden name="close" >
-                                        </label>
-                                        <label class="btn btn-edit">
-                                          Save
-                                            <input type="checkbox" hidden name="save" >
-                                        </label>
-                                    </div>
+                                        <div class="action-add-new">
+                                            <label for="edit-user-1" class="btn btn-delete">
+                                               Close
+                                                <input type="checkbox" hidden name="close" >
+                                            </label>
+                                            <label for="edit-user-1" class="btn btn-edit">
+                                              Save
+                                                <input  type="checkbox" hidden name="save" >
+                                            </label>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </td>
@@ -80,21 +87,26 @@
                                     <span class="mdi mdi-delete"> Delete</span>
                                     <input type="checkbox" hidden name="delete" >
                                 </label>
+                                <label for="edit-user-2" class="overlay"></label>
                                 <div class="add-new-dialog">
-                                    <p>New member<span>&times;</span></p>
+                                    <p>New member<label for="edit-user-2"><span>&times;</span>
+                                    <input type="checkbox" name="close-dialog" hidden>
+                                    </label></p>
+                                    <form method="post">
                                     <input type="text" autocomplete="off" name="skill" placeholder="Skill" required>
                                     <input type="text" autocomplete="off" name="name" placeholder="Name" required>
                                     <input type="email" autocomplete="off" name="email" placeholder="Email" required>
-                                    <div class="action-add-new">
-                                        <label for="edit-user-2" class="btn btn-delete">
-                                           Close
-                                            <input type="checkbox" hidden name="close" >
-                                        </label>
-                                        <label class="btn btn-edit">
-                                          Save
-                                            <input type="checkbox" hidden name="save" >
-                                        </label>
-                                    </div>
+                                        <div class="action-add-new">
+                                            <label for="edit-user-2" class="btn btn-delete">
+                                               Close
+                                                <input type="checkbox" hidden name="close" >
+                                            </label>
+                                            <label for="edit-user-2" class="btn btn-edit">
+                                              Save
+                                                <input  type="checkbox" hidden name="save" >
+                                            </label>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </td>
@@ -113,60 +125,30 @@
                                     <span class="mdi mdi-delete"> Delete</span>
                                     <input type="checkbox" hidden name="delete" >
                                 </label>
+                                <label for="edit-user-3" class="overlay"></label>
                                 <div class="add-new-dialog">
-                                    <p>New member<span>&times;</span></p>
+                                    <p>New member<label for="edit-user-3"><span>&times;</span>
+                                    <input type="checkbox" name="close-dialog" hidden>
+                                    </label></p>
+                                    <form method="post">
                                     <input type="text" autocomplete="off" name="skill" placeholder="Skill" required>
                                     <input type="text" autocomplete="off" name="name" placeholder="Name" required>
                                     <input type="email" autocomplete="off" name="email" placeholder="Email" required>
-                                    <div class="action-add-new">
-                                        <label for="edit-user-3" class="btn btn-delete">
-                                           Close
-                                            <input type="checkbox" hidden name="close" >
-                                        </label>
-                                        <label class="btn btn-edit">
-                                          Save
-                                            <input type="checkbox" hidden name="save" >
-                                        </label>
-                                    </div>
+                                        <div class="action-add-new">
+                                            <label for="edit-user-3" class="btn btn-delete">
+                                               Close
+                                                <input type="checkbox" hidden name="close" >
+                                            </label>
+                                            <label for="edit-user-3" class="btn btn-edit">
+                                              Save
+                                                <input type="checkbox" hidden name="save" >
+                                            </label>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </td>
                     </tr>
-            
-                    <tr>
-                        <td>1</td>
-                        <td>Nguyen Van A</td>
-                        <td>ex@f8.edu.vn</td>
-                        <td>
-                            <div class="action">
-                                <label class="btn btn-edit">
-                                    <span class="mdi mdi-pencil"> Edit</span>
-                                    <input type="checkbox" hidden name="edit" id="edit-user-5">
-                                </label>
-                                <label class="btn btn-delete">
-                                    <span class="mdi mdi-delete"> Delete</span>
-                                    <input type="checkbox" hidden name="delete" >
-                                </label>
-                                <div class="add-new-dialog">
-                                    <p>New member<span>&times;</span></p>
-                                    <input type="text" name="skill" placeholder="Skill" required>
-                                    <input type="text" name="name" placeholder="Name" required>
-                                    <input type="email" name="email" placeholder="Email" required>
-                                    <div class="action-add-new">
-                                        <label for="edit-user-5" class="btn btn-delete">
-                                           Close
-                                            <input type="checkbox" hidden name="close" >
-                                        </label>
-                                        <label class="btn btn-edit">
-                                          Save
-                                            <input type="checkbox" hidden name="save" >
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                  
                 </tbody>
             </table>
            

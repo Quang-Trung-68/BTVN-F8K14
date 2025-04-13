@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- cdn mdi icon -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css">
+    <!-- link style css -->
+     <link rel="stylesheet" href="style.css">
+    <title>F8 Admin</title>
+</head>
+<body>
+    <div class="container">
+        <div class="navigation-bar">
+            <div class="logo"><span class="mdi mdi-stack-overflow"></span><a href="#!">F8 Admin</a></div>
+            <nav class="nav">
+                <ul>Menu
+                    <li><a href="#!"><span class="mdi mdi-account"></span>Quản lý đơn hàng</a></li>
+                    <li><a href="#!"><span class="mdi mdi-account"></span>Quản lý xe</a></li>
+                    <li><a href="#!"><span class="mdi mdi-account"></span>Quản lý dịch vụ</a></li>
+                    <li><a href="#!"><span class="mdi mdi-account"></span>Quản lý khác</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="content">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Members Mail</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Nguyen Van A</td>
+                        <td>ex@f8.edu.vn</td>
+                        <td>
+                            <div class="action">
+                                <label class="btn btn-edit">
+                                    <span class="mdi mdi-pencil"> Edit</span>
+                                    <input type="checkbox" hidden name="edit" id="edit-user-1">
+                                </label>
+                                <label class="btn btn-delete">
+                                    <span class="mdi mdi-delete"> Delete</span>
+                                    <input type="checkbox" hidden name="delete" >
+                                </label>
+                                <div class="add-new-dialog">
+                                    <p>New member<span>&times;</span></p>
+                                    <input type="text" autocomplete="off" name="skill" placeholder="Skill" required>
+                                    <input type="text" autocomplete="off" name="name" placeholder="Name" required>
+                                    <input type="email" autocomplete="off" name="email" placeholder="Email" required>
+                                    <div class="action-add-new">
+                                        <label for="edit-user-1" class="btn btn-delete">
+                                           Close
+                                            <input type="checkbox" hidden name="close" >
+                                        </label>
+                                        <label class="btn btn-edit">
+                                          Save
+                                            <input type="checkbox" hidden name="save" >
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Nguyen Van A</td>
+                        <td>ex@f8.edu.vn</td>
+                        <td>
+                            <div class="action">
+                                <label class="btn btn-edit">
+                                    <span class="mdi mdi-pencil"> Edit</span>
+                                    <input type="checkbox" hidden name="edit" id="edit-user-2">
+                                </label>
+                                <label class="btn btn-delete">
+                                    <span class="mdi mdi-delete"> Delete</span>
+                                    <input type="checkbox" hidden name="delete" >
+                                </label>
+                                <div class="add-new-dialog">
+                                    <p>New member<span>&times;</span></p>
+                                    <input type="text" autocomplete="off" name="skill" placeholder="Skill" required>
+                                    <input type="text" autocomplete="off" name="name" placeholder="Name" required>
+                                    <input type="email" autocomplete="off" name="email" placeholder="Email" required>
+                                    <div class="action-add-new">
+                                        <label for="edit-user-2" class="btn btn-delete">
+                                           Close
+                                            <input type="checkbox" hidden name="close" >
+                                        </label>
+                                        <label class="btn btn-edit">
+                                          Save
+                                            <input type="checkbox" hidden name="save" >
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Nguyen Van A</td>
+                        <td>ex@f8.edu.vn</td>
+                        <td>
+                            <div class="action">
+                                <label class="btn btn-edit">
+                                    <span class="mdi mdi-pencil"> Edit</span>
+                                    <input type="checkbox" hidden name="edit" id="edit-user-3">
+                                </label>
+                                <label class="btn btn-delete">
+                                    <span class="mdi mdi-delete"> Delete</span>
+                                    <input type="checkbox" hidden name="delete" >
+                                </label>
+                                <div class="add-new-dialog">
+                                    <p>New member<span>&times;</span></p>
+                                    <input type="text" autocomplete="off" name="skill" placeholder="Skill" required>
+                                    <input type="text" autocomplete="off" name="name" placeholder="Name" required>
+                                    <input type="email" autocomplete="off" name="email" placeholder="Email" required>
+                                    <div class="action-add-new">
+                                        <label for="edit-user-3" class="btn btn-delete">
+                                           Close
+                                            <input type="checkbox" hidden name="close" >
+                                        </label>
+                                        <label class="btn btn-edit">
+                                          Save
+                                            <input type="checkbox" hidden name="save" >
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+            
+                    <tr>
+                        <td>1</td>
+                        <td>Nguyen Van A</td>
+                        <td>ex@f8.edu.vn</td>
+                        <td>
+                            <div class="action">
+                                <label class="btn btn-edit">
+                                    <span class="mdi mdi-pencil"> Edit</span>
+                                    <input type="checkbox" hidden name="edit" id="edit-user-5">
+                                </label>
+                                <label class="btn btn-delete">
+                                    <span class="mdi mdi-delete"> Delete</span>
+                                    <input type="checkbox" hidden name="delete" >
+                                </label>
+                                <div class="add-new-dialog">
+                                    <p>New member<span>&times;</span></p>
+                                    <input type="text" name="skill" placeholder="Skill" required>
+                                    <input type="text" name="name" placeholder="Name" required>
+                                    <input type="email" name="email" placeholder="Email" required>
+                                    <div class="action-add-new">
+                                        <label for="edit-user-5" class="btn btn-delete">
+                                           Close
+                                            <input type="checkbox" hidden name="close" >
+                                        </label>
+                                        <label class="btn btn-edit">
+                                          Save
+                                            <input type="checkbox" hidden name="save" >
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                  
+                </tbody>
+            </table>
+           
+        </div>
+    </div>
+</body>
+</html>

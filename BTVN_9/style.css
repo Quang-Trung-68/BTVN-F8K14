@@ -1,0 +1,141 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+a{
+    font-family: inherit;
+    font-size: inherit;
+    text-decoration: none;
+    color: inherit;
+}
+
+label{
+    cursor: pointer;
+}
+
+.container{
+    display: flex;
+    height: 100vh;
+}
+.navigation-bar{
+    width: 15%;
+    background-color: #666;
+    color:#fff;
+    padding: 20px;
+}
+
+.navigation-bar .logo{
+    padding: 20px;
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.navigation-bar ul{
+    list-style: none;
+}
+
+.navigation-bar ul li{
+    margin-top: 10px;
+    padding: 10px;
+}
+
+.navigation-bar ul li:hover{
+    cursor: pointer;
+    background-color: #555;
+}
+
+.content{
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    position: relative;
+}
+
+.content table{
+    margin-top: 50px;
+    border-collapse: collapse;
+}
+
+.content th, .content td{
+    padding: 20px;
+    border-bottom: 1px solid #888;
+}
+
+.content th{
+    font-size: 1.4rem;
+}
+
+.content .action,.action-add-new{
+    display: flex;
+    gap: 5px;
+}
+
+.content .action .btn{
+    padding: 8px;
+    border-radius: 8px;
+    color: #fff;
+}
+.content .action .btn-edit{
+   background-color: green;
+}
+.content .action .btn-delete{
+   background-color: red;
+}
+
+.add-new-dialog {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: #555;
+    display: none;
+}
+
+.add-new-dialog p{
+    padding: 10px;
+    background-color: #666;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1.3rem;
+}
+
+.add-new-dialog input{
+    font-family: inherit;
+    font-size: 1rem;
+    width: calc(100% - 24px);
+    margin: 12px;
+    padding: 5px;
+    outline: none;
+    border: 1px solid #666;
+}
+
+.add-new-dialog .action-add-new{
+    justify-content: center;
+}
+
+.add-new-dialog .action-add-new label{
+    width: 100%;
+    margin: 10px;
+    text-align: center;
+}
+
+.action .add-new-dialog:has(input[name="close"]:checked) {
+    display: none;
+}
+
+.action:has(input[name="edit"]:checked) .add-new-dialog{
+    display: block !important;
+}
+
+.container:has([name="edit"]:checked)::before{
+    content: "";
+    display: inline-block;
+    inset: 0;
+    position: absolute;
+    background: rgba(0, 0, 0, 0.4);
+}

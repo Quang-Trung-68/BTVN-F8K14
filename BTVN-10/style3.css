@@ -1,0 +1,97 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.container{
+    max-width: 1080px;
+    margin:0 auto ;
+}
+
+input,select,textarea{
+    font-family: inherit;
+    font-size: inherit;
+    padding: 24px;
+    border: none;
+    outline: none;
+}
+textarea{
+    resize: none;
+}
+
+.title,.desc,.form-data{
+    text-align: center;
+    padding: 20px;
+}
+
+.desc{
+    font-size: 1.2rem;
+}
+
+.form-data{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;  
+    flex-wrap: wrap;  
+}
+
+
+.form-group{
+    position: relative;
+    gap: 30px;
+    width: calc((100% - 100px) / 2);
+    margin-top: 20px;
+}
+
+.form-group .input-text{
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+
+.form-group .placeholder-text{
+    position: absolute;
+    top: 20px;
+    left:24px;
+    color:#666;
+    transition: 0.4s;
+}
+
+select{
+    color:#666;
+    background-color: transparent !important;
+}
+
+.form-group:has(:focus)  .placeholder-text, .form-group .input-text:not(:placeholder-shown) ~ .placeholder-text{
+    font-size: 0.8rem;
+    top: 8px;
+    left: 24px;
+}
+
+.form-group:has(:focus) .input-text{
+    border: 1px solid rgb(0, 221, 255);
+}
+
+.input-text:not(:placeholder-shown){
+    background-color: #edf0ff;
+}
+
+.form-group-message{
+    width: 100%;
+}
+
+.btn-submit{
+    margin: 20px auto;
+    background-color: rgba(42, 121, 218, 0.649);
+    border-radius: 20px;
+    padding: 10px;
+    color:#fff;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-submit:hover{
+    opacity: 0.8;
+}

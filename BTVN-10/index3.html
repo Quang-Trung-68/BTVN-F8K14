@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="style3.css" />
+
+    <title>Document</title>
+  </head>
+  <body>
+    <div style=" margin: 20px;display: inline-block;" class="block">
+        <a style="padding: 10px; background-color: burlywood; color: inherit; text-decoration: none;" href="./index.html">Bài 1</a>
+        <a style="padding: 10px; background-color: burlywood; color: inherit; text-decoration: none;"  href="./index2.html">Bài 2</a>
+        <a style="padding: 10px; background-color: burlywood; color: inherit; text-decoration: none;"  href="./index3.html">Bài 3</a>
+      </div>
+    <div class="container">
+      <h1 class="title">Drop Us a Line</h1>
+      <p class="desc">
+        Reach out to us from our contact form and we will get back to you
+        shortly.
+      </p>
+      <form method="post">
+        <div class="form-data">
+            <label class="form-group">
+                <input autocomplete="off" required type="text" placeholder="" class="input-text" name="first-name"/>
+              <span class="placeholder-text">First Name *</span>
+            </label>
+            <label class="form-group">
+                <input autocomplete="off" required type="text" placeholder="" class="input-text" name="last-name"/>
+                <span class="placeholder-text">Last Name *</span>
+            </label>
+            <label class="form-group">
+                <input autocomplete="off" required type="email" placeholder="" class="input-text" name="email"/>
+                <span class="placeholder-text">Email *</span>
+            </label>
+            <label class="form-group">
+              <select class="input-text" name="sales" id="sales">
+                <option value="">--Select one---</option>
+                <option value="saleCar">Sale Car</option>
+                <option value="saleBus">Sale Car</option>
+                <option value="saleBike">Sale Car</option>
+              </select>
+            </label>
+
+            <label class="form-group form-group-message">
+                <textarea required rows="10" name="message" id="message" class="input-text message-text" placeholder=""></textarea>
+                <span class="placeholder-text">Message *</span>
+            </label>
+            <input type="submit" value="Send message" class="btn-submit">
+        </div>
+
+      </form>
+    </div>
+  </body>
+</html>

@@ -55,7 +55,8 @@ a{
   border: 1px solid #ccc;
 }
 .card:hover .card-wrapper svg {
-  transform: translateY(-135%);
+  /* transform: translateY(-135%); */
+  transform: scale(0);
 }
 .card:hover .card-wrapper .title {
   transform: translateY(-80%);

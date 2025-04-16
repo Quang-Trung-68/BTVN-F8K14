@@ -4,6 +4,11 @@
   box-sizing: border-box;
 }
 
+a{
+  text-decoration: none;
+  color: inherit;
+}
+
 .container {
   max-width: 1080px;
   margin: 0 auto;
@@ -20,6 +25,7 @@
   flex-direction: column;
   gap: 10px;
 }
+
 .content__stage {
   display: flex;
   padding: 10px;
@@ -32,6 +38,10 @@
   font-size: 1.4rem;
 }
 
+.content__detail, .content__year, .line-status-block{
+  transition: transform 0.5s ease-in-out;
+}
+
 .content__detail {
   padding: 0px 15px 15px;
   display: flex;
@@ -39,9 +49,7 @@
   text-align: right;
   flex-direction: column;
   gap: 15px;
-}
-
-.content__desc {
+  width: 70%;
 }
 
 .content__pillrounded {
@@ -50,11 +58,13 @@
   background-color: #ddd;
   color: #666;
   font-weight: 600;
+  transition: 0.5s;
 }
 
 .content__year {
   white-space: nowrap;
   padding: 8px 15px;
+  width: 25%;
 }
 
 .content .line-status-block {
@@ -62,7 +72,25 @@
   flex-direction: column;
   align-items: center;
   gap: 20px;
+  width: 5%;
 }
+
+.content__stage:hover .content__detail{
+  transform: translateX(42.8571%);
+  text-align: left;
+  align-items: start;
+}
+.content__stage:hover .line-status-block{
+  transform: translateX(-900%);
+}
+.content__stage:hover .content__year{
+  transform: translateX(-300%);
+}
+.content__stage:hover .content__pillrounded{
+  background-color: #a26f5a;
+  color:#fff;
+}
+
 .content .status-icon {
   width: 12px;
   height: 12px;

@@ -1,0 +1,136 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  max-width: 1080px;
+  margin: 0 auto;
+  font-family: "Inter", sans-serif;
+  color: #666;
+  display: flex;
+}
+
+.content {
+  width: 40%;
+  font-size: 0.8rem;
+  padding-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.content__stage {
+  display: flex;
+  padding: 10px;
+}
+
+.content h2 {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  color: #000;
+  font-size: 1.4rem;
+}
+
+.content__detail {
+  padding: 0px 15px 15px;
+  display: flex;
+  align-items: end;
+  text-align: right;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.content__desc {
+}
+
+.content__pillrounded {
+  padding: 6px;
+  border-radius: 12px;
+  background-color: #ddd;
+  color: #666;
+  font-weight: 600;
+}
+
+.content__year {
+  white-space: nowrap;
+  padding: 8px 15px;
+}
+
+.content .line-status-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+.content .status-icon {
+  width: 12px;
+  height: 12px;
+  margin-top: 10px;
+  background-color: #4caf50;
+  border-radius: 50%;
+  box-shadow: 0px 0px 4px 6px rgba(76, 175, 80, 0.6);
+  flex-shrink: 0;
+}
+
+.content .line-icon {
+  width: 2px;
+  height: calc(100% - 42px);
+  background-color: #ccc;
+  flex-shrink: 0;
+}
+
+.media {
+  position: relative;
+}
+
+.media__image {
+  position: absolute;
+  z-index: -1;
+  width: 300px;
+  top: 60px;
+  left: 200px;
+}
+
+.background-image {
+  position: absolute;
+  width: 200px;
+  height: 300px;
+  background-image: url("https://picsum.photos/200");
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  top: 100px;
+  left: 80px;
+}
+
+.background-color {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #425aad;
+  width: 90%;
+  height: 90%;
+}
+
+.media h1 {
+  background-image: url("https://picsum.photos/200");
+  background-size: cover;
+  background-position: center;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 4rem;
+  font-weight: 700;
+  position: absolute;
+  bottom: 15%;
+  right: 5%;
+}
+.media p {
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  position: absolute;
+  bottom: 10%;
+  right: 5%;
+}

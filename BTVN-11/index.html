@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BTVN 11</title>
+  </head>
+  <body>
+    <script>
+      // 1. ***** KHAI BÁO BIẾN CƠ BẢN *****
+
+      console.log(" ------- 1. Biến và Kiểu Dữ Liệu  -------");
+
+      const PI = 3.14; // hằng số
+      let a = 7; // number
+      let b = 4; // number
+      let name = "Quang_Trung"; // string
+
+      console.log("Số a =", a);
+      console.log("Số b =", b);
+      console.log("Chuỗi name =", name);
+      console.log("Hằng số PI =", PI);
+
+      // 2. ***** TOÁN TỬ SỐ HỌC (NUMBER) *****
+      console.log("\n ------- 2. Toán tử số học  -------");
+
+      console.log("Phép Cộng (a + b):", a + b);
+      console.log("Phép Trừ (a - b):", a - b);
+      console.log("Phép Nhân (a * b):", a * b);
+      console.log("Phép Chia (a / b):", a / b);
+      console.log("Phép Chia dư (a % b):", a % b);
+      console.log("Phép Lũy thừa (a ** b):", a ** b);
+
+      // 3. ***** TOÁN TỬ ++ VÀ -- *****
+      console.log("\n ------- 3. Các Toán tử tăng và giảm  -------");
+
+      let x = 8;
+
+      console.log("Giá trị khởi tạo ban đầu:", x);
+      console.log("Hậu tố x++ =", x++);
+      console.log("Sau x++:", x);
+      console.log("Tiền tố ++x =", ++x);
+
+      console.log("Hậu tố x-- =", x--);
+      console.log("Sau x--:", x);
+      console.log("Tiền tố --x =", --x);
+
+      // 4. ***** TOÁN TỬ VỚI KIỂU DỮ LIỆU STRING *****
+      console.log("\n ------- 4. Toán tử với String  -------");
+
+      let firstName = "Dang";
+      let lastName = "Trung";
+      let fullName = lastName + " " + firstName;
+      console.log("firstName là ", firstName);
+      console.log("lastName là ", lastName);
+
+      console.log("Nối chuỗi thành:", fullName);
+
+      // 5. ***** NUMBER + STRING (CÁC TRƯỜNG HỢP ĐẶC BIỆT) *****
+      console.log("\n ------- 5. Number + String (ép kiểu ngầm định)  -------");
+
+      let num = 12;
+      let str = "8";
+      console.log("Phép số và chuỗi:");
+
+      console.log("num + str =", num + str); // "128"
+      console.log("str + num =", str + num); // "812"
+
+      console.log("num - str =", num - str); // 4
+      console.log("num * str =", num * str); // 96
+      console.log("str / num =", str / num); // ~0.6667
+
+      //Các trường hợp đặc biệt
+      console.log('"xyz" - 2 =', "xyz" - 2); // NaN
+      console.log('"45abc" * 3 =', "45abc" * 3); // NaN
+      console.log('"5" + 2 + 3 =', "5" + 2 + 3); // "523"
+      console.log('2 + 3 + "5" =', 2 + 3 + "5"); // "55"
+
+      // 6. ***** ÉP KIỂU TƯỜNG MINH *****
+      console.log("\n ------- 6. Ép kiểu tường minh  -------");
+
+      let s = "15";
+      let n = 25;
+
+      let total = Number(s) + n;
+      console.log("Chuỗi có thể ép sang số:");
+
+      console.log("Number(s) + n =", total); // 40
+
+      let invalid = Number("xyz");
+      console.log("Chuỗi không thể ép sang số:");
+
+      console.log('Number("xyz") =', invalid); // NaN
+    </script>
+  </body>
+</html>

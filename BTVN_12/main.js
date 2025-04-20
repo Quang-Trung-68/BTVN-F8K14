@@ -59,3 +59,14 @@ for (let i = 1; i <= 10; i++) {
     console.log(`${i} * ${j} = ${i * j}`);
   }
 }
+
+// =====BÀI 5: KIỂM TRA SỐ CHÍNH PHƯƠNG=====
+
+let num = 9;
+
+if (num === 0) console.log(num + " là số chính phương.");
+else if (num > 0) {
+  if ((num ** 0.5) % 1 === 0) {
+    console.log(num + " là số chính phương.");
+  } else console.log(num + " không là số chính phương.");
+} else console.log(num + " không là số chính phương.");

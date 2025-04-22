@@ -8,7 +8,7 @@
   <body>
     <div style="width: 1170px; margin: 0 auto" class="container">
       <!-- Lưu đồ -->
-      <img src="./BTVN F8 K14-BT12.svg" alt="" />
+      <img src="./btvn-12.svg" />
     </div>
     <!-- Code Javascript -->
     <script>
@@ -26,10 +26,14 @@
       if (a < 0) console.log("Số km không hợp lệ, phải lớn hơn hoặc bằng 0");
       else if (a <= 1) x = a * b;
       else if (a <= 5) x = b * 1 + (a - 1) * c;
-      else if (a <= 120) x = b * 1 + c * 4 + d * (a - 5);
-      else x = 0.9 * (b * 1 + c * 4 + d * (a - 5));
+      else x = b * 1 + c * 4 + d * (a - 5);
 
-      console.log("Số tiền trả khi đi " + a + "km là: " + x + " đ");
+      if (a <= 120)
+        console.log("Số tiền trả khi đi " + a + "km là: " + x + " đ");
+      else {
+        x = x * 0.9;
+        console.log("Số tiền trả khi đi " + a + "km là: " + x + " đ");
+      }
 
       // =====BÀI 2: TÍNH GIÁ TRỊ S= 1*2 + 2*3 + 3*4 + ... + n*(n+1)=====
 

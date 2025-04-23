@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <img src="./BTVN F8 K14-BTVN-13.svg">
+    <script>
+      // 01
+      // Cho trước 1 mảng số nguyên, yêu cầu tìm số lớn nhất, nhỏ nhất trong mảng và vị trí
+      console.log("\n=====BÀI 1=====\n");
+
+      let a = [23, 22, 3, 10, 8, 6, 5];
+      let max = a[0],
+        min = a[0],
+        i_max = 0,
+        i_min = 0;
+      if (a.length === 1) {
+        console.log(`Max value in index ${i_max} is a[${i_max}] = ${a[i_max]}`);
+        console.log(`Min value in index ${i_min} is a[${i_min}] = ${a[i_min]}`);
+      } else {
+        for (let i = 1; i < a.length; i++) {
+          if (max < a[i]) {
+            max = a[i];
+            i_max = i;
+          }
+
+          if (min > a[i]) {
+            min = a[i];
+            i_min = i;
+          }
+        }
+        console.log(`Max value in index ${i_max} is a[${i_max}] = ${a[i_max]}`);
+        console.log(`Min value in index ${i_min} is a[${i_min}] = ${a[i_min]}`);
+      }
+
+      //       Bài 02
+      // Cho trước 1 mảng số nguyên, tính trung bình các số nguyên tố trong mảng. Nếu trong mảng không có số nguyên tố thì hiển thị “Không có số nguyên tố”
+      console.log("\n=====BÀI 2=====\n");
+
+      let arr = [4, 7, 8, 11, 13, 2, 15, 19];
+      let i = 0,
+        count_prime = 0,
+        sum_primes = 0;
+
+      for (; i < arr.length; i++) {
+        let count = 0;
+        if (arr[i] > 1) {
+          for (let j = 2; j <= Math.sqrt(arr[i]); j++) {
+            if (arr[i] % j === 0) count++;
+          }
+          if (count === 0) {
+            count_prime++;
+            sum_primes += arr[i];
+          }
+        }
+      }
+
+      if (count_prime === 0) {
+        console.log("No any prime number");
+      } else {
+        console.log("Avg prime numbers is " + sum_primes / count_prime);
+      }
+
+      //       Bài 03
+      // Cho trước 1 mảng bất kỳ, nếu trong mảng có các phần tử trùng nhau thì chỉ giữa lại 1 (Gọi là lọc trùng). In ra mảng sau khi đã xử lý
+      console.log("\n=====BÀI 3=====\n");
+
+      let arr3 = [12, 5, 18, 12, 9, 15, 5, 2, 18, 7, 12, 3, 9, 18, 1];
+      for (let i = 0; i < arr3.length - 1; i++) {
+        for (let j = i + 1; j < arr3.length; ) {
+          if (arr3[i] === arr3[j]) {
+            let k = j;
+            for( ; k <arr3.length - 1; k++){
+                arr3[k] = arr3[k+1];
+            }
+            arr3.length--;
+          }
+          else j++;
+        }
+      }
+      console.log("Array 3 after filter the same number is [" + arr3 + "]");
+
+      //       Bài 04
+      // Cho trước 1 mảng số nguyên và thực hiện các yêu cầu sau
+      // Bước 1: Sắp xếp mảng theo thứ tự tăng dần
+      // Bước 2: Chèn thêm 1 số vào bất kỳ vị trí nào trong mảng mà không làm thay đổi thứ tự sắp xếp của mảng
+      console.log("\n=====BÀI 4=====\n");
+      let arr4 = [-3, 1, -5, 4, 0, -2, 3, 2, -1, 5];
+
+      for (let i = 0; i < arr4.length - 1; i++) {
+        for (let j = i + 1; j < arr4.length; j++) {
+          if (arr4[j] < arr4[i]) {
+            let temp = arr4[i];
+            arr4[i] = arr4[j];
+            arr4[j] = temp;
+          }
+        }
+      }
+      console.log(`Step 1: Array 4 after soft increasing: [${arr4}]`);
+
+      let elm = 100;
+      for (let i = 0; i < arr4.length - 1; i++) {
+        if (elm < arr4[0]) {
+          arr4.length++;
+          let j = arr4.length - 1;
+          for (; j > 0; j--) {
+            arr4[j] = arr4[j - 1];
+          }
+          arr4[0] = elm;
+          break;
+        }
+
+        if (arr4[i] <= elm && elm < arr4[i + 1]) {
+          arr4.length++;
+          let j = arr4.length - 1;
+          for (; j > i + 1; j--) {
+            arr4[j] = arr4[j - 1];
+          }
+          arr4[i + 1] = elm;
+          break;
+        }
+      }
+
+      if (arr4[arr4.length - 1] <= elm) {
+        arr4.length++;
+        arr4[arr4.length - 1] = elm;
+      }
+
+      console.log(`Step 2: Array after insert element ${elm} is [${arr4}]`);
+    </script>
+  </body>
+</html>

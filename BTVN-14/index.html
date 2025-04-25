@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <img src="./diagram14.svg">
+    <script>
+      // Bài 1: Gom nhóm học sinh theo lớp
+      // Kết quả mong muốn:
+      // {
+      //   "12A1": ["An", "Cường"],
+      //   "12A2": ["Bình", "Em"],
+      //   "12A3": ["Dung"]
+      // }
+      console.log("\n=====BAI 1=====\n");
+
+      const students = [
+        { name: "An", class: "12A1" },
+        { name: "Bình", class: "12A2" },
+        { name: "Cường", class: "12A1" },
+        { name: "Dung", class: "12A3" },
+        { name: "Em", class: "12A2" },
+      ];
+
+      const results = {};
+
+      students.forEach((student) => {
+        const className = student.class;
+        if (!results[className]) {
+          results[className] = [];
+        }
+        results[className].push(student.name);
+      });
+
+      console.log(`Results is: \n`);
+      console.log(results);
+
+      //       Bài 2: Tìm học sinh điểm cao nhất mỗi lớp
+
+      // const students = [
+      //   { name: "An", class: "12A1", score: 8.5 },
+      //   { name: "Bình", class: "12A1", score: 9.2 },
+      //   { name: "Cường", class: "12A2", score: 7.5 },
+      //   { name: "Dung", class: "12A2", score: 9.0 },
+      //   { name: "Em", class: "12A3", score: 8.0 }
+      // ];
+
+      // Kết quả mong muốn:
+      // [
+      //   { class: "12A1", topStudent: "Bình", score: 9.2 },
+      //   { class: "12A2", topStudent: "Dung", score: 9.0 },
+      //   { class: "12A3", topStudent: "Em", score: 8.0 }
+      // ]
+      console.log("\n=====BAI 2=====\n");
+      const students2 = [
+        { name: "An", class: "12A1", score: 8.5 },
+        { name: "Bình", class: "12A1", score: 9.2 },
+        { name: "Cường", class: "12A2", score: 7.5 },
+        { name: "Dung", class: "12A2", score: 9.0 },
+        { name: "Em", class: "12A3", score: 8.0 },
+      ];
+
+      //   Step 1: Grouped student
+      const grouped = {};
+
+      students2.forEach((student) => {
+        const className = student.class;
+
+        if (!grouped[className]) {
+          grouped[className] = [];
+        }
+        grouped[className].push(student);
+      });
+      //   Step 2: Compare score in unique className
+      const arrayGrouped = Object.entries(grouped);
+
+      const result2 = arrayGrouped.map(([className, students]) => {
+        const topStudent = students.reduce((prevValue, currentValue) =>
+          prevValue.score > currentValue.score ? prevValue : currentValue
+        );
+        return {
+          class: className,
+          topStudent: topStudent.name,
+          score: topStudent.score,
+        };
+      });
+      console.log("Result 2 is:");
+      console.log(result2);
+
+      //       Bài 3: Tính điểm trung bình mỗi lớp
+
+      // const students3 = [
+      //   { name: "An", class: "12A1", score: 8.5 },
+      //   { name: "Bình", class: "12A1", score: 9.2 },
+      //   { name: "Cường", class: "12A2", score: 7.5 },
+      //   { name: "Dung", class: "12A2", score: 9.0 },
+      //   { name: "Em", class: "12A3", score: 8.0 }
+      // ];
+
+      // Kết quả:
+      // [
+      //   { class: "12A1", averageScore: 8.85 },
+      //   { class: "12A2", averageScore: 8.25 },
+      //   { class: "12A3", averageScore: 8.0 }
+      // ]
+      console.log("\n=====BAI 3=====\n");
+      const students3 = [
+        { name: "An", class: "12A1", score: 8.5 },
+        { name: "Bình", class: "12A1", score: 9.2 },
+        { name: "Cường", class: "12A2", score: 7.5 },
+        { name: "Dung", class: "12A2", score: 9.0 },
+        { name: "Em", class: "12A3", score: 8.0 },
+      ];
+
+      //   Step 1: Grouped student
+
+      const grouped3 = {};
+      students3.forEach((student) => {
+        const className = student.class;
+        if (!grouped3[className]) {
+          grouped3[className] = [];
+        }
+        grouped3[className].push(student);
+      });
+
+      // Step 2: Calculate avg score every class
+
+      const arrayGrouped3 = Object.entries(grouped3);
+      const results3 = arrayGrouped3.map(([className, students]) => {
+        let sumScore = 0;
+        students.forEach((student) => {
+          sumScore += student.score;
+        });
+        let avgScore = sumScore / students.length;
+        return {
+          class: className,
+          averageScore: avgScore,
+        };
+      });
+      console.log("Result 3 is:");
+
+      console.log(results3);
+    </script>
+  </body>
+</html>

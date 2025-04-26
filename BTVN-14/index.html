@@ -6,7 +6,7 @@
     <title>Document</title>
   </head>
   <body>
-    <img src="./btvn-14svg.svg" />
+    <img src="./btvn-14.svg" />
     <script>
       // Bài 1: Gom nhóm học sinh theo lớp
       // Kết quả mong muốn:
@@ -15,6 +15,7 @@
       //   "12A2": ["Bình", "Em"],
       //   "12A3": ["Dung"]
       // }
+      
       console.log("\n=====BAI 1=====\n");
 
       const students = [
@@ -76,9 +77,11 @@
       }
 
       //   Step 2: Compare score in unique className
+
       const arrayGrouped = Object.entries(grouped);
 
       const result2 = [];
+
       for (const [index, studentsInClass] of arrayGrouped.entries()) {
         let maxScore = 0;
         let resultStudentInClass = {};
@@ -135,8 +138,8 @@
       // Step 2: Calculate avg score every class
 
       const arrayGrouped3 = Object.entries(grouped3);
-
       const result3 = [];
+
       for (const [index, studentsInClass] of arrayGrouped3.entries()) {
         let sumScore3 = 0;
         for (const student of studentsInClass[1]) {

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const colors = Array.from({ length: 20000 }, (_, i) => ({
+        id: i + 1,
+        name: `color ${i + 1}`,
+      }));
+      const flowers = Array.from({ length: 400000 }, (_, i) => ({
+        id: i + 1,
+        name: `flower ${i + 1}`,
+        colorId: Math.floor(Math.random() * 20000) + 1, // random colorId between 1 and 2000
+      }));
+
+      console.time("mergeJoin");
+
+      flowers.sort((a, b) => a.colorId - b.colorId);
+      console.log("Test case:");
+
+      console.log(colors, flowers);
+      let result = [];
+      let count = 0;
+      let count_tmp = 0;
+      for (let i = 0; i < flowers.length; i++) {
+        for (let j = count; j < colors.length; ) {
+          if (flowers[i].colorId === colors[j].id) {
+            result.push({
+              id: flowers[i].id,
+              name: flowers[i].name,
+              colorId: flowers[i].colorId,
+              color: colors[j].name,
+            });
+            count = j;
+            break;
+          } else {
+            j++;
+          }
+        }
+      }
+      
+      console.log("Results: ");
+      console.log(result);
+      console.timeEnd("mergeJoin");
+    </script>
+  </body>
+</html>

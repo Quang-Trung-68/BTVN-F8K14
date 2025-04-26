@@ -87,6 +87,7 @@
         let resultStudentInClass = {};
         for (const student of studentsInClass[1]) {
           if (maxScore < student.score) {
+            maxScore = student.score;
             resultStudentInClass = {
               class: studentsInClass[0],
               topStudent: student.name,

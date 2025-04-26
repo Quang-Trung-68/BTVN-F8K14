@@ -6,7 +6,7 @@
     <title>Document</title>
   </head>
   <body>
-    <img src="./btvn-14svg.svg">
+    <img src="./btvn-14svg.svg" />
     <script>
       // Bài 1: Gom nhóm học sinh theo lớp
       // Kết quả mong muốn:
@@ -27,13 +27,13 @@
 
       const results = {};
 
-      students.forEach((student) => {
+      for (const student of students) {
         const className = student.class;
         if (!results[className]) {
           results[className] = [];
         }
         results[className].push(student.name);
-      });
+      }
 
       console.log(`Results is: \n`);
       console.log(results);
@@ -66,27 +66,33 @@
       //   Step 1: Grouped student
       const grouped = {};
 
-      students2.forEach((student) => {
+      for (const student of students2) {
         const className = student.class;
 
         if (!grouped[className]) {
           grouped[className] = [];
         }
         grouped[className].push(student);
-      });
+      }
+
       //   Step 2: Compare score in unique className
       const arrayGrouped = Object.entries(grouped);
 
-      const result2 = arrayGrouped.map(([className, students]) => {
-        const topStudent = students.reduce((prevValue, currentValue) =>
-          prevValue.score > currentValue.score ? prevValue : currentValue
-        );
-        return {
-          class: className,
-          topStudent: topStudent.name,
-          score: topStudent.score,
-        };
-      });
+      const result2 = [];
+      for (const [index, studentsInClass] of arrayGrouped.entries()) {
+        let maxScore = 0;
+        let resultStudentInClass = {};
+        for (const student of studentsInClass[1]) {
+          if (maxScore < student.score) {
+            resultStudentInClass = {
+              class: studentsInClass[0],
+              topStudent: student.name,
+              score: student.score,
+            };
+          }
+        }
+        result2.push(resultStudentInClass);
+      }
       console.log("Result 2 is:");
       console.log(result2);
 
@@ -116,33 +122,36 @@
       ];
 
       //   Step 1: Grouped student
-
       const grouped3 = {};
-      students3.forEach((student) => {
+
+      for (const student of students3) {
         const className = student.class;
         if (!grouped3[className]) {
           grouped3[className] = [];
         }
         grouped3[className].push(student);
-      });
+      }
 
       // Step 2: Calculate avg score every class
 
       const arrayGrouped3 = Object.entries(grouped3);
-      const results3 = arrayGrouped3.map(([className, students]) => {
-        let sumScore = 0;
-        students.forEach((student) => {
-          sumScore += student.score;
-        });
-        let avgScore = sumScore / students.length;
-        return {
-          class: className,
+
+      const result3 = [];
+      for (const [index, studentsInClass] of arrayGrouped3.entries()) {
+        let sumScore3 = 0;
+        for (const student of studentsInClass[1]) {
+          sumScore3 += student.score;
+        }
+        let avgScore = sumScore3 / studentsInClass[1].length;
+        let avgScoreClass = {
+          class: studentsInClass[0],
           averageScore: avgScore,
         };
-      });
-      console.log("Result 3 is:");
+        result3.push(avgScoreClass);
+      }
 
-      console.log(results3);
+      console.log("Result 3 is:");
+      console.log(result3);
     </script>
   </body>
 </html>

@@ -6,7 +6,11 @@
     <title>Document</title>
   </head>
   <body>
+    <img src="./btvn-15.svg">
     <script>
+      // BT 1: MERGE JOIN
+      console.log("\nBAI 1");
+
       const colors = Array.from({ length: 20000 }, (_, i) => ({
         id: i + 1,
         name: `color ${i + 1}`,
@@ -21,13 +25,11 @@
 
       flowers.sort((a, b) => a.colorId - b.colorId);
       console.log("Test case:");
-
       console.log(colors, flowers);
       let result = [];
-      let count = 0;
-      let count_tmp = 0;
+      let j = 0;
       for (let i = 0; i < flowers.length; i++) {
-        for (let j = count; j < colors.length; ) {
+        for (; j < colors.length; ) {
           if (flowers[i].colorId === colors[j].id) {
             result.push({
               id: flowers[i].id,
@@ -35,17 +37,38 @@
               colorId: flowers[i].colorId,
               color: colors[j].name,
             });
-            count = j;
             break;
           } else {
             j++;
           }
         }
       }
-      
+
       console.log("Results: ");
       console.log(result);
       console.timeEnd("mergeJoin");
+
+      // BT 2: BINARY SEARCH
+
+      console.log("\nBAI 2");
+      console.time("binarySearch");
+      let arr1 = [1, 4, 55, 101, 150, 200, 210, 220, 230];
+      let x = 55;
+      let left = 0,
+        right = arr1.length - 1;
+      while (left <= right) {
+        let mid = Math.floor((left + right) / 2);
+        if (arr1[mid] === x) {
+          console.log(`Value x = ${x} is in index ${mid} of arr1 =  [${arr1}]`);
+          break;
+        } else if (arr1[mid] < x) {
+          left = mid + 1;
+        } else right = mid - 1;
+      }
+
+      if (left > right) console.log("No result search " + x);
+      
+      console.timeEnd("binarySearch");
     </script>
   </body>
 </html>

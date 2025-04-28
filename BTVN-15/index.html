@@ -21,11 +21,27 @@
         colorId: Math.floor(Math.random() * 20000) + 1, // random colorId between 1 and 2000
       }));
 
+      // Test them du lieu voi colorId = 0 (khong ton tai với id trong colors.id)
+      flowers.push({
+        id: 0,
+        name: "test 0",
+        colorId: 0,
+      });
+      // Test thêm dữ liệu với colorId = 410000 (không tồn tại với id trong colors.id)
+      flowers.push({
+        id: 410000,
+        name: "test 410000",
+        colorId: 410000,
+      });
+
       console.time("mergeJoin");
 
       flowers.sort((a, b) => a.colorId - b.colorId);
+
       console.log("Test case:");
       console.log(colors, flowers);
+
+      // MERGE JOIN
       let result = [];
       let j = 0;
       for (let i = 0; i < flowers.length; i++) {
@@ -41,6 +57,15 @@
           } else {
             j++;
           }
+        }
+        if (j === colors.length) {
+          result.push({
+            id: flowers[i].id,
+            name: flowers[i].name,
+            colorId: flowers[i].colorId,
+            color: "No color is find",
+          });
+          j = 0;
         }
       }
 

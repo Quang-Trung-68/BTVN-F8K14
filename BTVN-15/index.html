@@ -6,10 +6,10 @@
     <title>Document</title>
   </head>
   <body>
-    <img src="./btvn-15.svg">
+    <img src="./btvn-15.svg" />
     <script>
       // BT 1: MERGE JOIN
-      console.log("\nBAI 1");
+      console.log("\n====BAI 1====");
 
       const colors = Array.from({ length: 20000 }, (_, i) => ({
         id: i + 1,
@@ -50,7 +50,7 @@
 
       // BT 2: BINARY SEARCH
 
-      console.log("\nBAI 2");
+      console.log("\n====BAI 2====");
       console.time("binarySearch");
       let arr1 = [1, 4, 55, 101, 150, 200, 210, 220, 230];
       let x = 55;
@@ -67,7 +67,7 @@
       }
 
       if (left > right) console.log("No result search " + x);
-      
+
       console.timeEnd("binarySearch");
     </script>
   </body>

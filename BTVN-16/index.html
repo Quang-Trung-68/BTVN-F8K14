@@ -6,6 +6,7 @@
     <title>Document</title>
   </head>
   <body>
+    <img src="./btvn-16.svg">
     <script>
       const customers = [
         { id: 1, name: "John Doe" },
@@ -92,113 +93,66 @@
         },
       ];
 
-      let result = {};
+      //===== FUNCTION =====
 
-      orders.forEach((order) => {
-        if (!result[order.customerId]) result[order.customerId] = [];
-        result[order.customerId].push(order.items);
-      });
-      console.log(result);
+      const groupOrdersCustomerId = (orders) => {
+        orders.forEach((order) => {
+          if (!result[order.customerId]) result[order.customerId] = [];
+          result[order.customerId].push(order.items);
+        });
+      };
 
+      const groupedOrdersItems = (listBuys, items) => {
+        listBuys.forEach((listBuy) => {
+          listBuy.forEach((item) => {
+            if (!items[item.productId]) items[item.productId] = item.quantity;
+            else items[item.productId] += item.quantity;
+          });
+        });
+      };
 
-
-      let output = [];
-      customers.forEach((customer) => {
-        // console.log(result[customer.id]);
-        console.log(`===customer ${customer.id}===`);
-        let items = {};
-        let listBuys = result[customer.id];
-
-        listBuys.forEach(listBuy =>{
-            // console.log(listBuy);
-            listBuy.forEach(item =>{
-                // console.log(item);
-                if(!items[item.productId])
-                items[item.productId] = item.quantity;
-                else items[item.productId] += item.quantity;
-            })
-        })
-        console.log(items);
-        
+      const calcProductsCustomer = (
+        productsBuys,
+        products,
+        items,
+        customer
+      ) => {
         let totalSpent = 0;
-        let productsBuys = [];
-
-        for(let i = 0; i < products.length;i++){
-            if(items[products[i].id]){
+        for (let i = 0; i < products.length; i++) {
+          if (items[products[i].id]) {
             let everySpent = 0;
             everySpent = items[products[i].id] * [products[i].price];
             totalSpent += everySpent;
             productsBuys.push({
-                name: products[i].name,
-                quantity: items[products[i].id],
-                totalSpent: everySpent,
-            })
+              name: products[i].name,
+              quantity: items[products[i].id],
+              totalSpent: everySpent,
+            });
+          }
         }
-        }
-        console.log(totalSpent);
-        console.log(productsBuys);
         output.push({
-            id:customer.id,
-            name:customer.name,
-            totalSpent:totalSpent,
-            products:productsBuys,
-        })
-      });
-      console.log(output);
-      // output
-      // [
-      //     {
-      //         id: 1,
-      //         name: "John Doe",
-      //         totalSpent: 3600,
-      //         products: [
-      //             { name: "Laptop", quantity: 3, totalSpent: 3600 },
-      //             { name: "Phone", quantity: 1, totalSpent: 800 },
-      //             { name: "Headphones", quantity: 3, totalSpent: 450 }
-      //         ]
-      //     },
-      //     {
+          id: customer.id,
+          name: customer.name,
+          totalSpent: totalSpent,
+          products: productsBuys,
+        });
+      };
 
-      //         id: 5,
-      //         name: "Charlie Green",
-      //         totalSpent: 2250,
-      //         products: [
-      //             { name: "Tablet", quantity: 4, totalSpent: 2000 },
-      //             { name: "Smartwatch", quantity: 3, totalSpent: 900 },
-      //             { name: "Headphones", quantity: 10, totalSpent: 1500 }
-      //         ]
-      //     },
-      //     {
-      //         id: 2,
-      //         name: "Jane Smith",
-      //         totalSpent: 2100,
-      //         products: [
-      //             { name: "Phone", quantity: 1, totalSpent: 800 },
-      //             { name: "Tablet", quantity: 4, totalSpent: 2000 },
-      //             { name: "Smartwatch", quantity: 2, totalSpent: 600 }
-      //         ]
-      //     },
-      //     {
-      //         id: 4,
-      //         name: "Bob Brown",
-      //         totalSpent: 2300,
-      //         products: [
-      //             { name: "Laptop", quantity: 2, totalSpent: 2400 },
-      //             { name: "Tablet", quantity: 2, totalSpent: 1000 },
-      //             { name: "Phone", quantity: 1, totalSpent: 800 }
-      //         ]
-      //     },
-      //     {
-      //         id: 3,
-      //         name: "Alice Johnson",
-      //         totalSpent: 2050,
-      //         products: [
-      //             { name: "Smartwatch", quantity: 5, totalSpent: 1500 },
-      //             { name: "Phone", quantity: 2, totalSpent: 800 },
-      //             { name: "Headphones", quantity: 2, totalSpent: 300 }
-      //         ]
-      //     }
-      // ]
+      // ===== CALL FUNCTION =====
+
+      let result = {};
+      let output = [];
+
+      groupOrdersCustomerId(orders);
+      customers.forEach((customer) => {
+        let items = {};
+        let listBuys = result[customer.id];
+        groupedOrdersItems(listBuys, items);
+        let productsBuys = [];
+        calcProductsCustomer(productsBuys, products, items, customer);
+      });
+      // ===== SHOW RESULT =====
+      console.log(output);
     </script>
   </body>
 </html>

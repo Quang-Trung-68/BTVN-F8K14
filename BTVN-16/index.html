@@ -152,7 +152,7 @@
         calcProductsCustomer(productsBuys, products, items, customer);
       });
       // ===== SHOW RESULT =====
-      console.log(output);
+      console.log(output.sort((a,b) => (b.totalSpent - a.totalSpent)));
     </script>
   </body>
 </html>

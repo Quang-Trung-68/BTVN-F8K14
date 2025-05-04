@@ -6,7 +6,7 @@
     <title>Document</title>
   </head>
   <body>
-    <img src="./btvn-16.svg">
+    <img src="./btvn-16.svg" />
     <script>
       const customers = [
         { id: 1, name: "John Doe" },
@@ -14,6 +14,10 @@
         { id: 3, name: "Alice Johnson" },
         { id: 4, name: "Bob Brown" },
         { id: 5, name: "Charlie Green" },
+        // test the customer with no orders
+        { id: 6, name: "Adam Smith" },
+        { id: 7, name: "Adam Sore" },
+        { id: 8, name: "Adam June" },
       ];
 
       const products = [
@@ -121,7 +125,7 @@
         for (let i = 0; i < products.length; i++) {
           if (items[products[i].id]) {
             let everySpent = 0;
-            everySpent = items[products[i].id] * [products[i].price];
+            everySpent = items[products[i].id] * products[i].price;
             totalSpent += everySpent;
             productsBuys.push({
               name: products[i].name,
@@ -147,12 +151,22 @@
       customers.forEach((customer) => {
         let items = {};
         let listBuys = result[customer.id];
-        groupedOrdersItems(listBuys, items);
-        let productsBuys = [];
-        calcProductsCustomer(productsBuys, products, items, customer);
+
+        if (listBuys) {
+          groupedOrdersItems(listBuys, items);
+          let productsBuys = [];
+          calcProductsCustomer(productsBuys, products, items, customer);
+        } else {
+          output.push({
+            id: customer.id,
+            name: customer.name,
+            totalSpent: 0,
+            products: "No any products to show.",
+          });
+        }
       });
       // ===== SHOW RESULT =====
-      console.log(output.sort((a,b) => (b.totalSpent - a.totalSpent)));
+      console.log(output.sort((a, b) => b.totalSpent - a.totalSpent));
     </script>
   </body>
 </html>

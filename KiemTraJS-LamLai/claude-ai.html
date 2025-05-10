@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const employees = [
+   { id: 1, name: "Alice", age: 23, status: 'working' },
+   { id: 2, name: "Bob", age: 25, status: 'working' },
+   { id: 3, name: "John", age: 27, status: 'working' },
+   { id: 4, name: "David", age: 23, status: 'quited' },
+   { id: 5, name: "Eve", age: 20, status: 'working' },
+];
+
+const products = [
+   { id: 1, name: "Phone", price: 1200 },
+   { id: 2, name: "Laptop", price: 3000  },
+   { id: 3, name: "Tab", price: 2000  },
+   { id: 4, name: "PC", price: 800  },
+   { id: 5, name: "Monitor", price: 1500  },
+];
+
+const orders = [
+   { id: 1, employeeId: 1, productId: 4, quantity: 1 },
+   { id: 2, employeeId: 2, productId: 2, quantity: 4 },
+   { id: 3, employeeId: 1, productId: 5, quantity: 1 },
+   { id: 4, employeeId: 3, productId: 1, quantity: 2 },
+   { id: 5, employeeId: 2, productId: 5, quantity: 3 },
+   { id: 6, employeeId: 4, productId: 1, quantity: 1 },
+   { id: 7, employeeId: 5, productId: 3, quantity: 2 },
+];
+
+console.log("Bài 1: Danh sách nhân viên đang làm việc");
+const workingEmployees = employees.filter(employee => employee.status === 'working');
+console.log(workingEmployees);
+
+console.log("\nBài 2: Nhân viên lớn tuổi nhất");
+const oldestEmployee = employees.reduce((oldest, current) => {
+    return current.age > oldest.age ? current : oldest;
+}, employees[0]);
+console.log(oldestEmployee);
+
+console.log("\nBài 3: Sản phẩm giá rẻ nhất");
+const cheapestProduct = products.reduce((cheapest, current) => {
+    return current.price < cheapest.price ? current : cheapest;
+}, products[0]);
+console.log(cheapestProduct);
+
+console.log("\nBài 4: Sản phẩm bán chạy nhất (số lượng)");
+// Nhóm theo productId và tính tổng số lượng
+const productQuantities = orders.reduce((acc, order) => {
+    if (!acc[order.productId]) {
+        acc[order.productId] = 0;
+    }
+    acc[order.productId] += order.quantity;
+    return acc;
+}, {});
+
+// Tìm productId có số lượng cao nhất
+let bestSellingProductId = 0;
+let maxQuantity = 0;
+for (const [productId, quantity] of Object.entries(productQuantities)) {
+    if (quantity > maxQuantity) {
+        maxQuantity = quantity;
+        bestSellingProductId = parseInt(productId);
+    }
+}
+
+const bestSellingProduct = products.find(product => product.id === bestSellingProductId);
+console.log({
+    product: bestSellingProduct,
+    totalQuantity: maxQuantity
+});
+
+console.log("\nBài 5: Sản phẩm có doanh thu cao nhất");
+// Tính doanh thu cho mỗi sản phẩm
+const productRevenues = orders.reduce((acc, order) => {
+    const product = products.find(p => p.id === order.productId);
+    const revenue = product.price * order.quantity;
+    
+    if (!acc[order.productId]) {
+        acc[order.productId] = 0;
+    }
+    acc[order.productId] += revenue;
+    return acc;
+}, {});
+
+// Tìm sản phẩm có doanh thu cao nhất
+let highestRevenueProductId = 0;
+let maxRevenue = 0;
+for (const [productId, revenue] of Object.entries(productRevenues)) {
+    if (revenue > maxRevenue) {
+        maxRevenue = revenue;
+        highestRevenueProductId = parseInt(productId);
+    }
+}
+
+const highestRevenueProduct = products.find(product => product.id === highestRevenueProductId);
+console.log({
+    product: highestRevenueProduct,
+    totalRevenue: maxRevenue
+});
+
+console.log("\nBài 6: Nhân viên bán nhiều hàng nhất");
+// Nhóm theo employeeId và tính tổng số lượng
+const employeeQuantities = orders.reduce((acc, order) => {
+    if (!acc[order.employeeId]) {
+        acc[order.employeeId] = 0;
+    }
+    acc[order.employeeId] += order.quantity;
+    return acc;
+}, {});
+
+// Tìm employeeId có số lượng cao nhất
+let topSellerEmployeeId = 0;
+let maxSellerQuantity = 0;
+for (const [employeeId, quantity] of Object.entries(employeeQuantities)) {
+    if (quantity > maxSellerQuantity) {
+        maxSellerQuantity = quantity;
+        topSellerEmployeeId = parseInt(employeeId);
+    }
+}
+
+const topSellerEmployee = employees.find(employee => employee.id === topSellerEmployeeId);
+console.log({
+    employee: topSellerEmployee,
+    totalQuantity: maxSellerQuantity
+});
+
+console.log("\nBài 7: Nhân viên có doanh thu cao nhất");
+// Tính doanh thu cho mỗi nhân viên
+const employeeRevenues = orders.reduce((acc, order) => {
+    const product = products.find(p => p.id === order.productId);
+    const revenue = product.price * order.quantity;
+    
+    if (!acc[order.employeeId]) {
+        acc[order.employeeId] = 0;
+    }
+    acc[order.employeeId] += revenue;
+    return acc;
+}, {});
+
+// Tìm nhân viên có doanh thu cao nhất
+let highestRevenueEmployeeId = 0;
+let maxEmployeeRevenue = 0;
+for (const [employeeId, revenue] of Object.entries(employeeRevenues)) {
+    if (revenue > maxEmployeeRevenue) {
+        maxEmployeeRevenue = revenue;
+        highestRevenueEmployeeId = parseInt(employeeId);
+    }
+}
+
+const highestRevenueEmployee = employees.find(employee => employee.id === highestRevenueEmployeeId);
+console.log({
+    employee: highestRevenueEmployee,
+    totalRevenue: maxEmployeeRevenue
+});
+
+console.log("\nBài 8: Sản phẩm có doanh thu cao nhất của mỗi nhân viên");
+// Tính doanh thu cho mỗi sản phẩm của mỗi nhân viên
+const employeeProductRevenues = {};
+
+orders.forEach(order => {
+    const product = products.find(p => p.id === order.productId);
+    const revenue = product.price * order.quantity;
+    
+    if (!employeeProductRevenues[order.employeeId]) {
+        employeeProductRevenues[order.employeeId] = {};
+    }
+    
+    if (!employeeProductRevenues[order.employeeId][order.productId]) {
+        employeeProductRevenues[order.employeeId][order.productId] = 0;
+    }
+    
+    employeeProductRevenues[order.employeeId][order.productId] += revenue;
+});
+
+// Tìm sản phẩm có doanh thu cao nhất cho mỗi nhân viên
+const topProductsByEmployee = {};
+
+for (const [employeeId, productRevenues] of Object.entries(employeeProductRevenues)) {
+    let topProductId = 0;
+    let topProductRevenue = 0;
+    
+    for (const [productId, revenue] of Object.entries(productRevenues)) {
+        if (revenue > topProductRevenue) {
+            topProductRevenue = revenue;
+            topProductId = parseInt(productId);
+        }
+    }
+    
+    const employee = employees.find(e => e.id === parseInt(employeeId));
+    const topProduct = products.find(p => p.id === topProductId);
+    
+    topProductsByEmployee[employeeId] = {
+        employee: employee,
+        topProduct: topProduct,
+        revenue: topProductRevenue
+    };
+}
+
+console.log(topProductsByEmployee);
+
+console.log("\nBài 9: Hoa hồng 3% cho mỗi nhân viên");
+// Tính hoa hồng dựa trên doanh thu
+const employeeCommissions = {};
+
+for (const [employeeId, revenue] of Object.entries(employeeRevenues)) {
+    const commissionRate = 0.03; // 3%
+    const commission = revenue * commissionRate;
+    
+    const employee = employees.find(e => e.id === parseInt(employeeId));
+    
+    employeeCommissions[employeeId] = {
+        employee: employee,
+        totalRevenue: revenue,
+        commission: commission
+    };
+}
+
+console.log(employeeCommissions);
+
+console.log("\nBài 10: Sắp xếp nhân viên theo doanh thu giảm dần");
+// Tạo mảng nhân viên có doanh thu
+const employeesWithRevenue = employees.map(employee => {
+    const revenue = employeeRevenues[employee.id] || 0;
+    return {
+        ...employee,
+        revenue: revenue
+    };
+});
+
+// Sắp xếp nhân viên theo doanh thu giảm dần
+const sortedEmployees = employeesWithRevenue.sort((a, b) => b.revenue - a.revenue);
+console.log(sortedEmployees);
+    </script>
+</body>
+</html>

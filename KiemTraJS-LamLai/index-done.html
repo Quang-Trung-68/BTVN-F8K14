@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kiem Tra JS</title>
+  </head>
+  <body>
+    <div></div>
+    <script>
+      // Dữ liệu gốc
+      const employees = [
+        { id: 1, name: "Alice", age: 23, status: "working" },
+        { id: 2, name: "Bob", age: 25, status: "working" },
+        { id: 3, name: "John", age: 27, status: "working" },
+        { id: 4, name: "David", age: 23, status: "quited" },
+        { id: 5, name: "Eve", age: 20, status: "working" },
+      ];
+
+      const products = [
+        { id: 1, name: "Phone", price: 1200 },
+        { id: 2, name: "Laptop", price: 3000 },
+        { id: 3, name: "Tab", price: 2000 },
+        { id: 4, name: "PC", price: 800 },
+        { id: 5, name: "Monitor", price: 1500 },
+      ];
+
+      const orders = [
+        { id: 1, employeeId: 1, productId: 4, quantity: 1 },
+        { id: 2, employeeId: 2, productId: 2, quantity: 4 },
+        { id: 3, employeeId: 1, productId: 5, quantity: 1 },
+        { id: 4, employeeId: 3, productId: 1, quantity: 2 },
+        { id: 5, employeeId: 2, productId: 5, quantity: 3 },
+        { id: 6, employeeId: 4, productId: 1, quantity: 1 },
+        { id: 7, employeeId: 5, productId: 3, quantity: 2 },
+      ];
+
+      /*
+      Bài 1: Lấy ra danh sách nhân viên đang làm việc
+      Bài 2: Lấy ra nhân viên lớn tuổi nhất
+      Bài 3: Lấy ra sản phẩm giá rẻ nhất
+      Bài 4: Tìm ra sản phẩm bán chạy nhất (bán nhiều nhất về số lượng)
+      Bài 5: Tìm ra sản phẩm doanh thu cao nhất (nhiều tiền nhất)
+      Bài 6: Tìm ra nhân viên bán nhiều hàng nhất
+      Bài 7: Tìm ra nhân viên có doanh thu cao nhất
+      Bài 8: Tìm ra sản phẩm bán có doanh thu nhất của mỗi nhân viên
+      Bài 9: Giả sử nhân viên sẽ nhận được hoa hồng là 3% -> tìm hoa hồng cho mỗi nhân viên
+      Bài 10: Sắp xếp nhân viên theo thứ tự giảm dần theo doanh thu
+      */
+
+      // Bài 1: Lấy ra danh sách nhân viên đang làm việc
+      const workingEmployees = employees.filter(employee => employee.status === "working");
+      console.log("Bài 1: Nhân viên đang làm việc");
+      console.log(workingEmployees);
+
+      // Hàm tìm giá trị lớn nhất
+      const findMaxValues = (array, property) => {
+        if (!array.length) return [];
+        const maxValue = array.reduce((max, item) => 
+          Math.max(max, item[property] || 0), -Infinity);
+        return array.filter(item => (item[property] === maxValue));
+      };
+
+      // Hàm tìm giá trị nhỏ nhất
+      const findMinValues = (array, property) => {
+        if (!array.length) return [];
+        const minValue = array.reduce((min, item) => 
+          Math.min(min, item[property] || 0), Infinity);
+        return array.filter(item => item[property] === minValue);
+      };
+
+      // Bài 2: Lấy ra nhân viên lớn tuổi nhất
+      console.log("Bài 2: Nhân viên lớn tuổi nhất");
+      console.log(findMaxValues(employees, "age"));
+
+      // Bài 3: Lấy ra sản phẩm giá rẻ nhất
+      console.log("Bài 3: Sản phẩm giá rẻ nhất");
+      console.log(findMinValues(products, "price"));
+
+      // Bài 4: Tìm ra sản phẩm bán chạy nhất (số lượng)
+      // Tính tổng số lượng theo sản phẩm
+      const productQuantities = {};
+      orders.forEach((order) => {
+        if (!productQuantities[order.productId]) {
+          productQuantities[order.productId] = order.quantity;
+        } else {
+          productQuantities[order.productId] += order.quantity;
+        }
+      });
+
+      // Kết hợp thông tin sản phẩm với số lượng bán
+      const productsWithSales = [];
+      products.forEach((product) => {
+        const productWithSales = {
+          id: product.id,
+          name: product.name,
+          totalQuantity: productQuantities[product.id] || 0,
+          totalRevenue: (productQuantities[product.id] || 0) * product.price,
+        };
+        productsWithSales.push(productWithSales);
+      });
+
+      console.log("Bài 4: Sản phẩm bán chạy nhất (số lượng)");
+      console.log(findMaxValues(productsWithSales, "totalQuantity"));
+
+      // Bài 5: Tìm ra sản phẩm doanh thu cao nhất
+      console.log("Bài 5: Sản phẩm có doanh thu cao nhất");
+      console.log(findMaxValues(productsWithSales, "totalRevenue"));
+
+      // Bài 6: Tìm ra nhân viên bán nhiều hàng nhất
+      // Tính tổng số lượng theo nhân viên
+      const employeeQuantities = {};
+      orders.forEach((order) => {
+        if (!employeeQuantities[order.employeeId]) {
+          employeeQuantities[order.employeeId] = order.quantity;
+        } else {
+          employeeQuantities[order.employeeId] += order.quantity;
+        }
+      });
+
+      // Kết hợp thông tin nhân viên với số lượng bán
+      const employeesWithSales = [];
+      employees.forEach((employee) => {
+        const employeeWithSales = {
+          id: employee.id,
+          name: employee.name,
+          totalQuantitySold: employeeQuantities[employee.id] || 0,
+        };
+        employeesWithSales.push(employeeWithSales);
+      });
+
+      console.log("Bài 6: Nhân viên bán nhiều hàng nhất");
+      console.log(findMaxValues(employeesWithSales, "totalQuantitySold"));
+
+      // Bài 7: Tìm ra nhân viên có doanh thu cao nhất
+      // Gom nhóm đơn hàng theo nhân viên
+      const ordersByEmployee = {};
+      orders.forEach((order) => {
+        if (!ordersByEmployee[order.employeeId]) {
+          ordersByEmployee[order.employeeId] = [];
+        }
+
+        // Tìm thông tin sản phẩm trong đơn hàng
+        const product = products.find(p => p.id === order.productId);
+        
+        ordersByEmployee[order.employeeId].push({
+          productId: order.productId,
+          quantity: order.quantity,
+          orderRevenue: order.quantity * product.price,
+        });
+      });
+
+      // Tạo danh sách nhân viên với đơn hàng của họ
+      const employeesWithOrders = [];
+      employees.forEach((employee) => {
+        const employeeWithOrders = {
+          ...employee,
+          orders: ordersByEmployee[employee.id] || [],
+        };
+        employeesWithOrders.push(employeeWithOrders);
+      });
+
+      // Tính tổng doanh thu cho mỗi nhân viên
+      employeesWithOrders.forEach((employee) => {
+        let totalRevenue = 0;
+        employee.orders.forEach((orderItem) => {
+          totalRevenue += orderItem.orderRevenue;
+        });
+        employee.totalRevenue = totalRevenue;
+      });
+
+      console.log("Bài 7: Nhân viên có doanh thu cao nhất");
+      console.log(findMaxValues(employeesWithOrders, "totalRevenue"));
+
+      // Bài 8: Tìm ra sản phẩm bán có doanh thu nhất của mỗi nhân viên
+      console.log("Bài 8: Sản phẩm có doanh thu cao nhất của mỗi nhân viên");
+      
+      const employeesWithTopProducts = [...employees];
+      employeesWithTopProducts.forEach((employee) => {
+        const employeeOrders = ordersByEmployee[employee.id] || [];
+        
+        // Tìm sản phẩm có doanh thu cao nhất cho nhân viên này
+        const topSellingProducts = findMaxValues(employeeOrders, "orderRevenue");
+        
+        // Thêm thông tin đầy đủ về sản phẩm
+        const topProducts = [];
+        topSellingProducts.forEach((topProduct) => {
+          const productInfo = products.find(p => p.id === topProduct.productId);
+          topProducts.push(productInfo);
+        });
+        
+        employee.topProducts = topProducts;
+      });
+      
+      console.log(employeesWithTopProducts);
+
+      // Bài 9: Tính hoa hồng cho mỗi nhân viên (3%)
+      console.log("Bài 9: Hoa hồng cho mỗi nhân viên (3%)");
+      
+      const employeesWithCommission = employeesWithOrders.map((employee) => {
+        const commission = (employee.totalRevenue * 3) / 100;
+        return {
+          ...employee,
+          commission: commission
+        };
+      });
+      
+      console.log(employeesWithCommission);
+
+      // Bài 10: Sắp xếp nhân viên theo thứ tự giảm dần theo doanh thu
+      console.log("Bài 10: Nhân viên sắp xếp theo doanh thu giảm dần");
+      
+      const employeesSortedByRevenue = [...employeesWithCommission].sort(
+        (a, b) => b.totalRevenue - a.totalRevenue
+      );
+      
+      console.log(employeesSortedByRevenue);
+    </script>
+  </body>
+</html>

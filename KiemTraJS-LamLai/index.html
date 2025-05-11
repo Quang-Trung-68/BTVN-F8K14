@@ -78,17 +78,10 @@ Bai 10:
 Sap xep nhan vien theo thu tu giam dan theo doanh thu
 * */
 
-
-
       // Answers
 
       //   Q1
-      const employeesWork = [];
-      employees.map((employ) => {
-        if (employ.status === "working") {
-          employeesWork.push(employ);
-        }
-      });
+      const employeesWork = employees.filter(employee => employee.status==="working") ;
       console.log("Q1:");
       console.log(employeesWork);
       /*
@@ -103,33 +96,43 @@ Sap xep nhan vien theo thu tu giam dan theo doanh thu
 {id: 5, name: 'Eve', age: 20, status: 'working'}
     */
       // FIND MAX VALUE
-      const findMaxValue = (arr,property)=>{
-        let arrSortedUp = arr.sort((a,b)=> a[property] - b[property])
-        let maxValue = arrSortedUp[arrSortedUp.length - 1][property];
+      // const filterMaxValue = (arr, property) => {
+      //   let arrSortedUp = arr.sort((a, b) => a[property] - b[property]);
+      //   let maxValue = arrSortedUp[arrSortedUp.length - 1][property];
 
-        return arrSortedUp.filter(elm => elm[property]=== maxValue);
-      } 
+      //   return arrSortedUp.filter((elm) => elm[property] === maxValue);
+      // };
+
+      const filterMaxValue = (arr,property) =>{
+        if(!arr.length) return [];
+        const maxValue = arr.reduce((max,item)=> Math.max(max,item[property] || 0), -Infinity )
+        return arr.filter(item => (item[property] === maxValue));
+      }
 
       // FIND MIN VALUE
-      const findMinValue = (arr,property)=>{
-        let arrSortedUp = arr.sort((a,b)=> b[property] - a[property])
-        let maxValue = arrSortedUp[arrSortedUp.length - 1][property];
+      // const filterMinValue = (arr, property) => {
+      //   let arrSortedUp = arr.sort((a, b) => b[property] - a[property]);
+      //   let minValue = arrSortedUp[arrSortedUp.length - 1][property];
 
-        return arrSortedUp.filter(elm => elm[property]=== maxValue);
-      } 
+      //   return arrSortedUp.filter((elm) => elm[property] === minValue);
+      // };
+      
+      const filterMinValue = (arr, property)=>{
+        if(!arr.length) return [];
+        const minValue = arr.reduce((min,item)=> Math.min(min,item[property] || 0), Infinity);
+        return arr.filter(item => item[property] === minValue);
+      }
 
       // Q2:
-      // const employeesAgeSorted = employees.sort((a, b) => a.age - b.age);
-      // console.log(employeesAgeSorted[employeesAgeSorted.length - 1]);
-      
+
       console.log("Q2:");
-      console.log(findMaxValue(employees,'age'));
+      console.log(filterMaxValue(employees, "age"));
 
       // {id: 3, name: 'Charlie', age: 27, status: 'working'}
 
       // Q3:
       console.log("Q3:");
-      console.log(findMinValue(products,'price'));
+      console.log(filterMinValue(products, "price"));
       //   {id: 4, name: 'PC', price: 800}
 
       // Q4:
@@ -155,21 +158,8 @@ Sap xep nhan vien theo thu tu giam dan theo doanh thu
 
       // console.log(productsGroupQuant);
 
-      // let maxQuant = 0;
-      // productsGroupQuant.forEach((product) => {
-      //   if (maxQuant < product.quantityTotal) {
-      //     maxQuant = product.quantityTotal;
-      //   }
-      // });
-
-      // console.log("Q4:");
-      // productsGroupQuant.forEach((product) => {
-      //   if (maxQuant === product.quantityTotal) {
-      //     console.log(product);
-      //   }
-      // });
       console.log("Q4:");
-      console.log(findMaxValue(productsGroupQuant,'quantityTotal'));
+      console.log(filterMaxValue(productsGroupQuant, "quantityTotal"));
 
       /*
     {id: 5, name: 'Monitor', quantityTotal: 4}
@@ -177,22 +167,8 @@ Sap xep nhan vien theo thu tu giam dan theo doanh thu
     */
 
       // Q5:
-
-      // let maxPriceAll = 0;
-      // productsGroupQuant.forEach((product) => {
-      //   if (maxPriceAll < product.quantityPriceAll) {
-      //     maxPriceAll = product.quantityPriceAll;
-      //   }
-      // });
-
-      // console.log("Q5:");
-      // productsGroupQuant.forEach((product) => {
-      //   if (maxPriceAll === product.quantityPriceAll) {
-      //     console.log(product);
-      //   }
-      // });
       console.log("Q5:");
-      console.log(findMaxValue(productsGroupQuant,'quantityPriceAll'));
+      console.log(filterMaxValue(productsGroupQuant, "quantityPriceAll"));
       /*
     {id: 2, name: 'Laptop', quantityTotal: 4, quantityPriceAll: 12000}
     */
@@ -217,27 +193,14 @@ Sap xep nhan vien theo thu tu giam dan theo doanh thu
       });
       // console.log(employeeGroupQuant);
 
-      // let maxEmployeeQuant = 0;
-      // employeeGroupQuant.forEach((employee) => {
-      //   if (maxEmployeeQuant < employee.quantityTotalSell) {
-      //     maxEmployeeQuant = employee.quantityTotalSell;
-      //   }
-      // });
-
-      // console.log("Q6:");
-      // employeeGroupQuant.forEach((employee) => {
-      //   if (maxEmployeeQuant === employee.quantityTotalSell) {
-      //     console.log(employee);
-      //   }
-      // });
       console.log("Q6:");
-      console.log(findMaxValue(employeeGroupQuant,'quantityTotalSell'));
+      console.log(filterMaxValue(employeeGroupQuant, "quantityTotalSell"));
 
       // {id: 2, name: 'Bob', quantityTotalSell: 7}
 
       // Q7:
 
-      orderGroupEmployeeId = {};
+      let orderGroupEmployeeId = {};
 
       orders.map((order) => {
         if (!orderGroupEmployeeId[order.employeeId]) {
@@ -254,26 +217,24 @@ Sap xep nhan vien theo thu tu giam dan theo doanh thu
           productSellAll: order.quantity * productTemp.price,
         });
       });
-    //   console.log(orderGroupEmployeeId);
+      //   console.log(orderGroupEmployeeId);
       const orderGroups = [];
       employees.forEach((employee) => {
         let orders = {
           ...employee,
           order: orderGroupEmployeeId[employee.id],
         };
-        // console.log({...employee,...orderGroupEmployeeId[employee.id]});
         // console.log(orders);
         orderGroups.push(orders);
       });
 
-      console.log(orderGroups);
+      // console.log(orderGroups);
 
       orderGroups.forEach((orderIdEmploy) => {
         // console.log(orderIdEmploy.order);
         let totalSell = 0;
         orderIdEmploy.order.forEach((orderItem) => {
           // console.log(orderItem);
-          // totalSell += orderItem.quantity * products[orderItem.productId].price;
 
           products.forEach((product) => {
             if (product.id === orderItem.productId)
@@ -286,22 +247,8 @@ Sap xep nhan vien theo thu tu giam dan theo doanh thu
 
       // console.log(orderGroups);
 
-      // let maxSellEmployee = 0;
-      // orderGroups.forEach((employee) => {
-      //   if (maxSellEmployee < employee.totalSell) {
-      //     maxSellEmployee = employee.totalSell;
-      //   }
-      // });
-
-      // console.log("Q7:");
-      // orderGroups.forEach((employee) => {
-      //   if (maxSellEmployee === employee.totalSell) {
-      //     console.log(employee);
-      //   }
-      // });
-
       console.log("Q7:");
-      console.log(findMaxValue(orderGroups,'totalSell'));
+      console.log(filterMaxValue(orderGroups, "totalSell"));
 
       // {id: 2, name: 'Bob', age: 25, status: 'working', order: Array(2),totalSell: 16500}
 
@@ -310,43 +257,39 @@ Sap xep nhan vien theo thu tu giam dan theo doanh thu
       console.log("Q8:");
       // console.log(orderGroupEmployeeId);
       const topProductSales = employees;
-      topProductSales.forEach(employee=>{
-        // (orderGroupEmployeeId[employee.id].sort((a,b)=> (a.productSellAll - b.productSellAll)));
-        // let length = orderGroupEmployeeId[employee.id].length;
-        // console.log(orderGroupEmployeeId[employee.id][length - 1]);
-        
-        // console.log(`Employee id: ${employee.id}, name: ${employee.name}`);
-        let productHighestSales = findMaxValue(orderGroupEmployeeId[employee.id],'productSellAll');
+      topProductSales.forEach((employee) => {
+        let productHighestSales = filterMaxValue(
+          orderGroupEmployeeId[employee.id],
+          "productSellAll"
+        );
         // console.log(productHighestSales);
         let topProducts = [];
-        productHighestSales.map(productHighestSale =>{
+        productHighestSales.map((productHighestSale) => {
           // console.log(productHighestSale);
-          let findInProduct = products.find(pro => pro.id === productHighestSale.productId);
+          let findInProduct = products.find(
+            (pro) => pro.id === productHighestSale.productId
+          );
           // console.log(findInProduct);
           topProducts.push(findInProduct);
-          
-          // console.log(`Product name: ${findInProduct.name}, totalQuantity: ${productHighestSale.quantity}, total sale:${productHighestSale.productSellAll}`);
-        })
+        });
         employee.topProduct = topProducts;
-        // let findInProducts = products.find(pro => pro.id === productHighestSale.productId);
-        // console.log(findInProducts);
-        // let employeeTemp = {};
-      })
+      });
       console.log(topProductSales);
 
-    //   Q9:
-    console.log("Q9:");
-    let commissionEmployees = orderGroups;
-    commissionEmployees.map(orderIdEmp =>{
-      let bonusOfSale = orderIdEmp.totalSell * 3 / 100;
-        // console.log(`id: ${orderIdEmp.id}, name: ${orderIdEmp.name}, bonus: ${bonusOfSale}`);
+      //   Q9:
+      console.log("Q9:");
+      let commissionEmployees = orderGroups;
+      commissionEmployees.map((orderIdEmp) => {
+        let bonusOfSale = (orderIdEmp.totalSell * 3) / 100;
         orderIdEmp.commission = bonusOfSale;
-    })
-    console.log(commissionEmployees);
-    // Q10:
-    console.log("Q10:");
-    const orderIdEmpDe =  orderGroups.sort((a,b)=>(b.totalSell - a.totalSell));
-    console.log(orderIdEmpDe);
+      });
+      console.log(commissionEmployees);
+      // Q10:
+      console.log("Q10:");
+      const orderIdEmpDe = [...orderGroups].sort(
+        (a, b) => b.totalSell - a.totalSell
+      );
+      console.log(orderIdEmpDe);
     </script>
   </body>
 </html>

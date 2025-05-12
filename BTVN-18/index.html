@@ -341,8 +341,7 @@
       const employeesWithSales = [];
       employees.forEach((employee) => {
         const employeeWithSale = {
-          id: employee.id,
-          name: employee.name,
+          ...employee,
           totalQuantitySold: employeeQuantities[employee.id] || 0,
         };
         employeesWithSales.push(employeeWithSale);

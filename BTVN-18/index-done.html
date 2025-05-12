@@ -50,211 +50,220 @@
 
       // LƯU ĐỒ:
       /*
-      B1:
-      +-----------------------------------------------+
-| Bắt đầu Bài 1                                  |
-+-----------------------------------------------+
-             |
-             v
-+-----------------------------------------------+
-| Duyệt mảng `employees`                         |
-| Với mỗi phần tử, kiểm tra                      |
-| → employee.status === "working"                |
-+-----------------------------------------------+
-             |
-             v
-+-----------------------------------------------+
-| Nếu điều kiện đúng:                           |
-| → Thêm vào mảng `workingEmployees`             |
-+-----------------------------------------------+
-             |
-             v
-+-----------------------------------------------+
-| In ra `workingEmployees`                      |
-+-----------------------------------------------+
 
-      B2:
-      +-----------------------------------------------+
-| Bắt đầu Bài 2                                  |
-+-----------------------------------------------+
-             |
-             v
-+-----------------------------------------------+
-| Gọi hàm `findMaxValues(employees, "age")`     |
-| → Tìm giá trị tuổi lớn nhất trong employees    |
-| → Lọc ra các nhân viên có age === max          |
-+-----------------------------------------------+
-             |
-             v
-| Trả về mảng nhân viên lớn tuổi nhất           |
-+-----------------------------------------------+
-             |
-             v
-| In ra kết quả                                  |
-+-----------------------------------------------+
+      +-------------------------------+
+      | Bắt đầu hàm findMaxValues    |
+      +-------------------------------+
+                  |
+                  v
+      | Kiểm tra array có rỗng?      |
+      +-------------------------------+
+          | Có            | Không
+          v               v
+      | Trả về []         | Duyệt mảng array
+      +-------------------+----------------------------+
+                          | Tìm maxValue = max(item[property])
+                          +----------------------------+
+                                        |
+                                        v
+                          | Lọc array với item có item[property] === maxValue |
+                          +---------------------------------------------------+
+                                        |
+                                        v
+                                | Trả về kết quả |
+                                +----------------+
 
-      B3:
-      +-----------------------------------------------+
-| Bắt đầu Bài 3                                  |
-+-----------------------------------------------+
-             |
-             v
-+-----------------------------------------------+
-| Gọi hàm `findMinValues(products, "price")`     |
-| → Tìm giá thấp nhất                            |
-| → Lọc ra các sản phẩm có giá = min             |
-+-----------------------------------------------+
-             |
-             v
-| In ra sản phẩm rẻ nhất                         |
-+-----------------------------------------------+
+      
+      +-------------------------------+
+      | Bắt đầu hàm findMinValues    |
+      +-------------------------------+
+                  |
+                  v
+      | Kiểm tra array có rỗng?      |
+      +-------------------------------+
+          | Có            | Không
+          v               v
+      | Trả về []         | Duyệt mảng array
+      +-------------------+----------------------------+
+                          | Tìm minValue = min(item[property])
+                          +----------------------------+
+                                        |
+                                        v
+                          | Lọc array với item có item[property] === minValue |
+                          +---------------------------------------------------+
+                                        |
+                                        v
+                                | Trả về kết quả |
+                                +----------------+
 
-      B4:
-      +-----------------------------------------------+
-| Bắt đầu Bài 4                                  |
-+-----------------------------------------------+
-             |
-             v
-| Tạo object `productQuantities = {}`            |
-+-----------------------------------------------+
-             |
-             v
-| Duyệt từng đơn hàng trong `orders`             |
-| → Tăng dần productQuantities[productId]        |
-+-----------------------------------------------+
-             |
-             v
-| Duyệt `products`                               |
-| → Gắn thêm:                                    |
-|    - totalQuantity = từ productQuantities      |
-|    - totalRevenue = quantity * price           |
-| → Tạo mảng `productsWithSales`                 |
-+-----------------------------------------------+
-             |
-             v
-| Gọi `findMaxValues(productsWithSales, "totalQuantity")` |
-| → Tìm sản phẩm bán nhiều nhất                  |
-+-----------------------------------------------+
-             |
-             v
-| In kết quả                                     |
-+-----------------------------------------------+
 
-      B5:
-      +-----------------------------------------------+
-| Bắt đầu Bài 5                                  |
-+-----------------------------------------------+
-             |
-             v
-| Dùng mảng `productsWithSales` từ Bài 4         |
-| Gọi `findMaxValues(..., "totalRevenue")`       |
-+-----------------------------------------------+
-             |
-             v
-| In sản phẩm có doanh thu cao nhất             |
-+-----------------------------------------------+
+      +-------------------------------+
+      | Bắt đầu Bài 1                |
+      +-------------------------------+
+                  |
+                  v
+      | Duyệt mảng employees         |
+      | Lọc employee có status = "working" |
+      +-------------------------------+
+                  |
+                  v
+      | In danh sách kết quả         |
+      +-------------------------------+
 
-      B6:
-      +-----------------------------------------------+
-| Bắt đầu Bài 6                                  |
-+-----------------------------------------------+
-             |
-             v
-| Tạo object `employeeQuantities = {}`           |
-| Duyệt `orders`, cộng dồn theo employeeId       |
-+-----------------------------------------------+
-             |
-             v
-| Duyệt `employees`                              |
-| → Tạo mảng `employeesWithSales` gồm:           |
-|    - id, name                                  |
-|    - totalQuantitySold                         |
-+-----------------------------------------------+
-             |
-             v
-| Gọi `findMaxValues(..., "totalQuantitySold")`  |
-| → Tìm nhân viên bán nhiều hàng nhất            |
-+-----------------------------------------------+
 
-      B7:
-      +------------------------------------------------+
-| Bắt đầu Bài 7                                   |
-+------------------------------------------------+
-             |
-             v
-| Tạo object `ordersByEmployee = {}`             |
-| → Gom nhóm đơn hàng theo employeeId            |
-| → Tính orderRevenue = quantity * product.price |
-+------------------------------------------------+
-             |
-             v
-| Tạo mảng `employeesWithOrders` gồm:            |
-|    - id, name, age, status                     |
-|    - orders[] chứa các đơn hàng đã gom         |
-+------------------------------------------------+
-             |
-             v
-| Tính tổng doanh thu cho từng employee          |
-| → employee.totalRevenue                        |
-+------------------------------------------------+
-             |
-             v
-| Gọi `findMaxValues(..., "totalRevenue")`       |
-| → Tìm người có doanh thu cao nhất              |
-+------------------------------------------------+
+      +-------------------------------+
+      | Bắt đầu Bài 2                |
+      +-------------------------------+
+                  |
+                  v
+      | Gọi hàm findMaxValues(employees, "age") |
+      +-------------------------------+
+                  |
+                  v
+      | In kết quả trả về            |
+      +-------------------------------+
 
-      B8:
-      +------------------------------------------------+
-| Bắt đầu Bài 8                                   |
-+------------------------------------------------+
-             |
-             v
-| Duyệt `employees`                              |
-| → Lấy orders từ `ordersByEmployee[employeeId]` |
-+------------------------------------------------+
-             |
-             v
-| Gọi `findMaxValues(orders, "orderRevenue")`    |
-| → Tìm đơn hàng có doanh thu cao nhất           |
-+------------------------------------------------+
-             |
-             v
-| Với mỗi top order → tìm product tương ứng      |
-| → Gắn `topProducts[]` vào mỗi employee         |
-+------------------------------------------------+
-             |
-             v
-| In danh sách kết quả                           |
-+------------------------------------------------+
 
-      B9:
-      +------------------------------------------------+
-| Bắt đầu Bài 9                                   |
-+------------------------------------------------+
-             |
-             v
-| Duyệt `employeesWithOrders`                    |
-| → Tính `commission = totalRevenue * 0.03`      |
-| → Gắn vào từng employee                        |
-+------------------------------------------------+
-             |
-             v
-| In kết quả (employeesWithCommission)           |
-+------------------------------------------------+
+      +-------------------------------+
+      | Bắt đầu Bài 3                |
+      +-------------------------------+
+                  |
+                  v
+      | Gọi hàm findMinValues(products, "price") |
+      +-------------------------------+
+                  |
+                  v
+      | In kết quả trả về            |
+      +-------------------------------+
 
-      B10:
-      +------------------------------------------------+
-| Bắt đầu Bài 10                                  |
-+------------------------------------------------+
-             |
-             v
-| Dùng `employeesWithCommission`                 |
-| → Sắp xếp theo `totalRevenue` giảm dần         |
-+------------------------------------------------+
-             |
-             v
-| In danh sách đã sắp xếp                        |
-+------------------------------------------------+
+      
+      +-------------------------------+
+      | Bắt đầu Bài 4                |
+      +-------------------------------+
+                  |
+                  v
+      | Duyệt orders và tính tổng quantity theo productId |
+      +-------------------------------+
+                  |
+                  v
+      | Tạo mảng mới: productsWithSales chứa:           |
+      | id, name, totalQuantity, totalRevenue           |
+      +-------------------------------+
+                  |
+                  v
+      | Gọi findMaxValues(productsWithSales, "totalQuantity") |
+      +-------------------------------+
+                  |
+                  v
+      | In kết quả                          |
+      +-------------------------------+
+
+
+      +-------------------------------+
+      | Bắt đầu Bài 5                |
+      +-------------------------------+
+                  |
+                  v
+      | Gọi findMaxValues(productsWithSales, "totalRevenue") |
+      +-------------------------------+
+                  |
+                  v
+      | In kết quả                          |
+      +-------------------------------+
+
+
+      +-------------------------------+
+      | Bắt đầu Bài 6                |
+      +-------------------------------+
+                  |
+                  v
+      | Duyệt orders, tính tổng quantity theo employeeId |
+      +-------------------------------+
+                  |
+                  v
+      | Tạo danh sách employeesWithSales                 |
+      | → gồm: id, name, totalQuantitySold               |
+      +-------------------------------+
+                  |
+                  v
+      | Gọi findMaxValues(employeesWithSales, "totalQuantitySold") |
+      +-------------------------------+
+                  |
+                  v
+      | In kết quả                          |
+      +-------------------------------+
+
+
+      +-------------------------------+
+      | Bắt đầu Bài 7                |
+      +-------------------------------+
+                  |
+                  v
+      | Duyệt orders → Gom nhóm theo employeeId         |
+      | Tính orderRevenue = quantity * product.price     |
+      +-------------------------------+
+                  |
+                  v
+      | Với mỗi employee → tính tổng doanh thu          |
+      +-------------------------------+
+                  |
+                  v
+      | Gọi findMaxValues(employeesWithOrders, "totalRevenue") |
+      +-------------------------------+
+                  |
+                  v
+      | In kết quả                          |
+      +-------------------------------+
+
+
+      +-------------------------------+
+      | Bắt đầu Bài 8                |
+      +-------------------------------+
+                  |
+                  v
+      | Duyệt từng employee                           |
+      | → Lấy orders của họ từ ordersByEmployee       |
+      | → Gọi findMaxValues(employee.orders, "orderRevenue") |
+      +-------------------------------+
+                  |
+                  v
+      | Với mỗi order → tìm product tương ứng         |
+      | → Gắn vào employee.topProducts                |
+      +-------------------------------+
+                  |
+                  v
+      | In danh sách employeesWithTopProducts         |
+      +-------------------------------+
+
+
+      +-------------------------------+
+      | Bắt đầu Bài 9                |
+      +-------------------------------+
+                  |
+                  v
+      | Duyệt employeesWithOrders                  |
+      | → Tính commission = totalRevenue * 0.03    |
+      | → Gắn vào employee.commission              |
+      +-------------------------------+
+                  |
+                  v
+      | In employeesWithCommission                 |
+      +-------------------------------+
+
+
+      +-------------------------------+
+      | Bắt đầu Bài 10               |
+      +-------------------------------+
+                  |
+                  v
+      | Sử dụng employeesWithCommission             |
+      | → Sắp xếp theo totalRevenue giảm dần        |
+      +-------------------------------+
+                  |
+                  v
+      | In kết quả danh sách đã sắp xếp             |
+      +-------------------------------+
+
 
 
       */
@@ -331,12 +340,12 @@
       // Kết hợp thông tin nhân viên với số lượng bán
       const employeesWithSales = [];
       employees.forEach((employee) => {
-        const employeeWithSales = {
+        const employeeWithSale = {
           id: employee.id,
           name: employee.name,
           totalQuantitySold: employeeQuantities[employee.id] || 0,
         };
-        employeesWithSales.push(employeeWithSales);
+        employeesWithSales.push(employeeWithSale);
       });
 
       console.log("Bài 6: Nhân viên bán nhiều hàng nhất");
@@ -384,8 +393,7 @@
 
       // Bài 8: Tìm ra sản phẩm bán có doanh thu nhất của mỗi nhân viên
       console.log("Bài 8: Sản phẩm có doanh thu cao nhất của mỗi nhân viên");
-      
-      const employeesWithTopProducts = [...employees];
+      const employeesWithTopProducts = employees.map(employee=>({...employee}));
       employeesWithTopProducts.forEach((employee) => {
         const employeeOrders = ordersByEmployee[employee.id] || [];
         
@@ -420,11 +428,12 @@
       // Bài 10: Sắp xếp nhân viên theo thứ tự giảm dần theo doanh thu
       console.log("Bài 10: Nhân viên sắp xếp theo doanh thu giảm dần");
       
-      const employeesSortedByRevenue = [...employeesWithCommission].sort(
+      const employeesSortedByRevenue = [...employeesWithOrders].sort(
         (a, b) => b.totalRevenue - a.totalRevenue
       );
       
       console.log(employeesSortedByRevenue);
+
     </script>
   </body>
 </html>

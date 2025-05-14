@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <style>
+      table,
+      th,
+      td {
+        border: 1px solid #000;
+      }
+      th {
+        background-color: #ddd;
+      }
+      th,
+      td {
+        padding: 15px 20px;
+        text-align: center;
+      }
+      table {
+        border-collapse: collapse;
+        margin: 0 auto;
+      }
+    </style>
+
+    <!-- 
+    Luu do:
+    Bắt đầu
+    ↓
+    Định nghĩa hàm toHashMap(arr)
+    ↓
+    Tạo hashmap cho mảng data → dataHashMap
+    ↓
+    Tạo hashmap cho mảng positions → positionHashMap
+    ↓
+    Lấy phần tử #root từ DOM
+    ↓
+    Tạo thẻ <table>
+    ↓
+    Tạo phần <thead> và thêm hàng tiêu đề (ID, Tên, Tuổi, Email, Chức vụ)
+    ↓
+    Duyệt qua từng phần tử trong data:
+    ↓
+    ├─ Tạo thẻ <tr>
+    ↓
+    ├─ Tạo và thêm <td> cho ID
+    ↓
+    ├─ Tạo và thêm <td> cho Tên
+    ↓
+    ├─ Tạo và thêm <td> cho Tuổi
+    ↓
+    ├─ Tạo và thêm <td> cho Email
+    ↓
+    ├─ Tạo và thêm <td> cho Chức vụ từ positionHashMap
+    ↓
+    └─ Thêm <tr> vào <tbody>
+    ↓
+    Gắn <thead> và <tbody> vào bảng <table>
+    ↓
+    Gắn bảng vào #root
+    ↓
+    Kết thúc
+
+    -->
+    <script>
+      // B1:
+
+      const toHashMap = (arr) => {
+        let arrHashMap = {};
+        arr.forEach((element) => {
+          arrHashMap[element.id] = element;
+        });
+        return arrHashMap;
+      };
+
+      const data = [
+        { id: 1, name: "Nguyễn Văn A", age: 22, email: "a@example.com" },
+        { id: 2, name: "Trần Thị B", age: 21, email: "b@example.com" },
+        { id: 3, name: "Lê Văn C", age: 23, email: "c@example.com" },
+      ];
+
+      const positions = [
+        { id: 1, position: "Giám đốc" },
+        { id: 2, position: "Nhân viên" },
+        { id: 3, position: "Quản lý" },
+      ];
+
+      const dataHashMap = toHashMap(data);
+      const positionHashMap = toHashMap(positions);
+
+      const root = document.getElementById("root");
+      const tableE = document.createElement("table");
+
+      const theadE = document.createElement("thead");
+      const trHeadE = document.createElement("tr");
+      trHeadE.innerHTML += `
+      <th>ID</th>
+      <th>Tên</th>
+      <th>Tuổi</th>
+      <th>Email</th>
+      <th>Chức vụ</th>
+      `;
+
+      const tbodyE = document.createElement("tbody");
+      data.forEach((dt) => {
+        const tr = document.createElement("tr");
+
+        const tdId = document.createElement("td");
+        tdId.innerText = dt.id;
+
+        const tdName = document.createElement("td");
+        tdName.innerText = dt.name;
+
+        const tdAge = document.createElement("td");
+        tdAge.innerText = dt.age;
+
+        const tdEmail = document.createElement("td");
+        tdEmail.innerText = dt.email;
+
+        const tdPosition = document.createElement("td");
+        tdPosition.innerText = positionHashMap[dt.id].position;
+
+        tr.append(tdId, tdName, tdAge, tdEmail, tdPosition);
+        tbodyE.appendChild(tr);
+      });
+
+      tableE.append(trHeadE, tbodyE);
+      root.appendChild(tableE);
+    </script>
+  </body>
+</html>

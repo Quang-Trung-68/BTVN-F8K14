@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>Div 1</div>
+    <div>Div 2</div>
+    <p>P 1</p>
+    <section>
+      Section 1
+      <p>P 2</p>
+      <div>Div 3</div>
+    </section>
+
+    <!-- 
+    Bắt đầu hàm countElementsByTag(tagName)
+    ↓
+    Kiểm tra tagName có phải là chuỗi?
+    ↓
+    ├─ Nếu KHÔNG → Trả về 0
+    ↓
+    ├─ Nếu CÓ:
+        ↓
+        Dùng document.querySelectorAll(tagName)
+        ↓
+        Lấy số lượng phần tử phù hợp
+        ↓
+        Trả về số lượng
+    ↓
+    Kết thúc
+
+    -->
+    <script>
+      const countElementsByTag = (tagName) => {
+        if (typeof tagName === "string") {
+          const tagCollections = document.querySelectorAll(tagName);
+          return tagCollections.length;
+        } else return 0;
+      };
+
+      console.log(countElementsByTag("div")); // 3
+      console.log(countElementsByTag("p")); // 2
+      console.log(countElementsByTag("section")); // 1
+      console.log(countElementsByTag("header")); // 0
+      console.log(countElementsByTag(123)); // 0
+    </script>
+  </body>
+</html>
+<!-- // Code debug -->
+<!-- console.log(countElementsByTag("div")); // 3
+console.log(countElementsByTag("p")); // 2
+console.log(countElementsByTag("section")); // 1
+console.log(countElementsByTag("header")); // 0
+console.log(countElementsByTag(123)); // 0 -->

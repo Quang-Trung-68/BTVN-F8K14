@@ -36,6 +36,14 @@
         { id: 7, employeeId: 5, productId: 3, quantity: 2 },
       ];
 
+      const toHashMap = (arr)=>{
+        const result = {};
+        for(let e of arr){
+          result[e.id] = e;
+        }
+        return result;
+      }
+      console.log(toHashMap(products));
       /*
 Bai: 1
 Lay ra ds nhan vien dang lam viec

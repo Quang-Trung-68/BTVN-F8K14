@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="changeTextBtn">Đổi nội dung tất cả P</button>
+    <p>Đoạn 1</p>
+    <p>Đoạn 2</p>
+    <p>Đoạn 3</p>
+    <!-- 
+    Bắt đầu
+    ↓
+    Định nghĩa hàm changeContent
+    ↓
+    Lấy tất cả thẻ <p> → pTags
+    ↓
+    Khởi tạo biến count = 1
+    ↓
+    Duyệt qua từng pTag trong pTags:
+    ↓
+    ├─ Gán nội dung: "Đã đổi nội dung {count}"
+    ↓
+    └─ Tăng count lên 1
+    ↓
+    Lấy phần tử có id="changeTextBtn" → buttonE
+    ↓
+    Gắn sự kiện click cho buttonE gọi hàm changeContent
+    ↓
+    Kết thúc
+
+    -->
+    <script>
+      const changeContent = () => {
+        const pTags = document.querySelectorAll("p");
+        let count = 1;
+        pTags.forEach((pTag) => {
+          pTag.innerText = `Đã đổi nội dung ${count}`;
+          count++;
+        });
+      };
+      const buttonE = document.getElementById("changeTextBtn");
+      buttonE.addEventListener("click", changeContent);
+    </script>
+    <!-- // Kết quả đầu ra -->
+    <!-- <p>Đã đổi nội dung 1</p>
+    <p>Đã đổi nội dung 2</p>
+    <p>Đã đổi nội dung3</p> -->
+  </body>
+</html>

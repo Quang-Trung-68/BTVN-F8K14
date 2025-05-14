@@ -106,25 +106,19 @@
       `;
 
       const tbodyE = document.createElement("tbody");
+
       data.forEach((dt) => {
         const tr = document.createElement("tr");
-
-        const tdId = document.createElement("td");
-        tdId.innerText = dt.id;
-
-        const tdName = document.createElement("td");
-        tdName.innerText = dt.name;
-
-        const tdAge = document.createElement("td");
-        tdAge.innerText = dt.age;
-
-        const tdEmail = document.createElement("td");
-        tdEmail.innerText = dt.email;
+        Object.values(dt).forEach((dataElm) => {
+          const td = document.createElement("td");
+          td.innerText = dataElm;
+          tr.append(td);
+        });
 
         const tdPosition = document.createElement("td");
         tdPosition.innerText = positionHashMap[dt.id].position;
 
-        tr.append(tdId, tdName, tdAge, tdEmail, tdPosition);
+        tr.append(tdPosition);
         tbodyE.appendChild(tr);
       });
 

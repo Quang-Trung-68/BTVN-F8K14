@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1 class="heading-h1">Heading</h1>
+    <h2 class="heading">Heading</h2>
+    <h2 class="heading">Heading</h2>
+    <a href="https://abcd.test" class="link">Click me</a>
+    <div class="content">
+      <p class="paragraph" id="test-heading">P</p>
+      <p class="paragraph">P</p>
+    </div>
+    <script>
+      console.log(document.querySelector(".content .paragraph"));
+      console.log(document.getElementsByTagName("h2"));
+      const cl = document.getElementsByClassName("paragraph");
+
+      const headingElm = document.querySelector(".heading-h1");
+      headingElm.outerHTML = "<h1>123456<h1>";
+      console.log(headingElm);
+      const get = document.querySelector(".link");
+      get.style.textDecoration = "none";
+      console.log(get.getAttribute("href"));
+
+      const pNew = document.createElement("p");
+      pNew.innerText = "paragraph";
+
+      document.querySelector(".content").appendChild(pNew);
+
+      pNew.onclick = () => {
+        pNew.style.color = "red"
+      };
+
+      pNew.addEventListener('click',()=>{
+        console.log("clicked");
+      });
+      pNew.addEventListener('click',()=>{
+        console.log("clicked");
+      });
+      
+    </script>
+  </body>
+</html>

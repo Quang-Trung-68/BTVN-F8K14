@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      href="
+https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css
+"
+      rel="stylesheet"
+    />
+    <title>People Table</title>
+    <style>
+      table {
+        border-collapse: collapse;
+        width: 60%;
+        margin: 20px auto;
+      }
+      th,
+      td {
+        border: 1px solid #444;
+        padding: 8px 12px;
+        text-align: left;
+      }
+
+      th {
+        background-color: #eee;
+      }
+      .container {
+        padding: 0 200px;
+      }
+      .container input {
+        text-align: center;
+        background-color: #eee;
+        width: 100%;
+        padding: 10px;
+        border: 1px solid;
+      }
+
+      input {
+        border: none;
+        outline: none;
+        font-family: inherit;
+      }
+      button:hover {
+        opacity: 0.85;
+        cursor: pointer;
+      }
+      .hidden {
+        opacity: 0;
+        visibility: hidden;
+      }
+      .wrapper {
+        display: flex;
+        gap: 10px;
+      }
+      .modal {
+        width: 400px;
+        background-color: #bbb;
+        height: fit-content;
+        margin: auto auto;
+        position: fixed;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        row-gap: 40px;
+        padding: 20px;
+        z-index: 100;
+      }
+      .modal .title {
+        font-weight: 600;
+        text-align: center;
+        font-size: 1.6rem;
+      }
+      .input-group {
+        display: flex;
+        flex-direction: column;
+        row-gap: 20px;
+      }
+
+      .input-group label {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .input-group label input {
+        height: 30px;
+        width: 200px;
+      }
+      .modal .action {
+        display: flex;
+        justify-content: space-evenly;
+      }
+      .btn {
+        border: none;
+        outline: none;
+        width: 80px;
+        height: 40px;
+        color: #fff;
+      }
+      .btn-cancel {
+        background-color: red;
+      }
+      .btn-save {
+        background-color: blue;
+      }
+      .btn-add {
+        background-color: green;
+      }
+
+      /* overlay */
+      .overlay {
+        position: fixed;
+        inset: 0;
+        background-color: #00000099;
+        z-index: 90;
+      }
+      /* mdi */
+      span.mdi {
+        padding: 5px;
+        font-size: 20px;
+      }
+      span.mdi:hover {
+        background-color: #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2 style="text-align: center">People Information</h2>
+      <div class="wrapper">
+        <input type="text" placeholder="Search employees" />
+        <button class="btn btn-add">Add new</button>
+      </div>
+      <table>
+        <thead></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <!-- Add 'add new btn' -->
+    <!-- MODAL ADD NEW -->
+    <div class="modal modal-add hidden">
+      <p class="title">Add new employee</p>
+      <div class="input-group">
+        <div class="input-row">
+          <label>
+            <span>Name:</span>
+            <input
+              placeholder="Name"
+              required
+              autocomplete="off"
+              type="text"
+              name="name"
+            />
+          </label>
+        </div>
+        <div class="input-row">
+          <label>
+            <span>Address:</span>
+            <input
+              placeholder="Address"
+              required
+              autocomplete="off"
+              type="text"
+              name="address"
+            />
+          </label>
+        </div>
+        <div class="input-row">
+          <label>
+            <span>Age:</span>
+            <input
+              placeholder="Age"
+              required
+              autocomplete="off"
+              type="text"
+              name="age"
+            />
+          </label>
+        </div>
+      </div>
+      <div class="action">
+        <button class="btn btn-cancel">CANCEL</button>
+        <button class="btn btn-save">SAVE</button>
+      </div>
+    </div>
+    <!-- MODAL DELETE ONE -->
+    <div class="modal modal-delete hidden">
+      <p class="title">Delete employee ?</p>
+      <div class="action">
+        <button class="btn btn-cancel btn-no-delete">NO</button>
+        <button class="btn btn-save btn-yes-delete">YES</button>
+      </div>
+    </div>
+    <!-- MODAL EDIT ONE -->
+    <div class="modal modal-edit hidden">
+      <p class="title">Edit employee:</p>
+      <div class="input-group">
+        <div class="input-row">
+          <label>
+            <span>Name:</span>
+            <input
+              placeholder="Name"
+              required
+              autocomplete="off"
+              type="text"
+              name="name"
+            />
+          </label>
+        </div>
+        <div class="input-row">
+          <label>
+            <span>Address:</span>
+            <input
+              placeholder="Address"
+              required
+              autocomplete="off"
+              type="text"
+              name="address"
+            />
+          </label>
+        </div>
+        <div class="input-row">
+          <label>
+            <span>Age:</span>
+            <input
+              placeholder="Age"
+              required
+              autocomplete="off"
+              type="text"
+              name="age"
+            />
+          </label>
+        </div>
+      </div>
+      <div class="action">
+        <button class="btn btn-cancel btn-cancel-edit">CANCEL</button>
+        <button class="btn btn-save btn-save-edit">SAVE</button>
+      </div>
+    </div>
+    <div class="overlay hidden"></div>
+    <script>
+      // const headers = ["id", "name", "add", "age", "action"];
+      const headers = [
+        { name: "id", text: "ID", align: "right" },
+        { name: "name", text: "Name" },
+        { name: "address", text: "ADD" },
+        { name: "age", text: "Age" },
+        { name: "action", text: "Action" },
+      ];
+      let employees = [
+        {
+          id: 1,
+          name: "John",
+          address: "654 Maple St",
+          age: 22,
+        },
+        {
+          id: 2,
+          name: "David",
+          address: "654 Maple St",
+          age: 22,
+        },
+        {
+          id: 3,
+          name: "Jane",
+          address: "654 Maple St",
+          age: 22,
+        },
+      ];
+
+      const findMaxIdValue = (arr) => {
+        let max = arr[0].id;
+        arr.forEach((element) => {
+          if (max < element.id) max = element.id;
+        });
+        return max;
+      };
+      // console.log(findMaxIdValue(employees));
+
+      const renderUI = (employee) => {
+        const tr = document.createElement("tr");
+        for (let headerText of headers) {
+          const td = document.createElement("td");
+          if (headerText.name === "action") {
+            const editBtn = document.createElement("span");
+            const deleteBtn = document.createElement("span");
+
+            editBtn.setAttribute("class", "mdi mdi-pencil-outline");
+            editBtn.addEventListener("click", () => {
+              toggleModalEdit(employee);
+              showInfoEditModal();
+            });
+
+            deleteBtn.setAttribute("class", "mdi mdi-trash-can-outline");
+            deleteBtn.addEventListener("click", () => {
+              // deleteFromEmployeeId(employee.id, employee.name);
+              toggleModalDelete(employee);
+
+              // const btnYesDelete = document.querySelector(".btn-yes-delete");
+              // console.log(btnYesDelete);
+              // btnYesDelete.addEventListener("click", deleteFromEmployeeId(employee.id,employee.name));
+            });
+            td.appendChild(editBtn);
+            td.appendChild(deleteBtn);
+          } else {
+            if (headerText.align) td.style.textAlign = `${headerText.align}`;
+            td.innerText = employee[headerText.name];
+          }
+          tr.appendChild(td);
+          tbody.appendChild(tr);
+        }
+      };
+
+      const thead = document.querySelector("thead");
+
+      const tr = document.createElement("tr");
+      thead.appendChild(tr);
+
+      for (let tdText of headers) {
+        const td = document.createElement("th");
+        td.innerText = tdText.text;
+        tr.appendChild(td);
+      }
+
+      const tbody = document.querySelector("tbody");
+      const inputE = document.querySelector("input");
+
+      // Render all employees
+      const renderAll = () => {
+        tbody.innerHTML = "";
+        for (let employee of employees) {
+          renderUI(employee);
+        }
+      };
+      renderAll();
+
+      inputE.addEventListener("input", (e) => {
+        tbody.innerHTML = "";
+        for (let employee of employees) {
+          console.log(e.target.value);
+          renderUI(employee);
+        }
+        for (let employee of employees) {
+          console.log(e.target.value);
+
+          if (e.target.value === employee.name) {
+            tbody.innerHTML = "";
+            renderUI(employee);
+          }
+        }
+      });
+
+      //  ADD NEW EMP
+      const btnAdd = document.querySelector(".btn-add");
+      const toggleModalAdd = () => {
+        const modalAdd = document.querySelector(".modal-add");
+        modalAdd.classList.toggle("hidden");
+        const overlay = document.querySelector(".overlay");
+        overlay.classList.toggle("hidden");
+      };
+      btnAdd.addEventListener("click", toggleModalAdd);
+      // cancel while in add modal
+      const btnCancel = document.querySelector(".btn-cancel");
+      btnCancel.addEventListener("click", toggleModalAdd);
+      // save adding modal
+
+      const saveNewToEmployees = (name, address, age) => {
+        const newEmployee = {
+          id: findMaxIdValue(employees) + 1,
+          name,
+          address,
+          age,
+        };
+        employees.push(newEmployee);
+      };
+
+      const btnSave = document.querySelector(".btn-save");
+      btnSave.addEventListener("click", () => {
+        const inputAddName = document.querySelector(
+          ".modal-add input[name='name']"
+        );
+        const inputAddAddress = document.querySelector(
+          ".modal-add input[name='address']"
+        );
+        const inputAddAge = document.querySelector(
+          ".modal-add input[name='age']"
+        );
+        saveNewToEmployees(
+          inputAddName.value,
+          inputAddAddress.value,
+          inputAddAge.value
+        );
+
+        // Clear previous input add data
+        inputAddName.value = "";
+        inputAddAddress.value = "";
+        inputAddAge.value = "";
+
+        toggleModalAdd();
+        // Render all employees
+        renderAll();
+        console.log(employees);
+      });
+
+      // DELETE EMPLOYEE
+      let employeeTempDelete = {};
+      const toggleModalDelete = (employee) => {
+        // Open modal and overlay
+        const modalDelete = document.querySelector(".modal-delete");
+        const overlay = document.querySelector(".overlay");
+        modalDelete.classList.toggle("hidden");
+        overlay.classList.toggle("hidden");
+        // const titleDelete = document.querySelector(".modal-delete .title");
+        // titleDelete.innerText = `Delete employee : ${name} ? Are you sure!!`;
+
+        employeeTempDelete = employee;
+      };
+
+      const btnNoDelete = document.querySelector(".btn-no-delete");
+      btnNoDelete.addEventListener("click", () => {
+        const modalDelete = document.querySelector(".modal-delete");
+        modalDelete.classList.toggle("hidden");
+        const overlay = document.querySelector(".overlay");
+        overlay.classList.toggle("hidden");
+      });
+
+      const deleteFromEmployeeId = (id, name) => {
+        // toggleModalDelete();
+        employees = [...employees].filter((employee) => employee.id !== id);
+        console.log(employees);
+        toggleModalDelete();
+        renderAll();
+      };
+
+      const btnYesDelete = document.querySelector(".btn-yes-delete");
+      console.log(btnYesDelete);
+      btnYesDelete.addEventListener("click", () => {
+        deleteFromEmployeeId(employeeTempDelete.id, employeeTempDelete.name);
+      });
+
+      // EDIT EMPLOYEE
+
+      let employeeEditTemp = {};
+      const toggleModalEdit = (employee) => {
+        const modalEdit = document.querySelector(".modal-edit");
+        modalEdit.classList.toggle("hidden");
+        const overlay = document.querySelector(".overlay");
+        overlay.classList.toggle("hidden");
+        employeeEditTemp = employee;
+        console.log(employee,employeeEditTemp);
+      };
+
+      const showInfoEditModal = () => {
+        const inputEditName = document.querySelector(
+          ".modal-edit input[name='name']"
+        );
+        const inputEditAddress = document.querySelector(
+          ".modal-edit input[name='address']"
+        );
+        const inputEditAge = document.querySelector(
+          ".modal-edit input[name='age']"
+        );
+        inputEditName.value = employeeEditTemp.name;
+        inputEditAddress.value = employeeEditTemp.address;
+        inputEditAge.value = employeeEditTemp.age;
+      };
+
+      const btnCancelEdit = document.querySelector(".btn-cancel-edit");
+      console.log(btnCancelEdit);
+      btnCancelEdit.addEventListener("click", () => {
+        toggleModalEdit();
+      });
+
+      const btnSaveEdit = document.querySelector(".btn-save-edit");
+      console.log(btnSaveEdit);
+      btnSaveEdit.addEventListener("click", () => {
+        let employeeUpdate = {};
+        const inputEditName = document.querySelector(
+          ".modal-edit input[name='name']"
+        );
+        const inputEditAddress = document.querySelector(
+          ".modal-edit input[name='address']"
+        );
+        const inputEditAge = document.querySelector(
+          ".modal-edit input[name='age']"
+        );
+        employeeUpdate = {
+          id: employeeEditTemp.id,
+          name: inputEditName.value,
+          address: inputEditAddress.value,
+          age: Number(inputEditAge.value),
+        };
+        let employeeUp = employees.findIndex(eml =>  eml.id === employeeUpdate.id);
+        // employeeUp = employeeUpdate;
+        employees[employeeUp] = employeeUpdate;
+        console.log(employeeUp);
+        console.log(employees);
+        toggleModalEdit()
+        renderAll()
+      });
+    </script>
+  </body>
+</html>

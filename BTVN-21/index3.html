@@ -124,6 +124,12 @@ https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css
         cursor: pointer;
         border-radius: 5px;
       }
+      
+      /* Highlight search results */
+      .highlight-search {
+        background-color: yellow;
+        font-weight: bold;
+      }
     </style>
   </head>
   <body>
@@ -371,22 +377,37 @@ https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css
       }
 
       function capitalizeWords(str) {
-  return str
-    .toLowerCase() // Convert the whole string to lowercase first
-    .split(" ") // Split the string into words
-    .map(word => {
-      return word.charAt(0).toUpperCase() + word.slice(1);
-    })
-    .join(" "); // Join the words back into a single string
-}
+        return str
+          .toLowerCase() // Convert the whole string to lowercase first
+          .split(" ") // Split the string into words
+          .map(word => {
+            return word.charAt(0).toUpperCase() + word.slice(1);
+          })
+          .join(" "); // Join the words back into a single string
+      }
 
+      // Highlight function for search terms
+      function highlightText(text, searchTerm) {
+        if (!searchTerm || searchTerm.trim() === '') return text;
+        
+        const searchTermLower = searchTerm.toLowerCase();
+        const textLower = text.toString().toLowerCase();
+        
+        // If search term not found in text, return original text
+        if (textLower.indexOf(searchTermLower) === -1) return text;
+        
+        const regex = new RegExp(`(${searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+        return text.toString().replace(regex, '<span class="highlight-search">$1</span>');
+      }
 
-
-      const renderUI = (employee) => {
+      const renderTableRow = (employee, searchTerm = '') => {
         const tr = document.createElement("tr");
+        
         for (let headerText of headers) {
           const td = document.createElement("td");
+          
           if (headerText.name === "action") {
+            // Action buttons (edit/delete)
             const editBtn = document.createElement("span");
             const deleteBtn = document.createElement("span");
 
@@ -400,90 +421,28 @@ https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css
             deleteBtn.addEventListener("click", () => {
               toggleModalDelete(employee);
             });
+            
             td.appendChild(editBtn);
             td.appendChild(deleteBtn);
           } else {
+            // Regular data cells
             if (headerText.align) td.style.textAlign = `${headerText.align}`;
-            td.innerText = employee[headerText.name];
-          }
-          tr.appendChild(td);
-          tbody.appendChild(tr);
-        }
-      };
-
-      const renderUIHL = (employee,key) => {
-        const tr = document.createElement("tr");
-        for (let headerText of headers) {
-          const td = document.createElement("td");
-          if (headerText.name === "action") {
-            const editBtn = document.createElement("span");
-            const deleteBtn = document.createElement("span");
-
-            editBtn.setAttribute("class", "mdi mdi-pencil-outline");
-            editBtn.addEventListener("click", () => {
-              toggleModalEdit(employee);
-              showInfoEditModal();
-            });
-
-            deleteBtn.setAttribute("class", "mdi mdi-trash-can-outline");
-            deleteBtn.addEventListener("click", () => {
-              toggleModalDelete(employee);
-            });
-            td.appendChild(editBtn);
-            td.appendChild(deleteBtn);
-          } else {
-            if (headerText.align) td.style.textAlign = `${headerText.align}`;
-            td.innerText = employee[headerText.name];
-
-            if(headerText.name === "name"){
-              let tdTempArr = td.innerText;
-              let cut = tdTempArr.split(key);
-              console.log(key);
-              console.log(cut);
-              if(!cut[1])
-              td.innerHTML = `${cut[0] || '' }`;
-            else
-              td.innerHTML = `${cut[0] || '' }<span class="hightlight-search">${key}</span>${cut[1] || ''}`;
-              // td.innerText = capitalizeWords(td.innerText)
+            
+            const cellValue = employee[headerText.name];
+            
+            // Apply highlighting only for name column when search term exists
+            if (headerText.name === "name" && searchTerm) {
+              td.innerHTML = highlightText(cellValue, searchTerm);
+            } else {
+              td.innerText = cellValue;
             }
           }
+          
           tr.appendChild(td);
-          tbody.appendChild(tr);
         }
+        
+        tbody.appendChild(tr);
       };
-
-
-      // const renderUIHightLight = (employee,key)=>{
-      //   const tr = document.createElement("tr");
-      //   for (let headerText of headers) {
-      //     const td = document.createElement("td");
-      //     if (headerText.name === "action") {
-      //       const editBtn = document.createElement("span");
-      //       const deleteBtn = document.createElement("span");
-
-      //       editBtn.setAttribute("class", "mdi mdi-pencil-outline");
-      //       editBtn.addEventListener("click", () => {
-      //         toggleModalEdit(employee);
-      //         showInfoEditModal();
-      //       });
-
-      //       deleteBtn.setAttribute("class", "mdi mdi-trash-can-outline");
-      //       deleteBtn.addEventListener("click", () => {
-      //         toggleModalDelete(employee);
-      //       });
-      //       td.appendChild(editBtn);
-      //       td.appendChild(deleteBtn);
-      //     } else {
-      //       if (headerText.align) td.style.textAlign = `${headerText.align}`;
-
-      //       td.innerText = employee[headerText.name];
-      //       let test = td.innerText;
-      //       td.innerHTML = `<span>${test}</span>`
-      //     }
-      //     tr.appendChild(td);
-      //     tbody.appendChild(tr);
-      //   }
-      // }
 
       const thead = document.querySelector("thead");
 
@@ -499,43 +458,35 @@ https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css
       const tbody = document.querySelector("tbody");
       const inputE = document.querySelector("input");
 
+
       // Function Render all employees
-      const renderAll = () => {
+      const renderAll = (searchTerm = '') => {
         tbody.innerHTML = "";
-        for (let employee of employees) {
-          renderUI(employee);
+        
+        if (!searchTerm) {
+          // When no search term, show all employees
+          for (let employee of employees) {
+            renderTableRow(employee);
+          }
+        } else {
+          // When searching, filter and highlight matches
+          const searchTermLower = searchTerm.toLowerCase();
+          const filteredEmployees = employees.filter(employee => 
+            employee.name.toLowerCase().includes(searchTermLower)
+          );
+          
+          for (let employee of filteredEmployees) {
+            renderTableRow(employee, searchTerm);
+          }
         }
       };
 
-      // const renderTest = ()=>{
-      //   for (let employee of employees) {
-      //     console.log(employee);
-      //     renderUIHightLight(employee,"John");
-      //   }
-      // }
-      // renderTest()
-
       window.onload = renderAll();
 
+      // Search functionality
       inputE.addEventListener("input", (e) => {
-        // Clear tbody
-        tbody.innerHTML = "";
-        // Render when empty input
-        if (e.target.value === "") renderAll();
-
-        for (let employee of employees) {
-          console.log(e.target.value);
-          // Render when find similar name
-          let keyCheck = e.target.value;
-          keyCheck = keyCheck.toLowerCase();
-          console.log(keyCheck);
-          if (employee.name.toLocaleLowerCase().includes(keyCheck)) {
-            renderUI(employee);
-            let key = e.target.value;
-            console.log(typeof key);
-            renderUIHL(employee,e.target.value);
-          }
-        }
+        const searchTerm = e.target.value.trim();
+        renderAll(searchTerm);
       });
 
       //  ADD NEW EMP
@@ -745,7 +696,10 @@ https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css
           employees[employeeUp] = employeeUpdate;
           console.log(employees);
           toggleModalEdit();
-          renderAll();
+          
+          // Preserve search term after edit
+          const searchTerm = inputE.value.trim();
+          renderAll(searchTerm);
         }
       });
     </script>

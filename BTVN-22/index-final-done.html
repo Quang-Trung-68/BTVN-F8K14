@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css"
+      rel="stylesheet"
+    />
+    <title>People Table</title>
+    <style>
+      table {
+        border-collapse: collapse;
+        width: 60%;
+        margin: 20px auto;
+      }
+      th,
+      td {
+        border: 1px solid #444;
+        padding: 8px 12px;
+        text-align: left;
+      }
+
+      th {
+        background-color: #eee;
+      }
+      .container {
+        padding: 0 200px;
+      }
+      .container input {
+        text-align: center;
+        background-color: #eee;
+        width: 100%;
+        padding: 10px;
+        border: 1px solid;
+      }
+
+      input {
+        border: none;
+        outline: none;
+        font-family: inherit;
+      }
+      button:hover {
+        opacity: 0.85;
+        cursor: pointer;
+      }
+      .hidden {
+        opacity: 0;
+        visibility: hidden;
+      }
+      .wrapper {
+        display: flex;
+        gap: 10px;
+      }
+      .modal {
+        width: 400px;
+        background-color: #bbb;
+        height: fit-content;
+        margin: auto auto;
+        position: fixed;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        row-gap: 40px;
+        padding: 20px;
+        z-index: 100;
+      }
+      .modal .title {
+        font-weight: 600;
+        text-align: center;
+        font-size: 1.6rem;
+      }
+      .input-group {
+        display: flex;
+        flex-direction: column;
+        row-gap: 20px;
+      }
+
+      .input-group label {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .input-group label input {
+        height: 30px;
+        width: 200px;
+      }
+      .modal .action {
+        display: flex;
+        justify-content: space-evenly;
+      }
+      .btn {
+        border: none;
+        outline: none;
+        width: 80px;
+        height: 40px;
+        color: #fff;
+      }
+      .btn-cancel {
+        background-color: red;
+      }
+      .btn-save {
+        background-color: blue;
+      }
+      .btn-add {
+        background-color: green;
+      }
+
+      /* overlay */
+      .overlay {
+        position: fixed;
+        inset: 0;
+        background-color: #000000c5;
+        z-index: 90;
+      }
+      /* mdi */
+      span.mdi {
+        padding: 5px;
+        font-size: 24px;
+        transition: 0.5s;
+      }
+      span.mdi:hover {
+        background-color: #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+      span.mdi-pencil-outline {
+        color: blue;
+      }
+      span.mdi-trash-can-outline {
+        color: red;
+      }
+
+      /* Highlight search results */
+      .highlight-search {
+        background-color: yellow;
+        font-weight: bold;
+      }
+
+      /* Add search type indicator */
+      .search-info {
+        margin-top: 5px;
+        font-size: 0.8rem;
+        color: #666;
+        text-align: right;
+      }
+      .dropdown {
+        height: 150px;
+        overflow-y: auto;
+        position: absolute;
+
+        bottom: 0;
+        left: 0;
+        right: 0;
+        transform: translateY(100%);
+      }
+      .province {
+        border: 1px solid;
+        position: relative;
+      }
+      .dropdown .dropdown-item {
+        border: 1px solid #ccc;
+        padding: 4px;
+        background: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2 style="text-align: center">People Information</h2>
+      <div class="wrapper">
+        <input type="text" placeholder="Search by name, address or age" />
+        <button class="btn btn-add">Add new</button>
+      </div>
+      <div class="search-info"></div>
+      <table>
+        <thead></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <!-- Add 'add new btn' -->
+    <!-- MODAL ADD NEW -->
+    <div class="modal modal-add hidden">
+      <p class="title">Add new employee</p>
+
+      <div class="input-group">
+        <div class="input-row">
+          <label>
+            <span>Name:</span>
+            <input
+              placeholder="Name"
+              required
+              autocomplete="off"
+              type="text"
+              name="name"
+            />
+          </label>
+          <p style="font-size: 0.9rem; font-style: italic" class="log-name">
+            Please enter valid information name
+          </p>
+        </div>
+        <div class="input-row">
+          <label>
+            <span>Address:</span>
+            <input
+              placeholder="Address"
+              required
+              autocomplete="off"
+              type="text"
+              name="address"
+            />
+          </label>
+          <p style="font-size: 0.9rem; font-style: italic" class="log-address">
+            Please enter valid information address
+          </p>
+        </div>
+        <div class="input-row">
+          <label>
+            <span>Province:</span>
+            <div class="province">
+              <input
+                placeholder="Province"
+                required
+                autocomplete="off"
+                type="text"
+                name="province"
+                readonly
+              />
+              <div class="dropdown hidden"></div>
+            </div>
+          </label>
+          <p style="font-size: 0.9rem; font-style: italic" class="log-province">
+            Please enter valid information province
+          </p>
+        </div>
+        <div class="input-row">
+          <label>
+            <span>Age:</span>
+            <input
+              placeholder="Age"
+              required
+              autocomplete="off"
+              type="text"
+              name="age"
+            />
+          </label>
+          <p style="font-size: 0.9rem; font-style: italic" class="log-age">
+            Please enter valid information age
+          </p>
+        </div>
+      </div>
+      <div class="action">
+        <button class="btn btn-cancel">CANCEL</button>
+        <button class="btn btn-save">SAVE</button>
+      </div>
+    </div>
+    <!-- MODAL DELETE ONE -->
+    <div class="modal modal-delete hidden">
+      <p class="title">Delete employee ?</p>
+      <div class="action">
+        <button class="btn btn-cancel btn-no-delete">NO</button>
+        <button class="btn btn-save btn-yes-delete">YES</button>
+      </div>
+    </div>
+    <!-- MODAL EDIT ONE -->
+    <div class="modal modal-edit hidden">
+      <p class="title">Edit employee:</p>
+      <div class="input-group">
+        <div class="input-row">
+          <label>
+            <span>Name:</span>
+            <input
+              placeholder="Name"
+              required
+              autocomplete="off"
+              type="text"
+              name="name"
+            />
+          </label>
+          <p style="font-size: 0.9rem; font-style: italic" class="log-name">
+            Please enter valid update information name
+          </p>
+        </div>
+        <div class="input-row">
+          <label>
+            <span>Address:</span>
+            <input
+              placeholder="Address"
+              required
+              autocomplete="off"
+              type="text"
+              name="address"
+            />
+          </label>
+          <p style="font-size: 0.9rem; font-style: italic" class="log-address">
+            Please enter valid update information address
+          </p>
+        </div>
+        <div class="input-row">
+          <label>
+            <span>Age:</span>
+            <input
+              placeholder="Age"
+              required
+              autocomplete="off"
+              type="text"
+              name="age"
+            />
+          </label>
+          <p style="font-size: 0.9rem; font-style: italic" class="log-age">
+            Please enter valid update information age
+          </p>
+        </div>
+      </div>
+      <div class="action">
+        <button class="btn btn-cancel btn-cancel-edit">CANCEL</button>
+        <button class="btn btn-save btn-save-edit">SAVE</button>
+      </div>
+    </div>
+    <div class="overlay hidden"></div>
+    <script>
+      // Diagram
+      /*
+      +-----------------+
+      |   START: Page   |
+      |      Load       |
+      +-----------------+
+                |
+                v
+      +-----------------+
+      | Initialize      |
+      | `headers` array |
+      +-----------------+
+                |
+                v
+      +-----------------+
+      | Initialize      |
+      | `employees`     |
+      |     array       |
+      +-----------------+
+                |
+                v
+      +-----------------+
+      | Call            |
+      | renderAll()     |
+      +-----------------+
+                |
+                v
+      +-----------------+
+      | Attach Event    |
+      | Listener:       |
+      | Search Input    |
+      +-----------------+
+                |
+                v
+      +-----------------+
+      | Attach Event    |
+      | Listener:       |
+      | "Add new" Btn   |
+      +-----------------+
+                |
+                v
+      +-----------------+
+      |   FUNCTION      |
+      |   renderAll     |
+      | (searchTerm='') |
+      +-----------------+
+                |
+                v
+      +-----------------+
+      | Clear `tbody`   |
+      |  and `searchInfo`|
+      +-----------------+
+                |
+                v
+      +-----------------+
+      | IF searchTerm   |
+      |   is empty?     |
+      +-------+---------+
+              |         |
+              v         v
+      +-----------------+ +-----------------+
+      | FOR EACH        | | Call            |
+      | employee        | | filterEmployees |
+      | in `employees`  | | (searchTerm)    |
+      +-----------------+ +-----------------+
+              |                 |
+              v                 v
+      +-----------------+ +-----------------+
+      | Call            | | IF filtered     |
+      | renderTableRow  | | Employees > 0?  |
+      | (employee)      | +-------+---------+
+      +-----------------+         |         |
+                                  v         v
+                          +-----------------+ +-----------------+
+                          | Set `searchInfo`| | FOR EACH        |
+                          | .textContent    | | employee        |
+                          +-----------------+ | in filtered     |
+                                              | `employees`     |
+                                              +-----------------+
+                                                    |
+                                                    v
+                                          +-----------------+
+                                          | Call            |
+                                          | renderTableRow  |
+                                          | (employee, ...) |
+                                          +-----------------+
+                                                    |
+                                                    v
+                                          +-----------------+
+                                          | ELSE (No       |
+                                          | results)        |
+                                          +-----------------+
+                                                    |
+                                                    v
+                                          +-----------------+
+                                          | Set `searchInfo`|
+                                          | .textContent    |
+                                          +-----------------+
+                                                    |
+                                                    v
+                                          +-----------------+
+                                          |  END FUNCTION   |
+                                          |   renderAll     |
+                                          +-----------------+
+                |
+                v
+      +-----------------+
+      |   FUNCTION      |
+      |  renderTableRow |
+      | (employee, ...) |
+      +-----------------+
+                |
+                v
+      +-----------------+
+      | Create `<tr>`   |
+      +-----------------+
+                |
+                v
+      +-----------------+
+      | FOR EACH        |
+      | header in       |
+      | `headers`       |
+      +-----------------+
+                |
+                v
+      +-----------------+
+      | Create `<td>`   |
+      +-----------------+
+                |
+                v
+      +-----------------+
+      | IF header.name |
+      |   == "action"?  |
+      +-------+---------+
+              |         |
+              v         v
+      +-----------------+ +-----------------+
+      | Create Edit     | | ELSE (Data Cell)|
+      | Button          | +-----------------+
+      +-----------------+         |
+              |                 v
+      +-----------------+ +-----------------+
+      | Attach Click    | | IF header.align |
+      | Listener: Edit  | +-------+---------+
+      +-----------------+         |         |
+              |                 v         v
+      +-----------------+ +-----------------+
+      | Call            | | Get `cellValue` | | IF searchInfo   |
+      | toggleModalEdit | | = employee[...] | | and term match? |
+      | (employee)      | +-----------------+ +-------+---------+
+      | Call            |         |                 |         |
+      | showInfoEditModal|         v                 v         v
+      +-----------------+ +-----------------+ +-----------------+
+                            | Set alignment   | | `td.innerHTML`  | | `td.innerText`  |
+                            +-----------------+ | = highlightText | | = `cellValue`   |
+                                              +-----------------+ +-----------------+
+                                                    |
+                                                    v
+                                          +-----------------+
+                                          | Append `<td>`   |
+                                          | to `<tr>`       |
+                                          +-----------------+
+                |
+                v
+      +-----------------+
+      | Append `<tr>`   |
+      | to `tbody`      |
+      +-----------------+
+                |
+                v
+      +-----------------+
+      |  END FUNCTION   |
+      |  renderTableRow |
+      +-----------------+
+                |
+                v
+      +-----------------+
+      | MODAL: Add New  |
+      | (`.modal-add`)  |
+      +-----------------+
+                |
+                v
+      +-----------------+
+      | Input Listeners |
+      | (Name, Addr, Age)|
+      | -> validateString|
+      +-----------------+
+                |
+                v
+      +-----------------+
+      | "CANCEL" Button |
+      | -> toggleModalAdd|
+      +-----------------+
+                |
+                v
+      +-----------------+
+      | "SAVE" Button   |
+      | -> Validate     |
+      | -> saveNewTo... |
+      | -> toggleModalAdd|
+      | -> renderAll    |
+      +-----------------+
+                |
+                v
+      +-----------------+
+      | MODAL: Delete   |
+      | (`.modal-delete`)|
+      +-----------------+
+                |
+                v
+      +-----------------+
+      | "NO" Button     |
+      | -> toggleModalDel|
+      +-----------------+
+                |
+                v
+      +-----------------+
+      | "YES" Button    |
+      | -> deleteFrom...|
+      | -> toggleModalDel|
+      | -> renderAll    |
+      +-----------------+
+                |
+                v
+      +-----------------+
+      | MODAL: Edit     |
+      | (`.modal-edit`) |
+      +-----------------+
+                |
+                v
+      +-----------------+
+      | Input Listeners |
+      | (Name, Addr, Age)|
+      | -> validateString|
+      +-----------------+
+                |
+                v
+      +-----------------+
+      | "CANCEL" Button |
+      | -> toggleModalEdit|
+      +-----------------+
+                |
+                v
+      +-----------------+
+      | "SAVE" Button   |
+      | -> Validate     |
+      | -> Update       |
+      | -> toggleModalEdit|
+      | -> renderAll    |
+      +-----------------+
+                |
+                v
+      +-----------------+
+      |   END: Script   |
+      |     Execution   |
+      +-----------------+
+      */
+
+      const provinces = [
+        "An Giang",
+        "Ba Ria - Vung Tau",
+        "Bac Giang",
+        "Bac Kan",
+        "Bac Lieu",
+        "Bac Ninh",
+        "Ben Tre",
+        "Binh Dinh",
+        "Binh Duong",
+        "Binh Phuoc",
+        "Binh Thuan",
+        "Ca Mau",
+        "Can Tho",
+        "Cao Bang",
+        "Da Nang",
+        "Dak Lak",
+        "Dak Nong",
+        "Dien Bien",
+        "Dong Nai",
+        "Dong Thap",
+        "Gia Lai",
+        "Ha Giang",
+        "Ha Nam",
+        "Ha Noi",
+        "Ha Tinh",
+        "Hai Duong",
+        "Hai Phong",
+        "Hau Giang",
+        "Ho Chi Minh",
+        "Hoa Binh",
+        "Hung Yen",
+        "Khanh Hoa",
+        "Kien Giang",
+        "Kon Tum",
+        "Lai Chau",
+        "Lam Dong",
+        "Lang Son",
+        "Lao Cai",
+        "Long An",
+        "Nam Dinh",
+        "Nghe An",
+        "Ninh Binh",
+        "Ninh Thuan",
+        "Phu Tho",
+        "Phu Yen",
+        "Quang Binh",
+        "Quang Nam",
+        "Quang Ngai",
+        "Quang Ninh",
+        "Quang Tri",
+        "Soc Trang",
+        "Son La",
+        "Tay Ninh",
+        "Thai Binh",
+        "Thai Nguyen",
+        "Thanh Hoa",
+        "Thua Thien Hue",
+        "Tien Giang",
+        "Tra Vinh",
+        "Tuyen Quang",
+        "Vinh Long",
+        "Vinh Phuc",
+        "Yen Bai",
+      ];
+
+      const headers = [
+        { name: "id", text: "ID", align: "right" },
+        { name: "name", text: "Name" },
+        { name: "address", text: "ADD" },
+        { name: "age", text: "Age" },
+        { name: "province", text: "Province" },
+        { name: "action", text: "Action" },
+      ];
+
+      let employees = [
+        {
+          id: 1,
+          name: "John Smith",
+          address: "123 Maple St",
+          age: 32,
+          province: "Ha Noi",
+        },
+        {
+          id: 2,
+          name: "Sarah Johnson",
+          address: "456 Oak Ave",
+          age: 27,
+          province: "TP Ho Chi Minh",
+        },
+        {
+          id: 3,
+          name: "Michael Davis",
+          address: "789 Pine Rd",
+          age: 45,
+          province: "Da Nang",
+        },
+        {
+          id: 4,
+          name: "Emily Wilson",
+          address: "321 Cedar Ln",
+          age: 29,
+          province: "Hai Phong",
+        },
+        {
+          id: 5,
+          name: "David Brown",
+          address: "654 Birch Dr",
+          age: 38,
+          province: "Can Tho",
+        },
+        {
+          id: 6,
+          name: "Jennifer Lee",
+          address: "987 Elm St",
+          age: 34,
+          province: "Hue",
+        },
+        {
+          id: 7,
+          name: "Robert Johnson",
+          address: "456 Oak Ave",
+          age: 41,
+          province: "TP Ho Chi Minh",
+        },
+        {
+          id: 8,
+          name: "Lisa Smith",
+          address: "753 Maple St",
+          age: 32,
+          province: "Ha Noi",
+        },
+        {
+          id: 9,
+          name: "James Wilson",
+          address: "159 Walnut Ave",
+          age: 29,
+          province: "Binh Duong",
+        },
+        {
+          id: 10,
+          name: "Patricia Davis",
+          address: "852 Pine Rd",
+          age: 36,
+          province: "Da Nang",
+        },
+        {
+          id: 11,
+          name: "Thomas Brown",
+          address: "654 Birch Dr",
+          age: 38,
+          province: "Can Tho",
+        },
+        {
+          id: 12,
+          name: "Mary Johnson",
+          address: "357 Spruce Ct",
+          age: 27,
+          province: "Dong Nai",
+        },
+        {
+          id: 13,
+          name: "Daniel Harris",
+          address: "951 Oak Ave",
+          age: 45,
+          province: "TP Ho Chi Minh",
+        },
+        {
+          id: 14,
+          name: "Jennifer Martin",
+          address: "246 Maple St",
+          age: 34,
+          province: "Ha Noi",
+        },
+        {
+          id: 15,
+          name: "William Clark",
+          address: "135 Cedar Ln",
+          age: 41,
+          province: "Hai Phong",
+        },
+      ];
+
+      // Add provinces to dropdown list
+      const dropdown = document.querySelector(".dropdown");
+
+      // Listen event keydown or keyup
+      const provinceInputE = document.querySelector(
+        ".province input[name='province']"
+      );
+      let controlCount = 0;
+      let lengthProvinces = provinces.length;
+
+      const reRenderDropdown = () => {
+        const dropdownItem = document.querySelectorAll(
+          `.dropdown-item`
+        );
+        dropdownItem.forEach((dps) => {
+          dps.style.background = "#fff";
+        });
+      };
+
+      provinceInputE.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowDown") {
+          if (controlCount < lengthProvinces) controlCount++;
+          const dropdownItem = document.querySelectorAll(
+            `.dropdown-item:nth-child(${controlCount})`
+          );
+          reRenderDropdown();
+          dropdownItem.forEach((dps) => {
+            dps.style.background = "#ccc";
+          });
+          console.log(dropdownItem[0].innerText);
+          console.log(controlCount, lengthProvinces);
+          
+          e.target.value = dropdownItem[0].innerText;
+        }
+        if (e.key === "ArrowUp") {
+          if (controlCount > 1) controlCount--;
+          const dropdownItem = document.querySelectorAll(
+            `.dropdown-item:nth-child(${controlCount})`
+          );
+          reRenderDropdown();
+          dropdownItem.forEach((dps) => {
+            dps.style.background = "#ccc";
+          });
+          console.log(controlCount, lengthProvinces);
+          
+          console.log(controlCount);
+        }
+        if(e.key === "Enter") dropdown.classList.toggle("hidden");
+      });
+
+
+
+      // Filter province when type province to search
+
+      provinceInputE.addEventListener("input", (e) => {
+        let provinceResult = filterProvince(e.target.value);
+        lengthProvinces = provinceResult.length;
+        renderProvinceDropdown(provinceResult);
+        controlCount = 0;
+        console.log(e, lengthProvinces);
+      });
+
+      provinceInputE.addEventListener("click", (e)=>{
+        dropdown.classList.toggle("hidden");
+      })
+
+
+      // Show to dropdown arrProvince
+
+      const renderProvinceDropdown = (provincesArr) => {
+        dropdown.innerHTML = "";
+        provincesArr.forEach((province) => {
+          const dropdownItem = document.createElement("div");
+          dropdownItem.setAttribute("class", "dropdown-item");
+          dropdownItem.innerText = province;
+          dropdown.appendChild(dropdownItem);
+        });
+      };
+      renderProvinceDropdown(provinces);
+      // Filter province
+      const filterProvince = (provinceInput) => {
+        let arrFilter = provinces.filter((province) =>
+          province.toLowerCase().includes(provinceInput.toLowerCase())
+        );
+        // console.log(provinceInput);
+        // console.log(arrFilter);
+        return arrFilter;
+      };
+
+      
+
+      // Find max id and return max id in array
+      const findMaxIdValue = (arr) => {
+        let max = arr[0].id;
+        arr.forEach((element) => {
+          if (max < element.id) max = element.id;
+        });
+        return max;
+      };
+
+      // Validate input array
+      function validateName(name) {
+        if (typeof name !== "string") {
+          return [false, "Name is not a string."];
+        }
+
+        const trimmed = name.trim();
+
+        if (trimmed.length === 0) {
+          return [false, "Name is empty or just spaces."];
+        }
+
+        if (name !== trimmed) {
+          return [false, "Name has leading or trailing spaces."];
+        }
+
+        if (/[^A-Za-zÀ-ÿ\s'-]/.test(trimmed)) {
+          return [false, "Name contains invalid characters."];
+        }
+
+        if (!/^[A-Za-zÀ-ÿ]+([ '-][A-Za-zÀ-ÿ]+)*$/.test(trimmed)) {
+          return [false, "Name is not in a valid format."];
+        }
+
+        return [true, "Valid name."];
+      }
+
+      // Validate address
+      function validateAddress(address) {
+        if (typeof address !== "string") {
+          return [false, "Address is not a string."];
+        }
+
+        const trimmed = address.trim();
+
+        if (trimmed.length === 0) {
+          return [false, "Address is empty or just spaces."];
+        }
+
+        if (address !== trimmed) {
+          return [false, "Address has leading or trailing spaces."];
+        }
+
+        // Allow letters, digits, space, comma, period, hyphen, apostrophe
+        if (/[^A-Za-zÀ-ÿ0-9\s,.'-]/.test(trimmed)) {
+          return [false, "Address contains invalid characters."];
+        }
+
+        return [true, "Valid address."];
+      }
+
+      // Validate age
+      function validateAge(age) {
+        if (typeof age === "string" && !/^\d+$/.test(age)) {
+          return [false, "Age must be a properly formatted integer string."];
+        }
+        const num = Number(age);
+
+        if (isNaN(num)) {
+          return [false, "Age is not a number."];
+        }
+
+        if (!Number.isInteger(num)) {
+          return [false, "Age must be an integer."];
+        }
+
+        if (num < 0 || num > 120) {
+          return [false, "Age must be between 0 and 120."];
+        }
+
+        return [true, "Valid age."];
+      }
+
+      function capitalizeWords(str) {
+        return str
+          .toLowerCase() // Convert the whole string to lowercase first
+          .split(" ") // Split the string into words
+          .map((word) => {
+            return word.charAt(0).toUpperCase() + word.slice(1);
+          })
+          .join(" "); // Join the words back into a single string
+      }
+
+      // Highlight function for search terms
+      function highlightText(text, searchTerm) {
+        if (!searchTerm || searchTerm.trim() === "") return text;
+
+        const searchTermLower = searchTerm.toLowerCase();
+        const textStr = text.toString();
+        const textLower = textStr.toLowerCase();
+
+        // If search term not found in text, return original text
+        if (textLower.indexOf(searchTermLower) === -1) return textStr;
+
+        const regex = new RegExp(
+          `(${searchTerm.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`,
+          "gi"
+        );
+        return textStr.replace(
+          regex,
+          '<span class="highlight-search">$1</span>'
+        );
+      }
+
+      const renderTableRow = (employee, searchInfo = {}) => {
+        const tr = document.createElement("tr");
+
+        for (let headerText of headers) {
+          const td = document.createElement("td");
+
+          if (headerText.name === "action") {
+            // Action buttons (edit/delete)
+            const editBtn = document.createElement("span");
+            const deleteBtn = document.createElement("span");
+
+            editBtn.setAttribute("class", "mdi mdi-pencil-outline");
+            editBtn.addEventListener("click", () => {
+              toggleModalEdit(employee);
+              showInfoEditModal();
+            });
+
+            deleteBtn.setAttribute("class", "mdi mdi-trash-can-outline");
+            deleteBtn.addEventListener("click", () => {
+              toggleModalDelete(employee);
+            });
+
+            td.appendChild(editBtn);
+            td.appendChild(deleteBtn);
+          } else {
+            // Regular data cells
+            if (headerText.align) td.style.textAlign = `${headerText.align}`;
+
+            const cellValue = employee[headerText.name];
+
+            // Apply highlighting based on which field matched
+            if (searchInfo.term && searchInfo.field === headerText.name) {
+              td.innerHTML = highlightText(cellValue, searchInfo.term);
+            } else {
+              td.innerText = cellValue;
+            }
+          }
+
+          tr.appendChild(td);
+        }
+
+        tbody.appendChild(tr);
+      };
+
+      const thead = document.querySelector("thead");
+
+      const tr = document.createElement("tr");
+      thead.appendChild(tr);
+
+      for (let tdText of headers) {
+        const td = document.createElement("th");
+        td.innerText = tdText.text;
+        tr.appendChild(td);
+      }
+
+      const tbody = document.querySelector("tbody");
+      const inputE = document.querySelector("input");
+      const searchInfo = document.querySelector(".search-info");
+
+      // Function to filter employees based on search term with priority
+      const filterEmployees = (searchTerm) => {
+        if (!searchTerm) return { employees: employees, matchType: null };
+
+        const searchTermLower = searchTerm.toLowerCase();
+        let filteredEmployees = [];
+        let matchType = null;
+
+        // First priority: search by name
+        filteredEmployees = employees.filter((employee) =>
+          employee.name.toLowerCase().includes(searchTermLower)
+        );
+
+        if (filteredEmployees.length > 0) {
+          matchType = "name";
+          return { employees: filteredEmployees, matchType };
+        }
+
+        // Second priority: search by address
+        filteredEmployees = employees.filter((employee) =>
+          employee.address.toLowerCase().includes(searchTermLower)
+        );
+
+        if (filteredEmployees.length > 0) {
+          matchType = "address";
+          return { employees: filteredEmployees, matchType };
+        }
+
+        // Third priority: search by age (convert age to string for comparison)
+        filteredEmployees = employees.filter((employee) =>
+          employee.age.toString().includes(searchTerm)
+        );
+
+        if (filteredEmployees.length > 0) {
+          matchType = "age";
+          return { employees: filteredEmployees, matchType };
+        }
+
+        return { employees: [], matchType: null };
+      };
+
+      // Function Render all employees
+      const renderAll = (searchTerm = "") => {
+        tbody.innerHTML = "";
+        searchInfo.textContent = "";
+
+        if (!searchTerm) {
+          // When no search term, show all employees
+          for (let employee of employees) {
+            renderTableRow(employee);
+          }
+        } else {
+          // When searching, filter by priority and highlight matches
+          const { employees: filteredEmployees, matchType } =
+            filterEmployees(searchTerm);
+
+          if (filteredEmployees.length > 0) {
+            // Set search info text
+            searchInfo.textContent = `Found ${filteredEmployees.length} results matching "${searchTerm}" in ${matchType}`;
+
+            // Render with highlighting
+            for (let employee of filteredEmployees) {
+              renderTableRow(employee, { term: searchTerm, field: matchType });
+            }
+          } else {
+            searchInfo.textContent = `No results found for "${searchTerm}"`;
+          }
+        }
+      };
+
+      window.onload = renderAll();
+
+      // Search functionality
+      inputE.addEventListener("input", (e) => {
+        const searchTerm = e.target.value.trim();
+        renderAll(searchTerm);
+      });
+
+      //  ADD NEW EMP
+      const btnAdd = document.querySelector(".btn-add");
+      const toggleModalAdd = () => {
+        const modalAdd = document.querySelector(".modal-add");
+        modalAdd.classList.toggle("hidden");
+        const overlay = document.querySelector(".overlay");
+        overlay.classList.toggle("hidden");
+      };
+      btnAdd.addEventListener("click", toggleModalAdd);
+      // cancel while in add modal
+      const btnCancel = document.querySelector(".btn-cancel");
+      btnCancel.addEventListener("click", toggleModalAdd);
+      // save adding modal
+
+      const saveNewToEmployees = (name, address, age,province) => {
+        const newEmployee = {
+          id: findMaxIdValue(employees) + 1,
+          name,
+          address,
+          age: Number(age),
+          province
+        };
+        employees.push(newEmployee);
+      };
+
+      const btnSave = document.querySelector(".btn-save");
+      const inputAddName = document.querySelector(
+        ".modal-add input[name='name']"
+      );
+      const inputAddAddress = document.querySelector(
+        ".modal-add input[name='address']"
+      );
+      const inputAddAge = document.querySelector(
+        ".modal-add input[name='age']"
+      );
+      const inputAddProvince = document.querySelector(
+         ".modal-add input[name='province']"
+      );
+     
+
+      // Get log-infos
+      const logName = document.querySelector(".modal-add .log-name");
+      const logAddress = document.querySelector(".modal-add .log-address");
+      const logAge = document.querySelector(".modal-add .log-age");
+
+      // Check validate and show to log info
+      const validateString = (logName, validateName, inputAddName) => {
+        logName.style.color = "black";
+        if (!validateName(inputAddName.value)[0]) logName.style.color = "red";
+        logName.innerText = validateName(inputAddName.value)[1];
+      };
+
+      inputAddName.addEventListener("input", () => {
+        validateString(logName, validateName, inputAddName);
+      });
+
+      inputAddAddress.addEventListener("input", () => {
+        validateString(logAddress, validateAddress, inputAddAddress);
+      });
+
+      inputAddAge.addEventListener("input", () => {
+        validateString(logAge, validateAge, inputAddAge);
+      });
+
+      btnSave.addEventListener("click", () => {
+        if (
+          validateName(inputAddName.value)[0] &&
+          validateAddress(inputAddAddress.value)[0] &&
+          validateAge(inputAddAge.value)[0]
+        ) {
+          saveNewToEmployees(
+            capitalizeWords(inputAddName.value),
+            inputAddAddress.value,
+            inputAddAge.value,
+            inputAddProvince.value
+          );
+
+          // Clear previous input add data
+          inputAddName.value = "";
+          inputAddAddress.value = "";
+          inputAddAge.value = "";
+
+          toggleModalAdd();
+          // Render all employees and preserve search
+          const searchTerm = inputE.value.trim();
+          renderAll(searchTerm);
+          console.log(employees);
+        } else {
+          validateString(logName, validateName, inputAddName);
+          validateString(logAddress, validateAddress, inputAddAddress);
+          validateString(logAge, validateAge, inputAddAge);
+        }
+      });
+
+      // DELETE EMPLOYEE
+      let employeeTempDelete = {};
+      const toggleModalDelete = (employee) => {
+        // Open modal and overlay
+        let name = employee["name"];
+        const modalDelete = document.querySelector(".modal-delete");
+        const overlay = document.querySelector(".overlay");
+        modalDelete.classList.toggle("hidden");
+        overlay.classList.toggle("hidden");
+        const titleDelete = document.querySelector(".modal-delete .title");
+        titleDelete.innerText = `Delete employee : ${name} ? Are you sure!!`;
+
+        employeeTempDelete = employee;
+      };
+
+      const btnNoDelete = document.querySelector(".btn-no-delete");
+      btnNoDelete.addEventListener("click", () => {
+        const modalDelete = document.querySelector(".modal-delete");
+        modalDelete.classList.toggle("hidden");
+        const overlay = document.querySelector(".overlay");
+        overlay.classList.toggle("hidden");
+      });
+
+      const deleteFromEmployeeId = (id, name) => {
+        let employeeDelete = [...employees].find(
+          (employee) => employee.id == id
+        );
+        employees = [...employees].filter((employee) => employee.id !== id);
+        console.log(employees);
+        toggleModalDelete(employeeDelete);
+
+        // Preserve search term after delete
+        const searchTerm = inputE.value.trim();
+        renderAll(searchTerm);
+      };
+
+      const btnYesDelete = document.querySelector(".btn-yes-delete");
+      btnYesDelete.addEventListener("click", () => {
+        deleteFromEmployeeId(employeeTempDelete.id, employeeTempDelete.name);
+      });
+
+      // EDIT EMPLOYEE
+
+      let employeeEditTemp = {};
+      const toggleModalEdit = (employee) => {
+        const modalEdit = document.querySelector(".modal-edit");
+        modalEdit.classList.toggle("hidden");
+        const overlay = document.querySelector(".overlay");
+        overlay.classList.toggle("hidden");
+        employeeEditTemp = employee;
+      };
+
+      // Chose log-infos edit
+      // Get log-infos
+      const logNameEdit = document.querySelector(".modal-edit .log-name");
+      const logAddressEdit = document.querySelector(".modal-edit .log-address");
+      const logAgeEdit = document.querySelector(".modal-edit .log-age");
+      // Get input update string
+      const inputEditName = document.querySelector(
+        ".modal-edit input[name='name']"
+      );
+      const inputEditAddress = document.querySelector(
+        ".modal-edit input[name='address']"
+      );
+      const inputEditAge = document.querySelector(
+        ".modal-edit input[name='age']"
+      );
+      inputEditName.addEventListener("input", () => {
+        validateString(logNameEdit, validateName, inputEditName);
+      });
+      inputEditAddress.addEventListener("input", () => {
+        validateString(logAddressEdit, validateAddress, inputEditAddress);
+      });
+      inputEditAge.addEventListener("input", () => {
+        validateString(logAgeEdit, validateAge, inputEditAge);
+      });
+
+      const showInfoEditModal = () => {
+        inputEditName.value = employeeEditTemp.name;
+        inputEditAddress.value = employeeEditTemp.address;
+        inputEditAge.value = employeeEditTemp.age;
+        validateString(logNameEdit, validateName, inputEditName);
+        validateString(logAddressEdit, validateAddress, inputEditAddress);
+        validateString(logAgeEdit, validateAge, inputEditAge);
+      };
+
+      const btnCancelEdit = document.querySelector(".btn-cancel-edit");
+      btnCancelEdit.addEventListener("click", () => {
+        toggleModalEdit();
+      });
+
+      const btnSaveEdit = document.querySelector(".btn-save-edit");
+      btnSaveEdit.addEventListener("click", () => {
+        if (
+          validateName(inputEditName.value)[0] &&
+          validateAddress(inputEditAddress.value)[0] &&
+          validateAge(inputEditAge.value)[0]
+        ) {
+          let employeeUpdate = {};
+          employeeUpdate = {
+            id: employeeEditTemp.id,
+            name: capitalizeWords(inputEditName.value),
+            address: inputEditAddress.value,
+            age: Number(inputEditAge.value),
+          };
+          let employeeUp = employees.findIndex(
+            (eml) => eml.id === employeeUpdate.id
+          );
+          // employeeUp = employeeUpdate;
+          employees[employeeUp] = employeeUpdate;
+          console.log(employees);
+          toggleModalEdit();
+
+          // Preserve search term after edit
+          const searchTerm = inputE.value.trim();
+          renderAll(searchTerm);
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -315,6 +315,24 @@
         </div>
         <div class="input-row">
           <label>
+            <span>Province:</span>
+            <div class="province">
+              <input
+                placeholder="Province"
+                required
+                autocomplete="off"
+                type="text"
+                name="province"
+              />
+              <div class="dropdown hidden"></div>
+            </div>
+          </label>
+          <p style="font-size: 0.9rem; font-style: italic" class="log-province">
+            Please enter valid information province
+          </p>
+        </div>
+        <div class="input-row">
+          <label>
             <span>Age:</span>
             <input
               placeholder="Age"
@@ -676,7 +694,7 @@
           address: "123 Maple St",
           age: 32,
           province: "Ha Noi",
-          searchStr: "1|John Smith|123 Maple St|Ha Noi|32",
+          searchStr: "John Smith|123 Maple St|Ha Noi|32",
         },
         {
           id: 2,
@@ -684,7 +702,7 @@
           address: "456 Oak Ave",
           age: 27,
           province: "TP Ho Chi Minh",
-          searchStr: "2|Sarah Johnson|456 Oak Ave|TP Ho Chi Minh|27",
+          searchStr: "Sarah Johnson|456 Oak Ave|TP Ho Chi Minh|27",
         },
         {
           id: 3,
@@ -692,7 +710,7 @@
           address: "789 Pine Rd",
           age: 45,
           province: "Da Nang",
-          searchStr: "3|Michael Davis|789 Pine Rd|Da Nang|45",
+          searchStr: "Michael Davis|789 Pine Rd|Da Nang|45",
         },
         {
           id: 4,
@@ -700,7 +718,7 @@
           address: "321 Cedar Ln",
           age: 29,
           province: "Hai Phong",
-          searchStr: "4|Emily Wilson|321 Cedar Ln|Hai Phong|29",
+          searchStr: "Emily Wilson|321 Cedar Ln|Hai Phong|29",
         },
         {
           id: 5,
@@ -708,7 +726,7 @@
           address: "654 Birch Dr",
           age: 38,
           province: "Can Tho",
-          searchStr: "5|David Brown|654 Birch Dr|Can Tho|38",
+          searchStr: "David Brown|654 Birch Dr|Can Tho|38",
         },
         {
           id: 6,
@@ -716,7 +734,7 @@
           address: "987 Elm St",
           age: 34,
           province: "Hue",
-          searchStr: "6|Jennifer Lee|987 Elm St|Hue|34",
+          searchStr: "Jennifer Lee|987 Elm St|Hue|34",
         },
         {
           id: 7,
@@ -724,7 +742,7 @@
           address: "456 Oak Ave",
           age: 41,
           province: "TP Ho Chi Minh",
-          searchStr: "7|Robert Johnson|456 Oak Ave|TP Ho Chi Minh|41",
+          searchStr: "Robert Johnson|456 Oak Ave|TP Ho Chi Minh|41",
         },
         {
           id: 8,
@@ -732,7 +750,7 @@
           address: "753 Maple St",
           age: 32,
           province: "Ha Noi",
-          searchStr: "8|Lisa Smith|753 Maple St|Ha Noi|32",
+          searchStr: "Lisa Smith|753 Maple St|Ha Noi|32",
         },
         {
           id: 9,
@@ -740,7 +758,7 @@
           address: "159 Walnut Ave",
           age: 29,
           province: "Binh Duong",
-          searchStr: "9|James Wilson|159 Walnut Ave|Binh Duong|29",
+          searchStr: "James Wilson|159 Walnut Ave|Binh Duong|29",
         },
         {
           id: 10,
@@ -748,7 +766,7 @@
           address: "852 Pine Rd",
           age: 36,
           province: "Da Nang",
-          searchStr: "10|Patricia Davis|852 Pine Rd|Da Nang|36",
+          searchStr: "Patricia Davis|852 Pine Rd|Da Nang|36",
         },
         {
           id: 11,
@@ -756,7 +774,7 @@
           address: "654 Birch Dr",
           age: 38,
           province: "Can Tho",
-          searchStr: "11|Thomas Brown|654 Birch Dr|Can Tho|38",
+          searchStr: "Thomas Brown|654 Birch Dr|Can Tho|38",
         },
         {
           id: 12,
@@ -764,7 +782,7 @@
           address: "357 Spruce Ct",
           age: 27,
           province: "Dong Nai",
-          searchStr: "12|Mary Johnson|357 Spruce Ct|Dong Nai|27",
+          searchStr: "Mary Johnson|357 Spruce Ct|Dong Nai|27",
         },
         {
           id: 13,
@@ -772,7 +790,7 @@
           address: "951 Oak Ave",
           age: 45,
           province: "TP Ho Chi Minh",
-          searchStr: "13|Daniel Harris|951 Oak Ave|TP Ho Chi Minh|45",
+          searchStr: "Daniel Harris|951 Oak Ave|TP Ho Chi Minh|45",
         },
         {
           id: 14,
@@ -780,7 +798,7 @@
           address: "246 Maple St",
           age: 34,
           province: "Ha Noi",
-          searchStr: "14|Jennifer Martin|246 Maple St|Ha Noi|34",
+          searchStr: "Jennifer Martin|246 Maple St|Ha Noi|34",
         },
         {
           id: 15,
@@ -788,7 +806,7 @@
           address: "135 Cedar Ln",
           age: 41,
           province: "Hai Phong",
-          searchStr: "15|William Clark|135 Cedar Ln|Hai Phong|41",
+          searchStr: "William Clark|135 Cedar Ln|Hai Phong|41",
         },
       ];
 
@@ -800,6 +818,146 @@
         ".province input[name='province']"
       );
       const provinceRow = document.querySelector(".province");
+
+      // console.log(provinceRow);
+      // let controlCount = 0;
+      // let lengthProvinces = provinces.length;
+
+      // const reRenderDropdown = () => {
+      //   console.log("reRenderDropdown");
+      //   const dropdownItem = document.querySelectorAll(`.dropdown-item`);
+      //   dropdownItem.forEach((dps) => {
+      //     dps.style.background = "#fff";
+      //   });
+      // };
+
+      // provinceInputE.addEventListener("keydown", (e) => {
+      //   if (e.key === "ArrowDown") {
+      //     dropdown.classList.remove("hidden");
+      //     if (controlCount < lengthProvinces) controlCount++;
+      //     const dropdownItem = document.querySelectorAll(
+      //       `.dropdown-item:nth-child(${controlCount})`
+      //     );
+      //     reRenderDropdown();
+      //     dropdownItem.forEach((dps) => {
+      //       dps.style.background = "#ccc";
+      //     });
+      //     console.log(dropdownItem[0].innerText);
+      //     console.log(controlCount, lengthProvinces);
+
+      //     e.target.value = dropdownItem[0].innerText;
+      //   }
+      //   if (e.key === "ArrowUp") {
+      //     dropdown.classList.remove("hidden");
+      //     if (controlCount > 1) controlCount--;
+      //     const dropdownItem = document.querySelectorAll(
+      //       `.dropdown-item:nth-child(${controlCount})`
+      //     );
+      //     reRenderDropdown();
+      //     dropdownItem.forEach((dps) => {
+      //       dps.style.background = "#ccc";
+      //     });
+      //     console.log(dropdownItem[0].innerText);
+      //     console.log(controlCount, lengthProvinces);
+      //     e.target.value = dropdownItem[0].innerText;
+      //   }
+      //   if (e.key === "Enter") {
+      //     dropdown.classList.toggle("hidden");
+      //   }
+      // });
+
+      // // Filter province when type province to search
+      // provinceInputE.addEventListener("input", (e) => {
+      //   console.log(`provinceInputE.addEventListener("input"`);
+      //   let provinceResult = filterProvince(e.target.value);
+      //   lengthProvinces = provinceResult.length;
+      //   renderProvinceDropdown(provinceResult);
+      //   controlCount = 0;
+      //   // Show dropdown when typing
+      //   dropdown.classList.remove("hidden");
+      // });
+
+      // // Click outside both input and dropdown to hide dropdown
+      // document.addEventListener("click", function (e) {
+      //   e.stopPropagation();
+      //   console.log(`document.addEventListener("click"`);
+      //   if (
+      //     !provinceInputE.contains(e.target) &&
+      //     !dropdown.contains(e.target)
+      //   ) {
+      //     dropdown.classList.add("hidden");
+      //   }
+      // });
+
+      // provinceRow.addEventListener("click", (e) => {
+      //   console.log(`provinceRow.addEventListener("click"`);
+      //   dropdown.classList.toggle("hidden");
+      // });
+
+      // // Show to dropdown arrProvince
+      // const renderProvinceDropdown = (provincesArr) => {
+      //   console.log(`renderProvinceDropdown = (provincesArr)`);
+      //   dropdown.innerHTML = "";
+      //   provincesArr.forEach((province) => {
+      //     const dropdownItem = document.createElement("div");
+      //     dropdownItem.setAttribute("class", "dropdown-item");
+      //     dropdownItem.innerText = province;
+
+      //     // Single click handler with proper event handling
+      //     dropdownItem.addEventListener("click", (e) => {
+      //       console.log(`dropdownItem.addEventListener("click"`);
+      //       // Stop event propagation to prevent other click handlers from firing
+      //       e.stopPropagation();
+      //       e.stopImmediatePropagation();
+      //       provinceInputE.value = province;
+      //       console.log("Đã chọn: " + province);
+      //     });
+
+      //     dropdownItem.addEventListener("mouseover", () => {
+      //       reRenderDropdown();
+      //       dropdownItem.style.background = "#ccc";
+      //     });
+
+      //     dropdown.appendChild(dropdownItem);
+      //   });
+      // };
+
+      // renderProvinceDropdown(provinces);
+
+      // // Scroll follow hover or arrow
+      // // *******
+
+      // let currentIndex = -1;
+
+      // provinceInputE.addEventListener("keydown", (e) => {
+      //   const items = dropdown.querySelectorAll(".dropdown-item");
+      //   if (dropdown.classList.contains("hidden")) return;
+
+      //   if (e.key === "ArrowDown") {
+      //     currentIndex = Math.min(currentIndex + 1, items.length - 1);
+      //     updateActiveItem(items);
+      //     console.log(currentIndex);
+      //   } else if (e.key === "ArrowUp") {
+      //     currentIndex = Math.max(currentIndex - 1, 0);
+      //     updateActiveItem(items);
+      //     console.log(currentIndex);
+      //   }
+      // });
+
+      // function updateActiveItem(items) {
+      //   items.forEach((item, index) => {
+      //     if (index === currentIndex) {
+      //       item.classList.add("active");
+      //       console.log(dropdown.scrollTop);
+      //       dropdown.scrollTop = item.offsetTop - dropdown.offsetTop - 150;
+      //       console.log(dropdown.scrollTop);
+      //     } else {
+      //       item.classList.remove("active");
+      //     }
+      //   });
+      // }
+      // **** Test group add Modal
+
       console.log(provinceRow);
       let controlCount = 0;
       let lengthProvinces = provinces.length;
@@ -937,7 +1095,11 @@
           }
         });
       }
+
       // *******
+      // Edit province
+
+      // ***
 
       // Filter province
       const filterProvince = (provinceInput) => {
@@ -1060,7 +1222,7 @@
           '<span class="highlight-search">$1</span>'
         );
       }
-
+      let isEdit = null;
       const renderTableRow = (employee, searchInfo = {}) => {
         const tr = document.createElement("tr");
 
@@ -1074,8 +1236,9 @@
 
             editBtn.setAttribute("class", "mdi mdi-pencil-outline");
             editBtn.addEventListener("click", () => {
-              toggleModalEdit(employee);
-              showInfoEditModal();
+              toggleModalAdd(employee);
+              isEdit = true;
+              showInfoEditModal(employee);
             });
 
             deleteBtn.setAttribute("class", "mdi mdi-trash-can-outline");
@@ -1189,7 +1352,7 @@
               renderTableRow(employee, { term: searchTerm, field: matchType });
             }
           } else {
-            searchInfo.textContent = `No results found for "${searchTerm}"`;
+            //searchInfo.textContent = `No results found for "${searchTerm}"`;
           }
         }
       };
@@ -1208,19 +1371,6 @@
         );
       };
 
-      // Function highlight
-      // function highlightText(text, keyword) {
-      //   if (!keyword) {return text;
-      //     console.log("highlightText");
-      //   }
-      //   const regex = new RegExp(`(${keyword})`, "gi");
-      //   console.log("highlightText");
-      //   return text.replace(
-      //     regex,
-      //     `<span style="background-color: yellow">Dang quan</span>`
-      //   );
-      // }
-
       const highlightResultSStr = (searchResults, searchTerm) => {
         const tdResultsSearch = document.querySelectorAll(
           "tbody td:not(:last-child):not(:first-child)"
@@ -1229,7 +1379,7 @@
         tdResultsSearch.forEach((td) => {
           if (td.innerText.toLowerCase().includes(searchTerm.toLowerCase()))
             console.log(td.innerText);
-          td.innerHTML =  highlightText(td.innerText,searchTerm)
+          td.innerHTML = highlightText(td.innerText, searchTerm);
         });
       };
       // Search functionality
@@ -1304,12 +1454,15 @@
       inputAddAge.addEventListener("input", () => {
         validateString(logAge, validateAge, inputAddAge);
       });
+      // Temp var to save edit employee
+      let employeeEditTemp = {};
 
       btnSave.addEventListener("click", () => {
         if (
           validateName(inputAddName.value)[0] &&
           validateAddress(inputAddAddress.value)[0] &&
-          validateAge(inputAddAge.value)[0]
+          validateAge(inputAddAge.value)[0] &&
+          !isEdit
         ) {
           saveNewToEmployees(
             capitalizeWords(inputAddName.value),
@@ -1328,6 +1481,32 @@
           const searchTerm = inputE.value.trim();
           renderAll(searchTerm);
           console.log(employees);
+        } else if (
+          isEdit &&
+          validateName(inputAddName.value)[0] &&
+          validateAddress(inputAddAddress.value)[0] &&
+          validateAge(inputAddAge.value)[0]
+        ) {
+          console.log(employeeEditTemp);
+          let employeeUpdate = {};
+          employeeUpdate = {
+            id: employeeEditTemp.id,
+            name: capitalizeWords(inputAddName.value),
+            address: inputAddAddress.value,
+            province:inputAddProvince.value,
+            age: Number(inputAddAge.value),
+            searchStr: `${capitalizeWords(inputAddName.value)}|${inputAddAddress.value}|${inputAddProvince.value}|${inputAddAge.value}`,
+          };
+          let employeeUp = employees.findIndex(
+            (eml) => eml.id === employeeUpdate.id
+          );
+          // employeeUp = employeeUpdate;
+          employees[employeeUp] = employeeUpdate;
+          console.log(employees);
+          toggleModalAdd();
+          // Preserve search term after edit
+          const searchTerm = inputE.value.trim();
+          renderAll(searchTerm);
         } else {
           validateString(logName, validateName, inputAddName);
           validateString(logAddress, validateAddress, inputAddAddress);
@@ -1368,7 +1547,10 @@
 
         // Preserve search term after delete
         const searchTerm = inputE.value.trim();
-        renderAll(searchTerm);
+        console.log(searchBySearchStr(searchTerm));
+        searchResults = searchBySearchStr(searchTerm);
+        renderBySearchStr(searchResults);
+        highlightResultSStr(searchResults, searchTerm);
       };
 
       const btnYesDelete = document.querySelector(".btn-yes-delete");
@@ -1378,7 +1560,6 @@
 
       // EDIT EMPLOYEE
 
-      let employeeEditTemp = {};
       const toggleModalEdit = (employee) => {
         const modalEdit = document.querySelector(".modal-edit");
         modalEdit.classList.toggle("hidden");
@@ -1412,10 +1593,12 @@
         validateString(logAgeEdit, validateAge, inputEditAge);
       });
 
-      const showInfoEditModal = () => {
-        inputEditName.value = employeeEditTemp.name;
-        inputEditAddress.value = employeeEditTemp.address;
-        inputEditAge.value = employeeEditTemp.age;
+      const showInfoEditModal = (employEditTemp) => {
+        employeeEditTemp = employEditTemp;
+        inputAddName.value = employEditTemp.name;
+        inputAddAddress.value = employEditTemp.address;
+        inputAddAge.value = employEditTemp.age;
+        inputAddProvince.value = employEditTemp.province;
         validateString(logNameEdit, validateName, inputEditName);
         validateString(logAddressEdit, validateAddress, inputEditAddress);
         validateString(logAgeEdit, validateAge, inputEditAge);

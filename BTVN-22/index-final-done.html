@@ -676,6 +676,7 @@
           address: "123 Maple St",
           age: 32,
           province: "Ha Noi",
+          searchStr: "1|John Smith|123 Maple St|Ha Noi|32",
         },
         {
           id: 2,
@@ -683,6 +684,7 @@
           address: "456 Oak Ave",
           age: 27,
           province: "TP Ho Chi Minh",
+          searchStr: "2|Sarah Johnson|456 Oak Ave|TP Ho Chi Minh|27",
         },
         {
           id: 3,
@@ -690,6 +692,7 @@
           address: "789 Pine Rd",
           age: 45,
           province: "Da Nang",
+          searchStr: "3|Michael Davis|789 Pine Rd|Da Nang|45",
         },
         {
           id: 4,
@@ -697,6 +700,7 @@
           address: "321 Cedar Ln",
           age: 29,
           province: "Hai Phong",
+          searchStr: "4|Emily Wilson|321 Cedar Ln|Hai Phong|29",
         },
         {
           id: 5,
@@ -704,6 +708,7 @@
           address: "654 Birch Dr",
           age: 38,
           province: "Can Tho",
+          searchStr: "5|David Brown|654 Birch Dr|Can Tho|38",
         },
         {
           id: 6,
@@ -711,6 +716,7 @@
           address: "987 Elm St",
           age: 34,
           province: "Hue",
+          searchStr: "6|Jennifer Lee|987 Elm St|Hue|34",
         },
         {
           id: 7,
@@ -718,6 +724,7 @@
           address: "456 Oak Ave",
           age: 41,
           province: "TP Ho Chi Minh",
+          searchStr: "7|Robert Johnson|456 Oak Ave|TP Ho Chi Minh|41",
         },
         {
           id: 8,
@@ -725,6 +732,7 @@
           address: "753 Maple St",
           age: 32,
           province: "Ha Noi",
+          searchStr: "8|Lisa Smith|753 Maple St|Ha Noi|32",
         },
         {
           id: 9,
@@ -732,6 +740,7 @@
           address: "159 Walnut Ave",
           age: 29,
           province: "Binh Duong",
+          searchStr: "9|James Wilson|159 Walnut Ave|Binh Duong|29",
         },
         {
           id: 10,
@@ -739,6 +748,7 @@
           address: "852 Pine Rd",
           age: 36,
           province: "Da Nang",
+          searchStr: "10|Patricia Davis|852 Pine Rd|Da Nang|36",
         },
         {
           id: 11,
@@ -746,6 +756,7 @@
           address: "654 Birch Dr",
           age: 38,
           province: "Can Tho",
+          searchStr: "11|Thomas Brown|654 Birch Dr|Can Tho|38",
         },
         {
           id: 12,
@@ -753,6 +764,7 @@
           address: "357 Spruce Ct",
           age: 27,
           province: "Dong Nai",
+          searchStr: "12|Mary Johnson|357 Spruce Ct|Dong Nai|27",
         },
         {
           id: 13,
@@ -760,6 +772,7 @@
           address: "951 Oak Ave",
           age: 45,
           province: "TP Ho Chi Minh",
+          searchStr: "13|Daniel Harris|951 Oak Ave|TP Ho Chi Minh|45",
         },
         {
           id: 14,
@@ -767,6 +780,7 @@
           address: "246 Maple St",
           age: 34,
           province: "Ha Noi",
+          searchStr: "14|Jennifer Martin|246 Maple St|Ha Noi|34",
         },
         {
           id: 15,
@@ -774,6 +788,7 @@
           address: "135 Cedar Ln",
           age: 41,
           province: "Hai Phong",
+          searchStr: "15|William Clark|135 Cedar Ln|Hai Phong|41",
         },
       ];
 
@@ -1105,8 +1120,12 @@
       const inputE = document.querySelector("input");
       const searchInfo = document.querySelector(".search-info");
 
+      // add test
+      let searchResults = [];
+
       // Function to filter employees based on search term with priority
       const filterEmployees = (searchTerm) => {
+        // ***** add test
         if (!searchTerm) return { employees: employees, matchType: null };
 
         const searchTermLower = searchTerm.toLowerCase();
@@ -1148,9 +1167,10 @@
 
       // Function Render all employees
       const renderAll = (searchTerm = "") => {
+        let employees = searchResults;
         tbody.innerHTML = "";
         searchInfo.textContent = "";
-
+        console.log(employees);
         if (!searchTerm) {
           // When no search term, show all employees
           for (let employee of employees) {
@@ -1175,12 +1195,51 @@
         }
       };
 
-      window.onload = renderAll();
+      // Render by key : searchStr
+      const renderBySearchStr = (searchResults) => {
+        tbody.innerHTML = "";
+        for (let employee of searchResults) {
+          renderTableRow(employee);
+        }
+      };
+      window.onload = renderBySearchStr(employees);
+      const searchBySearchStr = (searchTerm) => {
+        return employees.filter((e) =>
+          e.searchStr.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+      };
 
+      // Function highlight
+      // function highlightText(text, keyword) {
+      //   if (!keyword) {return text;
+      //     console.log("highlightText");
+      //   }
+      //   const regex = new RegExp(`(${keyword})`, "gi");
+      //   console.log("highlightText");
+      //   return text.replace(
+      //     regex,
+      //     `<span style="background-color: yellow">Dang quan</span>`
+      //   );
+      // }
+
+      const highlightResultSStr = (searchResults, searchTerm) => {
+        const tdResultsSearch = document.querySelectorAll(
+          "tbody td:not(:last-child):not(:first-child)"
+        );
+        console.log(tdResultsSearch);
+        tdResultsSearch.forEach((td) => {
+          if (td.innerText.toLowerCase().includes(searchTerm.toLowerCase()))
+            console.log(td.innerText);
+          td.innerHTML =  highlightText(td.innerText,searchTerm)
+        });
+      };
       // Search functionality
       inputE.addEventListener("input", (e) => {
         const searchTerm = e.target.value.trim();
-        renderAll(searchTerm);
+        console.log(searchBySearchStr(searchTerm));
+        searchResults = searchBySearchStr(searchTerm);
+        renderBySearchStr(searchResults);
+        highlightResultSStr(searchResults, searchTerm);
       });
 
       //  ADD NEW EMP
@@ -1204,6 +1263,7 @@
           address,
           age: Number(age),
           province,
+          searchStr: `${name}|${address}|${province}|${age}`,
         };
         employees.push(newEmployee);
       };

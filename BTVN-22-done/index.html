@@ -355,263 +355,7 @@
     <div class="overlay hidden"></div>
     <script>
       // Diagram
-      /*
-      +-----------------+
-      |   START: Page   |
-      |      Load       |
-      +-----------------+
-                |
-                v
-      +-----------------+
-      | Initialize      |
-      | `headers` array |
-      +-----------------+
-                |
-                v
-      +-----------------+
-      | Initialize      |
-      | `employees`     |
-      |     array       |
-      +-----------------+
-                |
-                v
-      +-----------------+
-      | Call            |
-      | renderAll()     |
-      +-----------------+
-                |
-                v
-      +-----------------+
-      | Attach Event    |
-      | Listener:       |
-      | Search Input    |
-      +-----------------+
-                |
-                v
-      +-----------------+
-      | Attach Event    |
-      | Listener:       |
-      | "Add new" Btn   |
-      +-----------------+
-                |
-                v
-      +-----------------+
-      |   FUNCTION      |
-      |   renderAll     |
-      | (searchTerm='') |
-      +-----------------+
-                |
-                v
-      +-----------------+
-      | Clear `tbody`   |
-      |  and `searchInfo`|
-      +-----------------+
-                |
-                v
-      +-----------------+
-      | IF searchTerm   |
-      |   is empty?     |
-      +-------+---------+
-              |         |
-              v         v
-      +-----------------+ +-----------------+
-      | FOR EACH        | | Call            |
-      | employee        | | filterEmployees |
-      | in `employees`  | | (searchTerm)    |
-      +-----------------+ +-----------------+
-              |                 |
-              v                 v
-      +-----------------+ +-----------------+
-      | Call            | | IF filtered     |
-      | renderTableRow  | | Employees > 0?  |
-      | (employee)      | +-------+---------+
-      +-----------------+         |         |
-                                  v         v
-                          +-----------------+ +-----------------+
-                          | Set `searchInfo`| | FOR EACH        |
-                          | .textContent    | | employee        |
-                          +-----------------+ | in filtered     |
-                                              | `employees`     |
-                                              +-----------------+
-                                                    |
-                                                    v
-                                          +-----------------+
-                                          | Call            |
-                                          | renderTableRow  |
-                                          | (employee, ...) |
-                                          +-----------------+
-                                                    |
-                                                    v
-                                          +-----------------+
-                                          | ELSE (No       |
-                                          | results)        |
-                                          +-----------------+
-                                                    |
-                                                    v
-                                          +-----------------+
-                                          | Set `searchInfo`|
-                                          | .textContent    |
-                                          +-----------------+
-                                                    |
-                                                    v
-                                          +-----------------+
-                                          |  END FUNCTION   |
-                                          |   renderAll     |
-                                          +-----------------+
-                |
-                v
-      +-----------------+
-      |   FUNCTION      |
-      |  renderTableRow |
-      | (employee, ...) |
-      +-----------------+
-                |
-                v
-      +-----------------+
-      | Create `<tr>`   |
-      +-----------------+
-                |
-                v
-      +-----------------+
-      | FOR EACH        |
-      | header in       |
-      | `headers`       |
-      +-----------------+
-                |
-                v
-      +-----------------+
-      | Create `<td>`   |
-      +-----------------+
-                |
-                v
-      +-----------------+
-      | IF header.name |
-      |   == "action"?  |
-      +-------+---------+
-              |         |
-              v         v
-      +-----------------+ +-----------------+
-      | Create Edit     | | ELSE (Data Cell)|
-      | Button          | +-----------------+
-      +-----------------+         |
-              |                 v
-      +-----------------+ +-----------------+
-      | Attach Click    | | IF header.align |
-      | Listener: Edit  | +-------+---------+
-      +-----------------+         |         |
-              |                 v         v
-      +-----------------+ +-----------------+
-      | Call            | | Get `cellValue` | | IF searchInfo   |
-      | toggleModalEdit | | = employee[...] | | and term match? |
-      | (employee)      | +-----------------+ +-------+---------+
-      | Call            |         |                 |         |
-      | showInfoEditModal|         v                 v         v
-      +-----------------+ +-----------------+ +-----------------+
-                            | Set alignment   | | `td.innerHTML`  | | `td.innerText`  |
-                            +-----------------+ | = highlightText | | = `cellValue`   |
-                                              +-----------------+ +-----------------+
-                                                    |
-                                                    v
-                                          +-----------------+
-                                          | Append `<td>`   |
-                                          | to `<tr>`       |
-                                          +-----------------+
-                |
-                v
-      +-----------------+
-      | Append `<tr>`   |
-      | to `tbody`      |
-      +-----------------+
-                |
-                v
-      +-----------------+
-      |  END FUNCTION   |
-      |  renderTableRow |
-      +-----------------+
-                |
-                v
-      +-----------------+
-      | MODAL: Add New  |
-      | (`.modal-add`)  |
-      +-----------------+
-                |
-                v
-      +-----------------+
-      | Input Listeners |
-      | (Name, Addr, Age)|
-      | -> validateString|
-      +-----------------+
-                |
-                v
-      +-----------------+
-      | "CANCEL" Button |
-      | -> toggleModalAdd|
-      +-----------------+
-                |
-                v
-      +-----------------+
-      | "SAVE" Button   |
-      | -> Validate     |
-      | -> saveNewTo... |
-      | -> toggleModalAdd|
-      | -> renderAll    |
-      +-----------------+
-                |
-                v
-      +-----------------+
-      | MODAL: Delete   |
-      | (`.modal-delete`)|
-      +-----------------+
-                |
-                v
-      +-----------------+
-      | "NO" Button     |
-      | -> toggleModalDel|
-      +-----------------+
-                |
-                v
-      +-----------------+
-      | "YES" Button    |
-      | -> deleteFrom...|
-      | -> toggleModalDel|
-      | -> renderAll    |
-      +-----------------+
-                |
-                v
-      +-----------------+
-      | MODAL: Edit     |
-      | (`.modal-edit`) |
-      +-----------------+
-                |
-                v
-      +-----------------+
-      | Input Listeners |
-      | (Name, Addr, Age)|
-      | -> validateString|
-      +-----------------+
-                |
-                v
-      +-----------------+
-      | "CANCEL" Button |
-      | -> toggleModalEdit|
-      +-----------------+
-                |
-                v
-      +-----------------+
-      | "SAVE" Button   |
-      | -> Validate     |
-      | -> Update       |
-      | -> toggleModalEdit|
-      | -> renderAll    |
-      +-----------------+
-                |
-                v
-      +-----------------+
-      |   END: Script   |
-      |     Execution   |
-      +-----------------+
-      */
-
+     
       const provinces = [
         "An Giang",
         "Ba Ria - Vung Tau",
@@ -819,145 +563,6 @@
       );
       const provinceRow = document.querySelector(".province");
 
-      // console.log(provinceRow);
-      // let controlCount = 0;
-      // let lengthProvinces = provinces.length;
-
-      // const reRenderDropdown = () => {
-      //   console.log("reRenderDropdown");
-      //   const dropdownItem = document.querySelectorAll(`.dropdown-item`);
-      //   dropdownItem.forEach((dps) => {
-      //     dps.style.background = "#fff";
-      //   });
-      // };
-
-      // provinceInputE.addEventListener("keydown", (e) => {
-      //   if (e.key === "ArrowDown") {
-      //     dropdown.classList.remove("hidden");
-      //     if (controlCount < lengthProvinces) controlCount++;
-      //     const dropdownItem = document.querySelectorAll(
-      //       `.dropdown-item:nth-child(${controlCount})`
-      //     );
-      //     reRenderDropdown();
-      //     dropdownItem.forEach((dps) => {
-      //       dps.style.background = "#ccc";
-      //     });
-      //     console.log(dropdownItem[0].innerText);
-      //     console.log(controlCount, lengthProvinces);
-
-      //     e.target.value = dropdownItem[0].innerText;
-      //   }
-      //   if (e.key === "ArrowUp") {
-      //     dropdown.classList.remove("hidden");
-      //     if (controlCount > 1) controlCount--;
-      //     const dropdownItem = document.querySelectorAll(
-      //       `.dropdown-item:nth-child(${controlCount})`
-      //     );
-      //     reRenderDropdown();
-      //     dropdownItem.forEach((dps) => {
-      //       dps.style.background = "#ccc";
-      //     });
-      //     console.log(dropdownItem[0].innerText);
-      //     console.log(controlCount, lengthProvinces);
-      //     e.target.value = dropdownItem[0].innerText;
-      //   }
-      //   if (e.key === "Enter") {
-      //     dropdown.classList.toggle("hidden");
-      //   }
-      // });
-
-      // // Filter province when type province to search
-      // provinceInputE.addEventListener("input", (e) => {
-      //   console.log(`provinceInputE.addEventListener("input"`);
-      //   let provinceResult = filterProvince(e.target.value);
-      //   lengthProvinces = provinceResult.length;
-      //   renderProvinceDropdown(provinceResult);
-      //   controlCount = 0;
-      //   // Show dropdown when typing
-      //   dropdown.classList.remove("hidden");
-      // });
-
-      // // Click outside both input and dropdown to hide dropdown
-      // document.addEventListener("click", function (e) {
-      //   e.stopPropagation();
-      //   console.log(`document.addEventListener("click"`);
-      //   if (
-      //     !provinceInputE.contains(e.target) &&
-      //     !dropdown.contains(e.target)
-      //   ) {
-      //     dropdown.classList.add("hidden");
-      //   }
-      // });
-
-      // provinceRow.addEventListener("click", (e) => {
-      //   console.log(`provinceRow.addEventListener("click"`);
-      //   dropdown.classList.toggle("hidden");
-      // });
-
-      // // Show to dropdown arrProvince
-      // const renderProvinceDropdown = (provincesArr) => {
-      //   console.log(`renderProvinceDropdown = (provincesArr)`);
-      //   dropdown.innerHTML = "";
-      //   provincesArr.forEach((province) => {
-      //     const dropdownItem = document.createElement("div");
-      //     dropdownItem.setAttribute("class", "dropdown-item");
-      //     dropdownItem.innerText = province;
-
-      //     // Single click handler with proper event handling
-      //     dropdownItem.addEventListener("click", (e) => {
-      //       console.log(`dropdownItem.addEventListener("click"`);
-      //       // Stop event propagation to prevent other click handlers from firing
-      //       e.stopPropagation();
-      //       e.stopImmediatePropagation();
-      //       provinceInputE.value = province;
-      //       console.log("Đã chọn: " + province);
-      //     });
-
-      //     dropdownItem.addEventListener("mouseover", () => {
-      //       reRenderDropdown();
-      //       dropdownItem.style.background = "#ccc";
-      //     });
-
-      //     dropdown.appendChild(dropdownItem);
-      //   });
-      // };
-
-      // renderProvinceDropdown(provinces);
-
-      // // Scroll follow hover or arrow
-      // // *******
-
-      // let currentIndex = -1;
-
-      // provinceInputE.addEventListener("keydown", (e) => {
-      //   const items = dropdown.querySelectorAll(".dropdown-item");
-      //   if (dropdown.classList.contains("hidden")) return;
-
-      //   if (e.key === "ArrowDown") {
-      //     currentIndex = Math.min(currentIndex + 1, items.length - 1);
-      //     updateActiveItem(items);
-      //     console.log(currentIndex);
-      //   } else if (e.key === "ArrowUp") {
-      //     currentIndex = Math.max(currentIndex - 1, 0);
-      //     updateActiveItem(items);
-      //     console.log(currentIndex);
-      //   }
-      // });
-
-      // function updateActiveItem(items) {
-      //   items.forEach((item, index) => {
-      //     if (index === currentIndex) {
-      //       item.classList.add("active");
-      //       console.log(dropdown.scrollTop);
-      //       dropdown.scrollTop = item.offsetTop - dropdown.offsetTop - 150;
-      //       console.log(dropdown.scrollTop);
-      //     } else {
-      //       item.classList.remove("active");
-      //     }
-      //   });
-      // }
-      // **** Test group add Modal
-
       console.log(provinceRow);
       let controlCount = 0;
       let lengthProvinces = provinces.length;
@@ -1096,8 +701,6 @@
         });
       }
 
-      // *******
-      // Edit province
 
       // ***
 
@@ -1375,10 +978,8 @@
         const tdResultsSearch = document.querySelectorAll(
           "tbody td:not(:last-child):not(:first-child)"
         );
-        console.log(tdResultsSearch);
         tdResultsSearch.forEach((td) => {
           if (td.innerText.toLowerCase().includes(searchTerm.toLowerCase()))
-            console.log(td.innerText);
           td.innerHTML = highlightText(td.innerText, searchTerm);
         });
       };
@@ -1474,6 +1075,7 @@
           // Clear previous input add data
           inputAddName.value = "";
           inputAddAddress.value = "";
+          inputAddProvince.value="";
           inputAddAge.value = "";
 
           toggleModalAdd();
@@ -1507,6 +1109,12 @@
           // Preserve search term after edit
           const searchTerm = inputE.value.trim();
           renderAll(searchTerm);
+          // Clear after save edit
+          isEdit = false;
+          inputAddName.value = "";
+          inputAddAddress.value = "";
+          inputAddProvince.value="";
+          inputAddAge.value = "";
         } else {
           validateString(logName, validateName, inputAddName);
           validateString(logAddress, validateAddress, inputAddAddress);

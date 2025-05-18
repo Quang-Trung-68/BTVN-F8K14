@@ -152,11 +152,30 @@
         left: 0;
         right: 0;
         transform: translateY(100%);
+        transition: 0.4s;
       }
+
       .province {
         border: 1px solid;
         position: relative;
       }
+
+      .province::after {
+        content: "";
+        position: absolute;
+        top: 60%;
+        right: 10px;
+        transform: translateY(-100%) rotate(180deg);
+
+        border: 6px solid transparent;
+        border-width: 8px 5px;
+        border-top-color: #000;
+      }
+
+      .province:has(.dropdown.hidden)::after {
+        transform: translateY(-50%);
+      }
+
       .dropdown .dropdown-item {
         border: 1px solid #ccc;
         padding: 4px;
@@ -223,7 +242,6 @@
                 autocomplete="off"
                 type="text"
                 name="province"
-                readonly
               />
               <div class="dropdown hidden"></div>
             </div>
@@ -766,13 +784,14 @@
       const provinceInputE = document.querySelector(
         ".province input[name='province']"
       );
+      const provinceRow = document.querySelector(".province");
+      console.log(provinceRow);
       let controlCount = 0;
       let lengthProvinces = provinces.length;
 
       const reRenderDropdown = () => {
-        const dropdownItem = document.querySelectorAll(
-          `.dropdown-item`
-        );
+        console.log("reRenderDropdown");
+        const dropdownItem = document.querySelectorAll(`.dropdown-item`);
         dropdownItem.forEach((dps) => {
           dps.style.background = "#fff";
         });
@@ -780,6 +799,7 @@
 
       provinceInputE.addEventListener("keydown", (e) => {
         if (e.key === "ArrowDown") {
+          dropdown.classList.remove("hidden");
           if (controlCount < lengthProvinces) controlCount++;
           const dropdownItem = document.querySelectorAll(
             `.dropdown-item:nth-child(${controlCount})`
@@ -790,10 +810,11 @@
           });
           console.log(dropdownItem[0].innerText);
           console.log(controlCount, lengthProvinces);
-          
+
           e.target.value = dropdownItem[0].innerText;
         }
         if (e.key === "ArrowUp") {
+          dropdown.classList.remove("hidden");
           if (controlCount > 1) controlCount--;
           const dropdownItem = document.querySelectorAll(
             `.dropdown-item:nth-child(${controlCount})`
@@ -802,53 +823,115 @@
           dropdownItem.forEach((dps) => {
             dps.style.background = "#ccc";
           });
+          console.log(dropdownItem[0].innerText);
           console.log(controlCount, lengthProvinces);
-          
-          console.log(controlCount);
+          e.target.value = dropdownItem[0].innerText;
         }
-        if(e.key === "Enter") dropdown.classList.toggle("hidden");
+        if (e.key === "Enter") {
+          dropdown.classList.toggle("hidden");
+        }
       });
 
-
-
       // Filter province when type province to search
-
       provinceInputE.addEventListener("input", (e) => {
+        console.log(`provinceInputE.addEventListener("input"`);
         let provinceResult = filterProvince(e.target.value);
         lengthProvinces = provinceResult.length;
         renderProvinceDropdown(provinceResult);
         controlCount = 0;
-        console.log(e, lengthProvinces);
+        // Show dropdown when typing
+        dropdown.classList.remove("hidden");
       });
 
-      provinceInputE.addEventListener("click", (e)=>{
-        dropdown.classList.toggle("hidden");
-      })
+      // Click outside both input and dropdown to hide dropdown
+      document.addEventListener("click", function (e) {
+        e.stopPropagation();
+        console.log(`document.addEventListener("click"`);
+        if (
+          !provinceInputE.contains(e.target) &&
+          !dropdown.contains(e.target)
+        ) {
+          dropdown.classList.add("hidden");
+        }
+      });
 
+      provinceRow.addEventListener("click", (e) => {
+        console.log(`provinceRow.addEventListener("click"`);
+        dropdown.classList.toggle("hidden");
+      });
 
       // Show to dropdown arrProvince
-
       const renderProvinceDropdown = (provincesArr) => {
+        console.log(`renderProvinceDropdown = (provincesArr)`);
         dropdown.innerHTML = "";
         provincesArr.forEach((province) => {
           const dropdownItem = document.createElement("div");
           dropdownItem.setAttribute("class", "dropdown-item");
           dropdownItem.innerText = province;
+
+          // Single click handler with proper event handling
+          dropdownItem.addEventListener("click", (e) => {
+            console.log(`dropdownItem.addEventListener("click"`);
+            // Stop event propagation to prevent other click handlers from firing
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            provinceInputE.value = province;
+            console.log("Đã chọn: " + province);
+          });
+
+          dropdownItem.addEventListener("mouseover", () => {
+            reRenderDropdown();
+            dropdownItem.style.background = "#ccc";
+          });
+
           dropdown.appendChild(dropdownItem);
         });
       };
+
       renderProvinceDropdown(provinces);
+
+      // Scroll follow hover or arrow
+      // *******
+
+      let currentIndex = -1;
+
+      provinceInputE.addEventListener("keydown", (e) => {
+        const items = dropdown.querySelectorAll(".dropdown-item");
+        if (dropdown.classList.contains("hidden")) return;
+
+        if (e.key === "ArrowDown") {
+          currentIndex = Math.min(currentIndex + 1, items.length - 1);
+          updateActiveItem(items);
+          console.log(currentIndex);
+        } else if (e.key === "ArrowUp") {
+          currentIndex = Math.max(currentIndex - 1, 0);
+          updateActiveItem(items);
+          console.log(currentIndex);
+        }
+      });
+
+      function updateActiveItem(items) {
+        items.forEach((item, index) => {
+          if (index === currentIndex) {
+            item.classList.add("active");
+            console.log(dropdown.scrollTop);
+            dropdown.scrollTop = item.offsetTop - dropdown.offsetTop - 150;
+            console.log(dropdown.scrollTop);
+          } else {
+            item.classList.remove("active");
+          }
+        });
+      }
+      // *******
+
       // Filter province
       const filterProvince = (provinceInput) => {
         let arrFilter = provinces.filter((province) =>
           province.toLowerCase().includes(provinceInput.toLowerCase())
         );
-        // console.log(provinceInput);
-        // console.log(arrFilter);
+
         return arrFilter;
       };
-
-      
 
       // Find max id and return max id in array
       const findMaxIdValue = (arr) => {
@@ -1114,13 +1197,13 @@
       btnCancel.addEventListener("click", toggleModalAdd);
       // save adding modal
 
-      const saveNewToEmployees = (name, address, age,province) => {
+      const saveNewToEmployees = (name, address, age, province) => {
         const newEmployee = {
           id: findMaxIdValue(employees) + 1,
           name,
           address,
           age: Number(age),
-          province
+          province,
         };
         employees.push(newEmployee);
       };
@@ -1136,9 +1219,8 @@
         ".modal-add input[name='age']"
       );
       const inputAddProvince = document.querySelector(
-         ".modal-add input[name='province']"
+        ".modal-add input[name='province']"
       );
-     
 
       // Get log-infos
       const logName = document.querySelector(".modal-add .log-name");

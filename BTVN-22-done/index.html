@@ -75,6 +75,16 @@
         row-gap: 20px;
       }
 
+      input{
+        border-radius: 6px;
+        border:1px solid transparent;
+      }
+
+      input:focus-within{
+        background-color: #eee;
+        border: 1px solid;
+      }
+
       .input-group label {
         display: flex;
         justify-content: space-between;
@@ -156,7 +166,6 @@
       }
 
       .province {
-        border: 1px solid;
         position: relative;
       }
 
@@ -355,7 +364,7 @@
     <div class="overlay hidden"></div>
     <script>
       // Diagram
-     
+
       const provinces = [
         "An Giang",
         "Ba Ria - Vung Tau",
@@ -701,7 +710,6 @@
         });
       }
 
-
       // ***
 
       // Filter province
@@ -839,8 +847,8 @@
 
             editBtn.setAttribute("class", "mdi mdi-pencil-outline");
             editBtn.addEventListener("click", () => {
-              toggleModalAdd(employee);
               isEdit = true;
+              toggleModalAdd(employee);
               showInfoEditModal(employee);
             });
 
@@ -980,7 +988,7 @@
         );
         tdResultsSearch.forEach((td) => {
           if (td.innerText.toLowerCase().includes(searchTerm.toLowerCase()))
-          td.innerHTML = highlightText(td.innerText, searchTerm);
+            td.innerHTML = highlightText(td.innerText, searchTerm);
         });
       };
       // Search functionality
@@ -999,11 +1007,29 @@
         modalAdd.classList.toggle("hidden");
         const overlay = document.querySelector(".overlay");
         overlay.classList.toggle("hidden");
+
+        const titleAdd = document.querySelector(".modal-add .title");
+        if (isEdit) {
+          titleAdd.innerHTML = "Edit employee:";
+        } else {
+          titleAdd.innerHTML = "Add new employee:";
+          inputAddName.value = "";
+          inputAddAge.value = "";
+          inputAddAddress.value = "";
+          inputAddProvince.value = "";
+        }
       };
-      btnAdd.addEventListener("click", toggleModalAdd);
+
+      btnAdd.addEventListener("click", () => {
+        isEdit = false;
+        toggleModalAdd();
+      });
       // cancel while in add modal
       const btnCancel = document.querySelector(".btn-cancel");
-      btnCancel.addEventListener("click", toggleModalAdd);
+      btnCancel.addEventListener("click", () => {
+        isEdit = false;
+        toggleModalAdd();
+      });
       // save adding modal
 
       const saveNewToEmployees = (name, address, age, province) => {
@@ -1075,7 +1101,7 @@
           // Clear previous input add data
           inputAddName.value = "";
           inputAddAddress.value = "";
-          inputAddProvince.value="";
+          inputAddProvince.value = "";
           inputAddAge.value = "";
 
           toggleModalAdd();
@@ -1095,9 +1121,11 @@
             id: employeeEditTemp.id,
             name: capitalizeWords(inputAddName.value),
             address: inputAddAddress.value,
-            province:inputAddProvince.value,
+            province: inputAddProvince.value,
             age: Number(inputAddAge.value),
-            searchStr: `${capitalizeWords(inputAddName.value)}|${inputAddAddress.value}|${inputAddProvince.value}|${inputAddAge.value}`,
+            searchStr: `${capitalizeWords(inputAddName.value)}|${
+              inputAddAddress.value
+            }|${inputAddProvince.value}|${inputAddAge.value}`,
           };
           let employeeUp = employees.findIndex(
             (eml) => eml.id === employeeUpdate.id
@@ -1113,7 +1141,7 @@
           isEdit = false;
           inputAddName.value = "";
           inputAddAddress.value = "";
-          inputAddProvince.value="";
+          inputAddProvince.value = "";
           inputAddAge.value = "";
         } else {
           validateString(logName, validateName, inputAddName);

@@ -75,12 +75,12 @@
         row-gap: 20px;
       }
 
-      input{
+      input {
         border-radius: 6px;
-        border:1px solid transparent;
+        border: 1px solid transparent;
       }
 
-      input:focus-within{
+      input:focus-within {
         background-color: #eee;
         border: 1px solid;
       }
@@ -562,6 +562,15 @@
           searchStr: "William Clark|135 Cedar Ln|Hai Phong|41",
         },
       ];
+
+      const modalGeneral = document.querySelector(".modal");
+      const overlayGeneral = document.querySelector(".overlay");
+      const modalDelete = document.querySelector(".modal-delete");
+      overlayGeneral.addEventListener("click", ()=>{
+        modalGeneral.classList.add("hidden");
+        modalDelete.classList.add("hidden");
+        overlayGeneral.classList.add("hidden");
+      });
 
       // Add provinces to dropdown list
       const dropdown = document.querySelector(".dropdown");

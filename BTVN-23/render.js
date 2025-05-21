@@ -1,5 +1,5 @@
 
-import { onclickBtn, clearCalculator } from './index.js';
+import { onclickBtn } from './index.js';
 
 const calcState = {
   tokens: [],

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    .autocomplete {
+        width: 350px;
+        margin: auto;
+    }
+    .autocomplete input {
+        padding: 12px;
+        font-size: 22px;
+        width: 100%;
+    }
+    .autocomplete .dropdown {
+        font-size: 20px;
+        box-shadow: 0 0 4px #ccc;
+        max-height: 200px;
+        overflow-y: scroll;
+    }
+    .dropdown-item {
+        padding: 8px;
+    }
+</style>
+
+<body>
+
+<div class="autocomplete">
+  <input placeholder="province"/>
+  <div class="dropdown">
+  </div>
+</div>
+
+<script>
+  const items = [
+    "Ha Noi",
+    "Ha Nam",
+    "Vinh Phuc",
+    "Phu Tho",
+    "Bac Blinh",
+    "Bac Giang",
+    "Vinh Phuc",
+    "Phu Tho",
+    "Bac Blinh",
+    "Bac Giang"
+  ]
+  let cursor = null
+  const inputE = document.querySelector('input')
+
+  const renderDropdown = (items) => {
+    const container = document.querySelector(".dropdown");
+    container.innerHTML = ''
+    items.forEach((item, index) => {
+      const div = document.createElement("div");
+      div.className = "dropdown-item";
+      div.textContent = item;
+      container.appendChild(div);
+    });
+  }
+
+  const resetBackground = () => {
+    const itemsE = document.querySelectorAll('.dropdown-item')
+    itemsE.forEach(itemE => {
+      itemE.style.background = 'white'
+    })
+  }
+
+  renderDropdown(items)
+
+  inputE.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown') {
+      if (cursor === null) cursor = 0
+      else if (cursor + 1 >= items.length) cursor = 0
+      else cursor++
+
+      resetBackground()
+      const itemE = document.querySelector(`.dropdown-item:nth-child(${cursor + 1})`)
+      itemE.style.background = '#ccc'
+
+      const dropdown = document.querySelector(".dropdown");
+
+      if ((cursor + 1) * 39 > 200) {
+        console.log('can scoll', (cursor + 1) * 39)
+
+        dropdown.scrollTop = (cursor + 1) * 39 - 200
+      }
+      if (cursor === 0) dropdown.scrollTop = 0
+    }
+  })
+
+</script>
+
+</body>
+</html>

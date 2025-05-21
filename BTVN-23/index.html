@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+  </head>
+
+  <style>
+    .calculate {
+      width: 300px;
+      height: 500px;
+      border: 3px solid #333;
+      margin: 0 auto;
+    }
+    .calculate-screen {
+      width: 270px;
+      height: 100px;
+      border: 1px solid #222;
+      margin: 15px auto;
+      position: relative;
+    }
+    .calculate-keyboard {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .calculate-button {
+      padding: 5px;
+      width: 20%;
+      border: 1px solid #aaa;
+    }
+
+    .calculate-button:hover {
+      background: #aaa;
+      cursor: pointer;
+    }
+
+    .calculate-input {
+      width: 100%;
+      height: 20%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    .calculate-result {
+      width: 50%;
+      height: 20%;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      border: 1px solid #333;
+    }
+  </style>
+
+  <body>
+    <div class="calculate">
+      <div class="calculate-screen">
+        <div class="calculate-input">|...</div>
+        <div class="calculate-result">=</div>
+      </div>
+      <div class="calculate-keyboard"></div>
+    </div>
+
+    <script type="module" src="render.js"></script>
+    <script type="module" src="index.js"></script>
+  </body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    .question-title {
+      border: 1px solid #ccc;
+      padding: 32px;
+    }
+    .question-option {
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+    .check-btn {
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+    .check-btn:active {
+      background-color: #9ec2bb;
+      user-select: none;
+    }
+
+    .modal {
+      position: absolute;
+      width: 200px;
+      height: 300px;
+      inset: 0;
+      margin: auto auto;
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      gap: 20px;
+      flex-direction: column;
+      z-index: 200;
+      background-color: #e49797;
+      border-radius: 10px;
+      padding: 40px !important;
+    }
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background-color: #0000008d;
+      z-index: 100;
+    }
+
+    .hidden {
+      display: none;
+    }
+    .modal * {
+      text-align: center;
+      font-size: 1.6rem;
+    }
+    button {
+      border: none;
+      outline: none;
+      background-color: rgb(0, 0, 255);
+      border-radius: 10px;
+      padding: 5px;
+      font-size: 1rem !important;
+    }
+    button:hover {
+      background-color: rgb(0, 0, 200);
+      cursor: pointer;
+    }
+    .question-block {
+      position: relative;
+    }
+    .question-percent {
+      position: absolute;
+      top: 10px;
+      right: 0;
+    }
+  </style>
+
+  <body>
+    <div id="app">
+      <div class="question">
+        <div class="question-title">How are you</div>
+        <div class="question-block">
+          <div class="question-option" value="a">A: OK</div>
+          <div class="question-percent" value="a"></div>
+        </div>
+        <div class="question-block">
+          <div class="question-option" value="b">B: hmm</div>
+          <div class="question-percent" value="b"></div>
+        </div>
+        <div class="question-block">
+          <div class="question-option" value="c">C: good</div>
+          <div class="question-percent" value="c"></div>
+        </div>
+        <div class="question-block">
+          <div class="question-option" value="d">D: i'm bang</div>
+          <div class="question-percent" value="d"></div>
+        </div>
+      </div>
+
+      <div class="check-btn">Check</div>
+      <br />
+      <div class="phone-result"></div>
+      <div class="expert-result"></div>
+      <br />
+      <div>Time left:</div>
+      <div id="time">30</div>
+      <br />
+      <div>PLAYER WIN AT:</div>
+      <div id="showMoney">0</div>
+      <div id="showLevel">0</div>
+      <br />
+      <br />
+      <div>PLAYER SAFE PRIZE:</div>
+      <div id="showMoneySafe">0</div>
+      <div id="showLevelSafe">0</div>
+      <div class="overlay hidden"></div>
+      <div class="modal hidden">
+        <p class="modal-title">YOU LOSE</p>
+        <p class="modal-money">0$</p>
+        <p class="modal-level">1</p>
+        <button class="modal-restart">RESTART</button>
+      </div>
+      <div>=======</div>
+      <div class="help-block hidden">
+        <button class="half-answer">50:50</button>
+        <button class="ask-audience">Ask audience</button>
+        <button class="call-people">Call people</button>
+        <button class="expert-advice">Expert advice</button>
+      </div>
+
+      <div>=======</div>
+      <button style="background-color: #e49797" class="end-game">
+        END GAME
+      </button>
+    </div>
+
+    <script type="module" src="referances.js"></script>
+    <script type="module" src="const.js"></script>
+    <script type="module" src="render.js"></script>
+  </body>
+</html>

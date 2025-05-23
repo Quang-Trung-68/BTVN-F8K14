@@ -1,0 +1,1 @@
+export const questionRef = document.querySelector('.question')

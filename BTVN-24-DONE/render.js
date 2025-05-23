@@ -1,6 +1,25 @@
-
-import { questions, prizeMap } from "./const.js";
-import { questionRef } from "./referances.js";
+import { questions, prizeMap, allOptions } from "./const.js";
+import {
+  questionRef,
+  prizeLevelAll,
+  titleRef,
+  expertResultElement,
+  phoneResultElement,
+  modal,
+  overlay,
+  halfAnswer,
+  askAudienceBtn,
+  endGame,
+  titleModal,
+  modalMoney,
+  modalLevel,
+  timeLeftElement,
+  checkBtn,
+  callPeople,
+  callExpert,
+  buttonRestart,
+  helpBlock,
+} from "./references.js";
 import { resultPlayer, resultPlayerStart } from "./result.js";
 
 // todo: need to get next question / first question
@@ -27,7 +46,6 @@ const onShowQuestion = () => {
   // Check for show help block
   showHelpForPlayer();
   // Follow prize got
-  const prizeLevelAll = document.querySelectorAll(`.prize-level`);
   prizeLevelAll.forEach((prz) => {
     prz.classList.remove("active");
     prz.classList.remove("active-safe");
@@ -48,10 +66,9 @@ const onShowQuestion = () => {
   showMoneySafe.innerText = `Money: ${prizeMap[resultPlayer.levelSafe]}`;
   showLevelSafe.innerText = `Level:---${resultPlayer.levelSafe}---`;
 
-  const titleRef = questionRef.querySelector(".question-title");
   titleRef.innerText = curQuestion.question;
 
-  for (const key of ["a", "b", "c", "d"]) {
+  for (const key of allOptions) {
     questionRef.querySelector(
       `.question-option[value="${key}"]`
     ).innerText = `${key.toUpperCase()}: ${curQuestion[key]}`;
@@ -61,7 +78,6 @@ const onShowQuestion = () => {
 // Show help
 
 const showHelpForPlayer = () => {
-  const helpBlock = document.querySelector(".help-block");
   if (resultPlayer.level >= 5) {
     helpBlock.classList.remove("hidden");
   } else helpBlock.classList.add("hidden");
@@ -92,7 +108,7 @@ const createOptionHandler = (key) => {
 };
 
 const addEvent = () => {
-  for (const key of ["a", "b", "c", "d"]) {
+  for (const key of allOptions) {
     const answerRef = questionRef.querySelector(
       `.question-option[value="${key}"]`
     );
@@ -151,7 +167,7 @@ const enableOption = (key) => {
 
 // Reset all options to initial state
 const resetAllOptions = () => {
-  for (const key of ["a", "b", "c", "d"]) {
+  for (const key of allOptions) {
     enableOption(key);
   }
   resetBackground();
@@ -160,7 +176,6 @@ const resetAllOptions = () => {
 // 50:50 feature - remove 2 wrong answers
 const use5050 = () => {
   const correctAnswer = curQuestion.correctAns;
-  const allOptions = ["a", "b", "c", "d"];
   const wrongOptions = allOptions.filter((option) => option !== correctAnswer);
 
   // Randomly choose 2 wrong answers to remove
@@ -182,7 +197,6 @@ const use5050 = () => {
 // Ask the audience feature
 const askAudience = () => {
   const correctAnswer = curQuestion.correctAns;
-  const allOptions = ["a", "b", "c", "d"];
   const wrongOptions = allOptions.filter((option) => option !== correctAnswer);
 
   // Create percentage for correct answer (41-51%)
@@ -228,7 +242,6 @@ const askAudience = () => {
 
 // Clear ask audience
 const clearAskAudience = () => {
-  const allOptions = ["a", "b", "c", "d"];
   for (let key of allOptions) {
     const quesPercent = document.querySelector(
       `.question-percent[value="${key}"]`
@@ -239,8 +252,6 @@ const clearAskAudience = () => {
 
 // Clear call
 const clearCall = () => {
-  const expertResultElement = document.querySelector(".expert-result");
-  const phoneResultElement = document.querySelector(".phone-result");
   expertResultElement.innerHTML = "";
   phoneResultElement.innerHTML = "";
 };
@@ -289,37 +300,28 @@ const checkAnswer = () => {
 };
 
 const loseModal = () => {
-  const modal = document.querySelector(".modal");
-  const overlay = document.querySelector(".overlay");
   overlay.classList.remove("hidden");
   modal.classList.remove("hidden");
-  const titleModal = document.querySelector(".modal-title");
   titleModal.innerText = `YOU LOSE!!!`;
-  const modalMoney = document.querySelector(".modal-money");
   modalMoney.innerText = `Money get: ${prizeMap[resultPlayer.levelSafe]}$`;
-
-  const modalLevel = document.querySelector(".modal-level");
   modalLevel.innerText = `Level at: ${resultPlayer.levelSafe}`;
 };
 
 // Button start
 
-const buttonRestart = document.querySelector(".modal-restart");
 buttonRestart.addEventListener("click", () => {
-  const modal = document.querySelector(".modal");
-  const overlay = document.querySelector(".overlay");
   overlay.classList.add("hidden");
   modal.classList.add("hidden");
 
   resetGame();
   resetAllOptions(); // Reset all options
   // Reset button 50:50
-  const halfAnswer = document.querySelector(".half-answer");
+
   halfAnswer.disabled = false;
   callExpert.disabled = false;
   callPeople.disabled = false;
   // Reset button ask audience
-  const askAudienceBtn = document.querySelector(".ask-audience");
+
   askAudienceBtn.disabled = false;
 
   onShowQuestion();
@@ -336,24 +338,19 @@ const resetGame = () => {
 };
 
 // End game
-const endGame = document.querySelector(".end-game");
 endGame.addEventListener("click", () => {
   loseModal();
-  const titleModal = document.querySelector(".modal-title");
   if (resultPlayer.levelSafe >= 5) {
     titleModal.innerText = `YOU WIN!!!`;
   } else titleModal.innerText = `YOU LOSE!!!`;
 
-  const modalMoney = document.querySelector(".modal-money");
   modalMoney.innerText = `Money get: ${resultPlayer.money}$`;
 
-  const modalLevel = document.querySelector(".modal-level");
   modalLevel.innerText = `Level at: ${resultPlayer.level}`;
   stopTimer();
 });
 
 // Timer functions
-const timeLeftElement = document.querySelector("#time");
 
 const stopTimer = () => {
   if (countdownInterval) {
@@ -383,7 +380,7 @@ const startTimer = () => {
 
     console.log(`Time remaining: ${timeLeft}s`);
 
-    if (timeLeft < 1 ) {
+    if (timeLeft < 1) {
       stopTimer();
       console.log("Time's up! You lose.");
       loseModal();
@@ -411,9 +408,7 @@ const updateTimeDisplay = () => {
 // Initialize
 addEvent();
 onShowQuestion();
-// startTimer();
 
-const checkBtn = document.querySelector(".check-btn");
 checkBtn.addEventListener("click", () => {
   if (!isAnswer && isSelected) {
     isSelected = false;
@@ -425,15 +420,12 @@ checkBtn.addEventListener("click", () => {
     setTimeout(() => {
       console.log("Next to question");
       countCurQuestion++;
-
       if (countCurQuestion >= questions.length) {
         console.log("Game completed!");
         loseModal();
-        const titleModal = document.querySelector(".modal-title");
         titleModal.innerText = `YOU WIN!!!`;
         return;
       }
-
       curQuestion = questions[countCurQuestion];
       resetAllOptions(); // Reset all options for new question
       onShowQuestion();
@@ -445,7 +437,6 @@ checkBtn.addEventListener("click", () => {
 });
 
 // Add event listener for 50:50 button
-const halfAnswer = document.querySelector(".half-answer");
 if (halfAnswer) {
   halfAnswer.addEventListener("click", () => {
     if (!isAnswer) {
@@ -457,7 +448,6 @@ if (halfAnswer) {
 }
 
 // Add event for ask audience
-const askAudienceBtn = document.querySelector(".ask-audience");
 if (askAudienceBtn) {
   askAudienceBtn.addEventListener("click", () => {
     if (!isAnswer) {
@@ -471,7 +461,6 @@ if (askAudienceBtn) {
 // Phone call: Random suggest 1 answer (high accuracy rate 80-90%)
 const phoneCall = () => {
   const correctAnswer = curQuestion.correctAns;
-  const allOptions = ["a", "b", "c", "d"];
 
   // High accuracy rate (80-90%)
   const isCorrect = Math.random() < 0.85; // 85% chance of being correct
@@ -512,7 +501,6 @@ const phoneCall = () => {
 // Expert advice: Suggest 1 answer (random, can be correct or wrong 50-60%)
 const expertAdvice = () => {
   const correctAnswer = curQuestion.correctAns;
-  const allOptions = ["a", "b", "c", "d"];
 
   // Average accuracy rate (50-60%)
   const isCorrect = Math.random() < 0.55; // 55% chance of being correct
@@ -553,7 +541,6 @@ const expertAdvice = () => {
 
 // Function to display phone call result
 const displayPhoneResult = (message, suggestion) => {
-  const phoneResultElement = document.querySelector(".phone-result");
   if (phoneResultElement) {
     phoneResultElement.innerHTML = `
       <div class="lifeline-result">
@@ -573,7 +560,6 @@ const displayPhoneResult = (message, suggestion) => {
 // Function to display expert advice result
 const displayExpertResult = (message, suggestion) => {
   // Update UI - change according to your design
-  const expertResultElement = document.querySelector(".expert-result");
   if (expertResultElement) {
     expertResultElement.innerHTML = `
       <div class="lifeline-result">
@@ -591,7 +577,6 @@ const displayExpertResult = (message, suggestion) => {
 
 // Add event call
 
-const callPeople = document.querySelector(".call-people");
 callPeople.addEventListener("click", () => {
   if (callPeople) {
     phoneCall();
@@ -599,7 +584,6 @@ callPeople.addEventListener("click", () => {
   }
 });
 
-const callExpert = document.querySelector(".expert-advice");
 callExpert.addEventListener("click", () => {
   if (callExpert) {
     expertAdvice();

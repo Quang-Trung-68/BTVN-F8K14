@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Game Quiz</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        background-color: #f0f4f8;
+        padding: 20px;
+      }
+
+      #app {
+        display: flex;
+        gap: 40px;
+        justify-content: center;
+      }
+
+      .container-main {
+        max-width: 600px;
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        flex-grow: 1;
+      }
+
+      .question-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        background-color: #cbe9f8;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+      }
+
+      .question-block {
+        margin-bottom: 10px;
+        position: relative;
+      }
+
+      .question-option {
+        padding: 12px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        transition: background-color 0.2s;
+        cursor: pointer;
+      }
+
+      .question-option:hover {
+        background-color: #e2f0fb;
+      }
+
+      .question-percent {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        font-size: 0.9rem;
+        color: #888;
+      }
+
+      .check-btn {
+        margin-top: 20px;
+        padding: 12px;
+        background-color: #2196f3;
+        color: white;
+        border-radius: 8px;
+        cursor: pointer;
+        text-align: center;
+        font-weight: bold;
+        user-select: none;
+      }
+
+      .check-btn:active {
+        background-color: #1976d2;
+      }
+
+      .modal {
+        position: absolute;
+        width: 400px;
+        height: auto;
+        min-height: 320px;
+        inset: 0;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 20px;
+        z-index: 200;
+        padding: 40px 30px;
+        text-align: center;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        animation: modalFadeIn 0.4s ease-out;
+      }
+
+      @keyframes modalFadeIn {
+        from {
+          opacity: 0;
+          transform: scale(0.8) translateY(-50px);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1) translateY(0);
+        }
+      }
+
+      .overlay {
+        position: fixed;
+        inset: 0;
+        background: linear-gradient(45deg, rgba(0, 0, 0, 0.6), rgba(30, 30, 60, 0.7));
+        z-index: 100;
+        animation: overlayFadeIn 0.3s ease-out;
+      }
+
+      @keyframes overlayFadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .modal-title {
+        font-size: 2.2rem;
+        font-weight: 800;
+        color: #ffffff;
+        margin-bottom: 25px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        letter-spacing: -0.5px;
+      }
+
+      .modal-money {
+        font-size: 1.4rem;
+        font-weight: 600;
+        color: #ffd700;
+        margin: 15px 0;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        background: rgba(255, 215, 0, 0.1);
+        padding: 12px 20px;
+        border-radius: 25px;
+        border: 2px solid rgba(255, 215, 0, 0.3);
+      }
+
+      .modal-level {
+        font-size: 1.2rem;
+        font-weight: 500;
+        color: #e8f4fd;
+        margin-bottom: 30px;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+      }
+
+      .modal-restart {
+        background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+        color: white;
+        padding: 15px 35px;
+        border-radius: 30px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 8px 25px rgba(238, 90, 82, 0.3);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .modal-restart::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.5s;
+      }
+
+      .modal-restart:hover::before {
+        left: 100%;
+      }
+
+      .modal-restart:hover {
+        background: linear-gradient(135deg, #ff5252, #d32f2f);
+        transform: translateY(-2px);
+        box-shadow: 0 12px 35px rgba(238, 90, 82, 0.4);
+      }
+
+      .modal-restart:active {
+        transform: translateY(0);
+        box-shadow: 0 5px 15px rgba(238, 90, 82, 0.3);
+      }
+
+      .help-block {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+        justify-content: space-evenly;
+      }
+
+      .help-block button {
+        background-color: #ff9800;
+        color: white;
+        padding: 8px;
+        border-radius: 6px;
+        width: 100px;
+      }
+
+      .help-block button:disabled,
+      .help-block button:disabled:hover {
+        background-color: gray;
+      }
+
+      .help-block button:hover {
+        background-color: #fb8c00;
+      }
+
+      .end-game {
+        margin-top: 50px;
+        background-color: #e57373;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        margin-left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .container-prize {
+        width: 200px;
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        height: fit-content;
+      }
+
+      .prize-level {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+        font-weight: bold;
+      }
+
+      .prize-level:last-child {
+        border-bottom: none;
+      }
+
+      .prize-level.active {
+        background-color: #f0f8e2;
+        color: #388e3c;
+        border-radius: 10px;
+      }
+
+      .prize-level.active-safe {
+        background-color: cyan;
+        color: black;
+        border-radius: 10px;
+      }
+
+      .hidden {
+        display: none;
+      }
+      button {
+        user-select: none !important;
+        border: none;
+        outline: none;
+      }
+      button:hover {
+        background-color: #e57373cf;
+        cursor: pointer;
+      }
+
+      #time{
+        font-size: 1.6rem;
+      }
+
+      /* Responsive design for modal */
+      @media (max-width: 768px) {
+        .modal {
+          width: 90%;
+          padding: 30px 20px;
+        }
+        
+        .modal-title {
+          font-size: 1.8rem;
+        }
+        
+        .modal-money {
+          font-size: 1.2rem;
+        }
+        
+        .modal-restart {
+          padding: 12px 25px;
+          font-size: 1rem;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="app">
+      <div class="container-main">
+        <div class="question">
+          <div class="question-title">How are you</div>
+          <div class="question-block">
+            <div class="question-option" value="a">A: OK</div>
+            <div class="question-percent" value="a"></div>
+          </div>
+          <div class="question-block">
+            <div class="question-option" value="b">B: hmm</div>
+            <div class="question-percent" value="b"></div>
+          </div>
+          <div class="question-block">
+            <div class="question-option" value="c">C: good</div>
+            <div class="question-percent" value="c"></div>
+          </div>
+          <div class="question-block">
+            <div class="question-option" value="d">D: I'm bang</div>
+            <div class="question-percent" value="d"></div>
+          </div>
+        </div>
+
+        <div class="check-btn">Check</div>
+        <br />
+        <div class="phone-result"></div>
+        <div class="expert-result"></div>
+        <br />
+        <div>Time left: <span id="time">30</span></div>
+        <br />
+        <div>
+          PLAYER WIN AT: <span id="showMoney">0</span> | Level:
+          <span id="showLevel">0</span>
+        </div>
+        <br />
+        <div>
+          PLAYER SAFE PRIZE: <span id="showMoneySafe">0</span> | Level:
+          <span id="showLevelSafe">0</span>
+        </div>
+
+        <div class="overlay"></div>
+        <div class="modal">
+          <p class="modal-title">WHO IS BILLION!</p>
+          <p class="modal-money"></p>
+          <p class="modal-level"></p>
+          <button class="modal-restart">START</button>
+        </div>
+
+        <div class="help-block hidden">
+          <button class="half-answer">50:50</button>
+          <button class="ask-audience">Ask audience</button>
+          <button class="call-people">Call people</button>
+          <button class="expert-advice">Expert advice</button>
+        </div>
+
+        <button class="end-game">END GAME</button>
+      </div>
+
+      <div class="container-prize">
+        <div class="prize-level prize-level-15">15. $500,000</div>
+        <div class="prize-level prize-level-14">14. $250,000</div>
+        <div class="prize-level prize-level-13">13. $150,000</div>
+        <div class="prize-level prize-level-12">12. $100,000</div>
+        <div class="prize-level prize-level-11">11. $75,000</div>
+        <div class="prize-level prize-level-10">10. $50,000</div>
+        <div class="prize-level prize-level-9">9. $25,000</div>
+        <div class="prize-level prize-level-8">8. $15,000</div>
+        <div class="prize-level prize-level-7">7. $10,000</div>
+        <div class="prize-level prize-level-6">6. $5,000</div>
+        <div class="prize-level prize-level-5">5. $2,000</div>
+        <div class="prize-level prize-level-4">4. $1,000</div>
+        <div class="prize-level prize-level-3">3. $500</div>
+        <div class="prize-level prize-level-2">2. $300</div>
+        <div class="prize-level prize-level-1">1. $200</div>
+      </div>
+    </div>
+
+    <script type="module" src="references.js"></script>
+    <script type="module" src="const.js"></script>
+    <script type="module" src="render.js"></script>
+  </body>
+</html>

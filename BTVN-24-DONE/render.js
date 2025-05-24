@@ -61,10 +61,10 @@ const onShowQuestion = () => {
   );
   prizeActive.classList.add("active");
   // Show info about current prize
-  showMoney.innerText = `Money: ${resultPlayer.money}`;
-  showLevel.innerText = `Level:---${resultPlayer.level}---`;
-  showMoneySafe.innerText = `Money: ${prizeMap[resultPlayer.levelSafe]}`;
-  showLevelSafe.innerText = `Level:---${resultPlayer.levelSafe}---`;
+  showMoney.innerText = `Phần thưởng: ${resultPlayer.money} đ`;
+  showLevel.innerText = `Cấp độ:---${resultPlayer.level}---`;
+  showMoneySafe.innerText = `Phần thưởng: ${prizeMap[resultPlayer.levelSafe]} đ`;
+  showLevelSafe.innerText = `Cấp độ:---${resultPlayer.levelSafe}---`;
 
   titleRef.innerText = curQuestion.question;
 
@@ -302,9 +302,9 @@ const checkAnswer = () => {
 const loseModal = () => {
   overlay.classList.remove("hidden");
   modal.classList.remove("hidden");
-  titleModal.innerText = `YOU LOSE!!!`;
-  modalMoney.innerText = `Money get: ${prizeMap[resultPlayer.levelSafe]}$`;
-  modalLevel.innerText = `Level at: ${resultPlayer.levelSafe}`;
+  titleModal.innerText = `BẠN ĐÃ THUA!!!`;
+  modalMoney.innerText = `Phần thưởng nhận được: ${prizeMap[resultPlayer.levelSafe]} đ`;
+  modalLevel.innerText = `Cấp độ đạt được: ${resultPlayer.levelSafe}`;
 };
 
 // Button start
@@ -341,12 +341,15 @@ const resetGame = () => {
 endGame.addEventListener("click", () => {
   loseModal();
   if (resultPlayer.levelSafe >= 5) {
-    titleModal.innerText = `YOU WIN!!!`;
-  } else titleModal.innerText = `YOU LOSE!!!`;
+    titleModal.innerText = `BẠN ĐÃ THẮNG!!!`;
+    modalMoney.innerText = `Phần thưởng nhận được: ${resultPlayer.money} đ`;
+    modalLevel.innerText = `Cấp độ đạt được: ${resultPlayer.level}`;
+  } else {
+    titleModal.innerText = `BẠN ĐÃ THUA!!!`;
+    modalMoney.innerText = `Phần thưởng nhận được: 0 đ`;
+    modalLevel.innerText = `Cấp độ đạt được: 0`;
+  }
 
-  modalMoney.innerText = `Money get: ${resultPlayer.money}$`;
-
-  modalLevel.innerText = `Level at: ${resultPlayer.level}`;
   stopTimer();
 });
 
@@ -423,7 +426,7 @@ checkBtn.addEventListener("click", () => {
       if (countCurQuestion >= questions.length) {
         console.log("Game completed!");
         loseModal();
-        titleModal.innerText = `YOU WIN!!!`;
+        titleModal.innerText = `BẠN ĐÃ THẮNG!!!`;
         return;
       }
       curQuestion = questions[countCurQuestion];
@@ -479,11 +482,11 @@ const phoneCall = () => {
 
   // Display suggestion with random message
   const messages = [
-    `I think the answer is ${suggestedAnswer.toUpperCase()}`,
-    `In my opinion, choose ${suggestedAnswer.toUpperCase()}`,
-    `I'm quite sure it's ${suggestedAnswer.toUpperCase()}`,
-    `${suggestedAnswer.toUpperCase()} is the correct answer`,
-    `I would choose ${suggestedAnswer.toUpperCase()}`,
+    `Tôi nghĩ đáp án là ${suggestedAnswer.toUpperCase()}`,
+    `Theo tôi, hãy chọn ${suggestedAnswer.toUpperCase()}`,
+    `Tôi khá chắc đó là ${suggestedAnswer.toUpperCase()}`,
+    `${suggestedAnswer.toUpperCase()} là đáp án đúng`,
+    `Tôi sẽ chọn ${suggestedAnswer.toUpperCase()}`,
   ];
 
   const randomMessage = messages[Math.floor(Math.random() * messages.length)];
@@ -519,11 +522,11 @@ const expertAdvice = () => {
 
   // Expert messages (more professional)
   const expertMessages = [
-    `Based on my knowledge, I recommend you choose ${suggestedAnswer.toUpperCase()}`,
-    `According to analysis, answer ${suggestedAnswer.toUpperCase()} has the highest probability`,
-    `I would go with ${suggestedAnswer.toUpperCase()} in this case`,
-    `${suggestedAnswer.toUpperCase()} is the most reasonable choice`,
-    `With my experience, I choose ${suggestedAnswer.toUpperCase()}`,
+    `Dựa trên kiến thức của tôi, tôi khuyên bạn chọn ${suggestedAnswer.toUpperCase()}`,
+    `Theo phân tích, đáp án ${suggestedAnswer.toUpperCase()} có xác suất đúng cao nhất`,
+    `Trong trường hợp này, tôi sẽ chọn ${suggestedAnswer.toUpperCase()}`,
+    `${suggestedAnswer.toUpperCase()} là lựa chọn hợp lý nhất`,
+    `Với kinh nghiệm của tôi, tôi chọn ${suggestedAnswer.toUpperCase()}`,
   ];
 
   const randomMessage =
@@ -544,13 +547,13 @@ const displayPhoneResult = (message, suggestion) => {
   if (phoneResultElement) {
     phoneResultElement.innerHTML = `
       <div class="lifeline-result">
-        <h3>📞 Call a Friend</h3>
-        <p>Rate: 85%</p>
+        <h3>📞 Gọi điện cho người thân</h3>
+        <p>Độ tin cậy: 85%</p>
         <p>"${message}"</p>
-        <div class="suggestion-highlight">Suggested answer: <strong>${suggestion.toUpperCase()}</strong></div>
+        <div class="suggestion-highlight">Đáp án gợi ý: <strong>${suggestion.toUpperCase()}</strong></div>
         <br>
-        <p>Correct answer to check: ${curQuestion.correctAns.toUpperCase()}</p>
-         <br>
+        <p>Đáp án đúng thực tế để kiểm tra: ${curQuestion.correctAns.toUpperCase()}</p>
+        <br>
       </div>
     `;
     phoneResultElement.style.display = "block";
@@ -559,15 +562,15 @@ const displayPhoneResult = (message, suggestion) => {
 
 // Function to display expert advice result
 const displayExpertResult = (message, suggestion) => {
-  // Update UI - change according to your design
   if (expertResultElement) {
     expertResultElement.innerHTML = `
       <div class="lifeline-result">
-        <h3>👨‍🎓 Expert Advice</h3>
+        <h3>👨‍🎓 Lời khuyên từ chuyên gia</h3>
+        <p>Độ tin cậy: 55%</p>
         <p>"${message}"</p>
-        <div class="suggestion-highlight">Suggested answer: <strong>${suggestion.toUpperCase()}</strong></div>
-         <br>
-        <p>Correct answer to check: ${curQuestion.correctAns.toUpperCase()}</p>
+        <div class="suggestion-highlight">Đáp án gợi ý: <strong>${suggestion.toUpperCase()}</strong></div>
+        <br>
+        <p>Đáp án đúng thực tế để kiểm tra: ${curQuestion.correctAns.toUpperCase()}</p>
         <br>
       </div>
     `;

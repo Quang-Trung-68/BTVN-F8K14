@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="
+https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css
+"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <div class="input-group">
+          <input type="text" name="search" placeholder="Search employees" />
+          <select name="select-team" id="teamSelect">
+            <option value="all">All</option>
+            <option value="Reactjs">ReactJS</option>
+            <option value="Expressjs">ExpressJS</option>
+            <option value="Nestjs">NestJS</option>
+          </select>
+        </div>
+        <button>Create Schedule</button>
+      </div>
+      <div class="table">
+        <table>
+          <thead>
+            <tr>
+                <th>Name</th>
+                <th>Team</th>
+                <th>Mon</th>
+                <th>Tue</th>
+                <th>Wed</th>
+                <th>Thu</th>
+                <th>Fri</th>
+            </tr>
+          </thead>
+          <tbody class="tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <script src="main.js"></script>
+  </body>
+</html>

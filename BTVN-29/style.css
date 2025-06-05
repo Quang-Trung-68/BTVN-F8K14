@@ -1,0 +1,104 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.heading {
+  margin: 40px auto;
+  text-align: center;
+}
+
+.container {
+  width: 80%;
+  margin: 50px auto;
+}
+
+.card-list {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.card-item {
+  width: calc((100% - 60px) / 4);
+  box-shadow: 0 0 5px #ccc;
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  transition: 0.3s;
+}
+
+.card-item:has(.card-thumb:hover),
+.card-item:has(.card-title:hover) {
+  box-shadow: 0 0 10px #888;
+}
+
+.card-thumb:hover,
+.card-item:has(.card-title:hover) .card-thumb {
+  scale: 1.1;
+  cursor: pointer;
+}
+
+.card-thumb {
+  width: 80%;
+  height: 250px;
+  align-self: center;
+  transition: 0.3s;
+}
+
+.card-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-top: 10px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* min 2 height */
+  line-height: 1.3rem;
+  min-height: calc(1.3rem * 2);
+}
+
+.card-title:hover {
+  cursor: pointer;
+}
+
+.card-price {
+  font-weight: bold;
+  margin-top: 10px;
+  color: green;
+}
+
+.card-description {
+  font-weight: lighter;
+  font-size: 0.9rem;
+  overflow: hidden;
+  margin-top: 10px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* min 3 height */
+  line-height: 1.1rem;
+  min-height: calc(1.1rem * 3);
+}
+
+.card-category {
+  margin-top: 10px;
+  font-size: 0.8rem;
+  font-style: italic;
+  font-weight: light;
+  color: #555;
+}
+
+.card-rating {
+  color: orange;
+  font-size: 0.9rem;
+  margin-top: 10px;
+}

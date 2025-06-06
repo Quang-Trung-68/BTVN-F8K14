@@ -1,15 +1,28 @@
+// function to fetch data from API
 const getProducts = async () => {
   const responds = await fetch("https://fakestoreapi.com/products/");
   const products = await responds.json();
   return products;
 };
+// array to save products
+let arrays;
+// function to init
+const init = async () => {
+  // waiting for data is fetched
+  arrays = await getProducts();
+  console.log(arrays);
+  // render data to UI
+  renderCards(arrays);
+};
 
-getProducts().then((products) => {
+const renderCards = (products) => {
+  // select card-list element
   const list = document.querySelector(".card-list");
+  // function to go to detail product
   const goToDetails = (id) => {
     window.location.href = `./detail-product-${id}`;
   };
-
+  // render product of products
   products.forEach((product) => {
     // create item
     const item = document.createElement("div");
@@ -49,4 +62,6 @@ getProducts().then((products) => {
     // add item to list
     list.append(item);
   });
-});
+};
+
+init();

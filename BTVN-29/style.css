@@ -44,8 +44,8 @@
 }
 
 .card-thumb {
-  width: 80%;
-  height: 250px;
+  width: 60%;
+  height: 200px;
   align-self: center;
   transition: 0.3s;
 }

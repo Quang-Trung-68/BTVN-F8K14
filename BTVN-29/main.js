@@ -6,6 +6,10 @@ const getProducts = async () => {
 
 getProducts().then((products) => {
   const list = document.querySelector(".card-list");
+  const goToDetails = (id) => {
+    window.location.href = `./detail-product-${id}`;
+  };
+
   products.forEach((product) => {
     // create item
     const item = document.createElement("div");
@@ -14,10 +18,16 @@ getProducts().then((products) => {
     const thumb = document.createElement("img");
     thumb.setAttribute("class", "card-thumb");
     thumb.setAttribute("src", `${product.image}`);
+    thumb.addEventListener("click", () => {
+      goToDetails(product.id);
+    });
     // create title
     const title = document.createElement("p");
     title.setAttribute("class", "card-title");
     title.innerText = product.title;
+    title.addEventListener("click", () => {
+      goToDetails(product.id);
+    });
     // create price
     const price = document.createElement("p");
     price.setAttribute("class", "card-price");

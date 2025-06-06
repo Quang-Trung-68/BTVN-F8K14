@@ -1,8 +1,16 @@
 // function to fetch data from API
 const getProducts = async () => {
-  const responds = await fetch("https://fakestoreapi.com/products/");
-  const products = await responds.json();
-  return products;
+  try {
+    const responds = await fetch("https://fakestoreapi.com/products/");
+    if (!responds.ok) {
+      throw new Error(`HTTP error! status: ${responds.status}`);
+    }
+    const products = await responds.json();
+    return products;
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    throw error;
+  }
 };
 // array to save products
 let arrays;

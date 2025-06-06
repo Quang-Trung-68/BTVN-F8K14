@@ -28,7 +28,7 @@ const renderCards = (products) => {
   const list = document.querySelector(".card-list");
   // function to go to detail product
   const goToDetails = (id) => {
-    window.location.href = `./detail-product-${id}`;
+    window.location.href = `./products/${id}`;
   };
   // render product of products
   products.forEach((product) => {

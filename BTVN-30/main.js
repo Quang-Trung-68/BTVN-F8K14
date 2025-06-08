@@ -1,6 +1,5 @@
 import {
   getAllMethod,
-  getMethod,
   postMethod,
   putMethod,
   deleteMethod,
@@ -8,11 +7,6 @@ import {
 
 const todoList = document.querySelector(".todo-list");
 console.log(todoList);
-
-const getData = async (id) => {
-  const data = await getMethod(id);
-  return data;
-};
 
 const getAll = async () => {
   const dataAll = await getAllMethod();
@@ -24,14 +18,40 @@ const postData = async (data) => {
   return dataTodo;
 };
 
+// validate input
+function validateTodoInput(input) {
+  const trimmed = input.trim();
+
+  // 1. Check if empty input
+  if (trimmed === "") {
+    return { valid: false, error: "Todo không được để trống." };
+  }
+
+  // 2. Maximum length and min
+  if (trimmed.length < 3) {
+    return { valid: false, error: "Todo quá ngắn (tối thiểu 3 ký tự)." };
+  }
+
+  if (trimmed.length > 100) {
+    return { valid: false, error: "Todo quá dài (tối đa 100 ký tự)." };
+  }
+
+  // 3. Do not have special letters
+  const invalidChars = /[^a-zA-Z0-9\s\u00C0-\u1EF9]/;
+  if (invalidChars.test(trimmed)) {
+    return { valid: false, error: "Todo chứa ký tự không hợp lệ." };
+  }
+
+  return { valid: true };
+}
+
 const todoInput = document.querySelector(".todo-input");
 const todoAddBtn = document.querySelector(".add-btn");
 todoAddBtn.addEventListener("click", () => {
-  if (todoInput.value) {
+  if (validateTodoInput(todoInput.value).valid) {
     let obj = {};
     obj.title = todoInput.value;
     obj.completed = true;
-    console.log("Added todo: " + obj);
     // run post
     const runPost = async () => {
       try {
@@ -47,6 +67,9 @@ todoAddBtn.addEventListener("click", () => {
     runPost();
 
     // renderUI();
+    todoInput.value = "";
+  } else {
+    alert(validateTodoInput(todoInput.value).error);
     todoInput.value = "";
   }
 });
@@ -73,7 +96,7 @@ const main = async () => {
     overlay.classList.remove("hidden");
     editInput.value = todo.title;
 
-    // Remove existing event listeners để tránh duplicate
+    // Remove existing event listeners to avoid duplicate
     const newTodoCancel = todoCancel.cloneNode(true);
     todoCancel.parentNode.replaceChild(newTodoCancel, todoCancel);
 
@@ -88,7 +111,7 @@ const main = async () => {
 
     // Save button
     newTodoSave.addEventListener("click", async () => {
-      if (editInput.value.trim()) {
+      if (validateTodoInput(editInput.value).valid) {
         try {
           await putMethod(todo.id, {
             title: editInput.value.trim(),
@@ -98,9 +121,12 @@ const main = async () => {
         } catch (error) {
           console.log(error);
         }
+        modal.classList.add("hidden");
+        overlay.classList.add("hidden");
+      } else {
+        alert(validateTodoInput(editInput.value).error);
+        editInput.value = todo.title;
       }
-      modal.classList.add("hidden");
-      overlay.classList.add("hidden");
     });
 
     // Close modal when click overlay
@@ -150,7 +176,7 @@ const main = async () => {
 
     todoCheckbox.addEventListener("change", (e) => {
       e.stopPropagation();
-      if (todoCheckbox.checked) {
+      if (!todoCheckbox.checked) {
         {
           todoCheckbox.checked = false;
           todoContent.classList.remove("completed");
@@ -215,8 +241,6 @@ const main = async () => {
     todoItem.append(todoCheckbox, todoContent, todoEditBtn, todoDeleteBtn);
     todoList.append(todoItem);
   });
-
-  //   add a todo
 };
 
 main();

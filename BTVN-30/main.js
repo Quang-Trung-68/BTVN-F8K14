@@ -41,6 +41,7 @@ function validateTodoInput(input) {
 
 const todoInput = document.querySelector(".todo-input");
 const todoAddBtn = document.querySelector(".add-btn");
+
 todoAddBtn.addEventListener("click", () => {
   if (validateTodoInput(todoInput.value).valid) {
     let obj = {};
@@ -51,9 +52,11 @@ todoAddBtn.addEventListener("click", () => {
       try {
         const dataRunPost = await postData(obj);
         await main();
+        // todoInput.focus();
         return dataRunPost;
       } catch (error) {
         console.log(error);
+        // todoInput.focus();
       }
     };
 
@@ -63,7 +66,10 @@ todoAddBtn.addEventListener("click", () => {
     alert(validateTodoInput(todoInput.value).error);
     todoInput.value = "";
   }
+  todoInput.focus();
 });
+
+// Main function
 
 const main = async () => {
   const resultAll = await getAll();
@@ -129,7 +135,7 @@ const main = async () => {
     // Create todo item
     const todoItem = document.createElement("div");
     todoItem.classList.add("todo-item");
-    
+
     // Create checkbox
     const todoCheckbox = document.createElement("input");
     todoCheckbox.setAttribute("type", "checkbox");
@@ -139,7 +145,7 @@ const main = async () => {
     const todoContent = document.createElement("div");
     todoContent.classList.add("todo-content");
     todoContent.innerText = todo.title;
-    
+
     // Create btn edit & del
     const todoEditBtn = document.createElement("button");
     todoEditBtn.classList.add("edit-btn", "fa-solid", "fa-pen-to-square");
@@ -165,9 +171,9 @@ const main = async () => {
     // Checkbox change logic
     todoCheckbox.addEventListener("change", async (e) => {
       e.stopPropagation();
-      
+
       const isChecked = todoCheckbox.checked;
-      
+
       if (isChecked) {
         // User checked the box - mark as completed
         todoContent.classList.add("completed");
@@ -175,11 +181,11 @@ const main = async () => {
         // User unchecked the box - mark as not completed
         todoContent.classList.remove("completed");
       }
-      
+
       try {
         await putMethod(todo.id, {
           title: todo.title,
-          completed: isChecked
+          completed: isChecked,
         });
       } catch (error) {
         console.log("Error updating todo:", error);
@@ -196,23 +202,27 @@ const main = async () => {
     // Click to toggle completion
     todoItem.addEventListener("click", async (e) => {
       // Don't trigger if clicking on checkbox, edit, or delete buttons
-      if (e.target === todoCheckbox || e.target === todoEditBtn || e.target === todoDeleteBtn) {
+      if (
+        e.target === todoCheckbox ||
+        e.target === todoEditBtn ||
+        e.target === todoDeleteBtn
+      ) {
         return;
       }
-      
+
       const newCompletedState = !todoCheckbox.checked;
       todoCheckbox.checked = newCompletedState;
-      
+
       if (newCompletedState) {
         todoContent.classList.add("completed");
       } else {
         todoContent.classList.remove("completed");
       }
-      
+
       try {
         await putMethod(todo.id, {
           title: todo.title,
-          completed: newCompletedState
+          completed: newCompletedState,
         });
       } catch (error) {
         console.log("Error updating todo:", error);
@@ -234,7 +244,7 @@ const main = async () => {
       todoCheckbox.checked = false;
       todoContent.classList.remove("completed");
     }
-    
+
     // Add to todoItem
     todoItem.append(todoCheckbox, todoContent, todoEditBtn, todoDeleteBtn);
     todoList.append(todoItem);

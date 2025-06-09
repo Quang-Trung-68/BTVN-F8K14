@@ -36,12 +36,6 @@ function validateTodoInput(input) {
     return { valid: false, error: "Todo quá dài (tối đa 100 ký tự)." };
   }
 
-  // 3. Do not have special letters
-  const invalidChars = /[^a-zA-Z0-9\s\u00C0-\u1EF9]/;
-  if (invalidChars.test(trimmed)) {
-    return { valid: false, error: "Todo chứa ký tự không hợp lệ." };
-  }
-
   return { valid: true };
 }
 
@@ -50,8 +44,8 @@ const todoAddBtn = document.querySelector(".add-btn");
 todoAddBtn.addEventListener("click", () => {
   if (validateTodoInput(todoInput.value).valid) {
     let obj = {};
-    obj.title = todoInput.value;
-    obj.completed = true;
+    obj.title = todoInput.value.trim();
+    obj.completed = false;
     // run post
     const runPost = async () => {
       try {

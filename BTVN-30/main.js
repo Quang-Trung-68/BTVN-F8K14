@@ -162,7 +162,7 @@ const main = async () => {
       runDelete();
     });
 
-    // FIXED: Checkbox change logic
+    // Checkbox change logic
     todoCheckbox.addEventListener("change", async (e) => {
       e.stopPropagation();
       

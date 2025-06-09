@@ -51,7 +51,6 @@ todoAddBtn.addEventListener("click", () => {
       try {
         const dataRunPost = await postData(obj);
         await main();
-
         return dataRunPost;
       } catch (error) {
         console.log(error);
@@ -59,25 +58,21 @@ todoAddBtn.addEventListener("click", () => {
     };
 
     runPost();
-
-    // renderUI();
     todoInput.value = "";
   } else {
     alert(validateTodoInput(todoInput.value).error);
     todoInput.value = "";
   }
 });
-console.log(todoInput);
 
 const main = async () => {
   const resultAll = await getAll();
   console.log(resultAll);
 
-  //   clear screen
+  // Clear screen
   todoList.innerHTML = "";
 
-  //   create function handle todo edit
-
+  // Create function handle todo edit
   const handleEditModal = (todo) => {
     const modal = document.querySelector(".modal");
     const overlay = document.querySelector(".overlay");
@@ -131,25 +126,26 @@ const main = async () => {
   };
 
   resultAll.forEach((todo) => {
-    // create todo item
+    // Create todo item
     const todoItem = document.createElement("div");
     todoItem.classList.add("todo-item");
-    // create checkbox
+    
+    // Create checkbox
     const todoCheckbox = document.createElement("input");
     todoCheckbox.setAttribute("type", "checkbox");
     todoCheckbox.setAttribute("name", "todoCheckbox");
 
-    // create todo content
+    // Create todo content
     const todoContent = document.createElement("div");
     todoContent.classList.add("todo-content");
     todoContent.innerText = todo.title;
-    // create btn edit & del
+    
+    // Create btn edit & del
     const todoEditBtn = document.createElement("button");
     todoEditBtn.classList.add("edit-btn", "fa-solid", "fa-pen-to-square");
     todoEditBtn.setAttribute("type", "button");
     todoEditBtn.addEventListener("click", (e) => {
       e.stopPropagation();
-
       handleEditModal(todo);
     });
 
@@ -166,64 +162,71 @@ const main = async () => {
       runDelete();
     });
 
-    // check checkbox is true or false to render and post to api
-
-    todoCheckbox.addEventListener("change", (e) => {
+    // FIXED: Checkbox change logic
+    todoCheckbox.addEventListener("change", async (e) => {
       e.stopPropagation();
-      if (!todoCheckbox.checked) {
-        {
-          todoCheckbox.checked = false;
-          todoContent.classList.remove("completed");
-
-          const runPut = async () => {
-            const resultPut = await putMethod(todo.id, {
-              title: `${todo.title}`,
-              completed: false,
-            });
-          };
-          runPut();
-        }
-      } else {
-        todoCheckbox.checked = true;
+      
+      const isChecked = todoCheckbox.checked;
+      
+      if (isChecked) {
+        // User checked the box - mark as completed
         todoContent.classList.add("completed");
-        const runPut = async () => {
-          const resultPut = await putMethod(todo.id, {
-            title: `${todo.title}`,
-            completed: true,
-          });
-        };
-        runPut();
+      } else {
+        // User unchecked the box - mark as not completed
+        todoContent.classList.remove("completed");
+      }
+      
+      try {
+        await putMethod(todo.id, {
+          title: todo.title,
+          completed: isChecked
+        });
+      } catch (error) {
+        console.log("Error updating todo:", error);
+        // Revert UI change if API call fails
+        todoCheckbox.checked = !isChecked;
+        if (isChecked) {
+          todoContent.classList.remove("completed");
+        } else {
+          todoContent.classList.add("completed");
+        }
       }
     });
 
-    // click to content of item that change completed
-    todoItem.addEventListener("click", () => {
-      if (!todoCheckbox.checked) {
-        {
-          todoContent.classList.add("completed");
-          todoCheckbox.checked = true;
-          const runPut = async () => {
-            const resultPut = await putMethod(todo.id, {
-              title: `${todo.title}`,
-              completed: true,
-            });
-          };
-          runPut();
-        }
+    // Click to toggle completion
+    todoItem.addEventListener("click", async (e) => {
+      // Don't trigger if clicking on checkbox, edit, or delete buttons
+      if (e.target === todoCheckbox || e.target === todoEditBtn || e.target === todoDeleteBtn) {
+        return;
+      }
+      
+      const newCompletedState = !todoCheckbox.checked;
+      todoCheckbox.checked = newCompletedState;
+      
+      if (newCompletedState) {
+        todoContent.classList.add("completed");
       } else {
         todoContent.classList.remove("completed");
-        todoCheckbox.checked = false;
-        const runPut = async () => {
-          const resultPut = await putMethod(todo.id, {
-            title: `${todo.title}`,
-            completed: false,
-          });
-        };
-        runPut();
+      }
+      
+      try {
+        await putMethod(todo.id, {
+          title: todo.title,
+          completed: newCompletedState
+        });
+      } catch (error) {
+        console.log("Error updating todo:", error);
+        // Revert UI change if API call fails
+        todoCheckbox.checked = !newCompletedState;
+        if (newCompletedState) {
+          todoContent.classList.remove("completed");
+        } else {
+          todoContent.classList.add("completed");
+        }
       }
     });
 
-    // check from api to render
+    // Set initial state from API
     if (todo.completed) {
       todoCheckbox.checked = true;
       todoContent.classList.add("completed");
@@ -231,7 +234,8 @@ const main = async () => {
       todoCheckbox.checked = false;
       todoContent.classList.remove("completed");
     }
-    // add to todoItem
+    
+    // Add to todoItem
     todoItem.append(todoCheckbox, todoContent, todoEditBtn, todoDeleteBtn);
     todoList.append(todoItem);
   });

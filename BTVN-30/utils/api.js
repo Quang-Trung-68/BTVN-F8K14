@@ -1,14 +1,5 @@
 const baseUrl = "https://api-todolist-multiuser.onrender.com/Trung/todos";
 
-const getMethod = async (endpoint) => {
-  try {
-    const response = await fetch(`${baseUrl}/${endpoint}`);
-    return await response.json();
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 const getAllMethod = async () => {
   try {
     const response = await fetch(`${baseUrl}`);
@@ -64,4 +55,4 @@ try {
 }
 }
 
-export { getMethod, getAllMethod, postMethod,putMethod, deleteMethod };
+export { getAllMethod, postMethod,putMethod, deleteMethod };

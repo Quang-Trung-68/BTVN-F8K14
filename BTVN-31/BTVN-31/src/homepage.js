@@ -12,7 +12,7 @@ const homePage = async (token) => {
   try {
     const posts = await getPostMethod(token);
     // if token access is expired
-    if (posts.detail === "token expired") {
+    if (posts.detail) {
       // log post
       console.log(posts);
       const body = {

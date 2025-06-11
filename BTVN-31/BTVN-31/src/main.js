@@ -36,8 +36,12 @@ const validateAccount = (accountInfo) => {
 };
 
 const mainLogIn = async (accountInfo) => {
-  const response = await postLoginMethod(accountInfo);
-  return response;
+  try {
+    const response = await postLoginMethod(accountInfo);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const logIn = document.querySelector(".log-in");
@@ -47,17 +51,20 @@ if (logIn) {
       email: username.value.trim(),
       password: password.value.trim(),
     };
-    console.log(username.value, password.value);
     if (validateAccount(accountInfo)) {
-      token = await mainLogIn(accountInfo);
-      if (token.access) {
-        // save token to local storage
-        localStorage.setItem("access_token", `${token.access}`);
-        localStorage.setItem("refresh_token", `${token.refresh}`);
+      try {
+        token = await mainLogIn(accountInfo);
+        if (token.access) {
+          // save token to local storage
+          localStorage.setItem("access_token", `${token.access}`);
+          localStorage.setItem("refresh_token", `${token.refresh}`);
 
-        console.log(token.access);
-        // go to home page
-        document.location.href = `./homepage.html`;
+          console.log(token.access);
+          // go to home page
+          document.location.href = `./homepage.html`;
+        }
+      } catch (error) {
+        console.log(error);
       }
     } else {
       console.log("No validate input");

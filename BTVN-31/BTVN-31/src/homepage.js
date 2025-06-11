@@ -6,10 +6,10 @@ let token = {
   refresh: localStorage["refresh_token"],
 };
 
-
 // function keep access by keep valid token
 const homePage = async (token) => {
   // function auto checking token is not expired or expired, after post to get new access token
+  try {
     const posts = await getPostMethod(token);
     // if token access is expired
     if (posts.detail === "token expired") {
@@ -34,8 +34,10 @@ const homePage = async (token) => {
       console.log("Login token is valid");
       console.log(posts);
     }
+  } catch (error) {
+    console.log(error);
+  }
 };
-
 
 homePage(token);
 
